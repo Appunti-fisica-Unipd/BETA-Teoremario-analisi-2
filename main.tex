@@ -1,0 +1,2320 @@
+\documentclass{article}
+\usepackage[A4, left=3.75cm, right=3.75cm, top=2.5cm,
+bottom=2.5cm,dvips]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{gensymb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{setspace} \doublespacing
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{empheq}
+\usepackage{amsfonts}
+\usepackage{esint}
+\usepackage{marvosym }
+\usepackage{MnSymbol}
+%\usepackage[margin=4cm]{geometry}
+\usepackage[most]{tcolorbox}
+\usepackage{afterpage}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Ln}{\text{Ln}}
+\newcommand{\sgn}{\text{sgn}}
+\newcommand{\dom}{\text{dom}}
+\newcommand\myemptypage{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage
+    }
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,      
+    urlcolor=black,
+    }
+
+\title{Appunti di Analisi 2}
+\author{Giacomo Veglio}
+\date{Febbraio 2022}
+
+\begin{document}
+\begin{titlepage}
+    \begin{center}
+        \vspace*{2.5cm}
+        \Large\textbf{Università degli Studi di Padova} \\
+        \large\textbf{Dipartimento di Fisica e Astronomia  “Galileo Galilei”}\\
+        \textbf{Anno accademico:} 2022-23\\
+        \vspace{30pt}
+        \includegraphics[width=0.4\textwidth]{UniPdlogo.png}
+        \hspace{30pt}
+        \includegraphics[width=0.4\textwidth]{DFALogo.jpg}\\
+        \vspace{30pt}
+        \hline
+        \vspace{15pt}
+        \large\textbf{Teoremario di Analisi 2}\\
+        \vspace{15pt}
+        \hline
+        \vspace{30pt}
+        \textbf{Giacomo Veglio}\\
+        \vspace{15pt}
+        \textbf{La\TeX}\\
+        \vspace{15pt}
+        \textbf{Data:} 29/10/2023\\
+    \end{center}
+\end{titlepage}
+
+\myemptypage
+
+\begin{titlepage}
+    \renewcommand{\contentsname}{Indice}
+    \tableofcontents
+    \thispagestyle{empty}
+\end{titlepage}
+
+\section{\Large\textbf{Introduzione}}
+Quanto segue è un teoremario da me realizzato riassumendo i contenuti del corso di Analisi Matematica 2 presso il Dipartimento di Fisica e Astronomia "Galileo Galilei" il secondo semestre dell'anno accademico '22-'23. \underline{Non} mi assumo alcun merito ne mi prendo alcuna responsabilità per quanto segue in questo testo\footnote{certamente pieno di errori di battitura}. In quanto studente consiglio a chiunque di non fidarsi ciecamente di quanto qui riportato e di studiare da testi completi. Spero tuttavia che queste pagine possano in qualche modo assistere futuri studenti di Analisi 2 come accompagnamento al loro studio.  
+\newpage
+
+\section{\Large\textbf{Serie numeriche}}
+
+\paragraph{Definizione}
+Una serie a valori in $\C$ è una coppia $( \{a_n \}_{n\in \N},\{S_n\}_{n\in \N})$ tale che $\{a_n \}_{n\in \N}\subseteq \C$ è una successione e $\{S_n\}_{n\in \N}$ è la sua successione delle ridotte n-esima,
+\begin{empheq}{align}
+    \nonumber S_n &= \sum_{k=0}^{n} a_k.\\
+    \nonumber S_0 &=a_0\\
+    \nonumber S_1 &=a_0+a_1\\
+    \nonumber S_2 &=a_0+a_1+a_2\\
+    \nonumber S_n &=a_0+a_1+a_2+...+a_n
+\end{empheq}
+La coppia $( \{a_n \}_{n\in \N},\{S_n\}_{n\in \N})$ è identificata con
+\begin{empheq}{equation}
+  \nonumber  \sum_{k=0}^{\infty} a_k.
+\end{empheq}
+
+\paragraph{Definizione}
+Una serie $\sum_{k=0}^{\infty} a_k$ si dice
+\begin{itemize}
+    \item \underline{Convergente} se converge la successione delle ridotte, cioè se $\exists$ finito 
+            \begin{empheq}{equation}
+                \nonumber \lim_{n\rightarrow +\infty} S_n = \lim_{n\rightarrow +\infty} \sum_{k=0}^{n} a_k
+            \end{empheq}
+    \item \underline{Divergente}
+        \begin{itemize}
+            \item a $+\infty$ se $\lim_{n\rightarrow +\infty} S_n =+\infty$
+            \item a $-\infty$ se $\lim_{n\rightarrow +\infty} S_n =-\infty$
+            \item a $\infty$ se $\lim_{n\rightarrow +\infty} S_n =\infty$, cioè se $lim_{n\rightarrow +\infty} |S_n|=+\infty$
+        \end{itemize}
+    \item \underline{Irregolare} o \underline{indeterminata} se $\lim_{n\rightarrow +\infty} S_n$ non esiste.
+\end{itemize}
+
+\paragraph{Definizione}
+Se la serie $\sum_{k=0}^{\infty} a_k$ converge, cioè se il $\lim_{n\rightarrow +\infty} S_n = \lim_{n\rightarrow +\infty} \sum_{k=0}^{n} a_k$, si dice \underline{somma della serie} ed è indicato con $\sum_{k=0}^{\infty} a_k$.
+
+\paragraph{Proposizione}
+Sia $\sum_{k=0}^{\infty} a_k$ una serie a termini complessi. Allora $\sum_{k=0}^{\infty} a_k$ converge $\Longleftrightarrow$ convergono $\sum_{k=0}^{\infty} Re(a_k)$ e $\sum_{k=0}^{\infty} Im(a_k)$
+\begin{empheq}{equation*}
+    a_k=\alpha_k +i\beta_k, \,\,\,\,\, \alpha_k,\beta_k \in \R
+\end{empheq}
+$\sum_{k=0}^{\infty} a_k$ converge $\Longleftrightarrow$ convergono entrambe le serie a termini in $\R$
+\begin{empheq}{equation*}
+    \sum_{k=0}^{\infty} \alpha_k \,\,\,\,\, \text{e} \,\,\,\,\, \sum_{k=0}^{\infty} \beta_k.
+\end{empheq}
+
+\paragraph{Dimostrazione della proposizione $\Rightarrow)$}
+    Se $\sum_{k=0}^{\infty} a_k$ converge allora $\sum_{k=0}^{\infty} \alpha_k$ e $\sum_{k=0}^{\infty} \beta_k$ convergono.\\
+    Sia $S_a+iS_b$ la somma di $\sum_{k=0}^{\infty}a_k$, allora
+    \begin{empheq}{equation*}
+        S_a+iS_b=\lim_{n\rightarrow +\infty} \sum_{k=0}^{n} (\alpha_k + i\beta_k)
+    \end{empheq}
+    Faccio vedere che 
+    \begin{empheq}{equation*}
+        \lim_{n \rightarrow +\infty} \sum_{k=0}^{n}\alpha_k = S_a \,\,\,\,\, \text{e} \,\,\,\,\, \lim_{n \rightarrow +\infty} \sum_{k=0}^{n}\beta_k = S_b
+    \end{empheq}
+    allora
+    \begin{empheq}{equation}
+        \nonumber 0 \leq |\sum_{k=0}^{n} \alpha_k - S_a|=|Re(\sum_{k=0}^{n} a_k - (S_a +iS_b)|\leq |\sum_{k=0}^{n} a_k - (S_a +iS_b)| \xrightarrow{n\rightarrow +\infty} 0.
+    \end{empheq}
+Quindi per il Teorema dei Due Carabinieri
+    \begin{empheq}{equation}
+        \nonumber \lim_{n\rightarrow +\infty} |\sum_{k=0}^{n} \alpha_k - S_a|=0 \Longleftrightarrow \lim_{n\rightarrow +\infty} \sum_{k=0}^{n} \alpha_k =S_a
+    \end{empheq}
+In modo analogo si dimostra che $\lim_{n\rightarrow +\infty}\beta_k=S_b$
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{Dimostrazione della proposizione $\Leftarrow)$}
+\begin{empheq}{equation*}
+    \sum_{k=0}^{\infty}\alpha_k \,\,\,\,\, \text{e} \,\,\,\,\, \sum_{k=0}^{\infty} \beta_k \,\,\,\,\, \text{convergono} \,\,\,\,\, \Longrightarrow \sum_{k=0}^{\infty} a_k \,\,\,\,\, \text{converge,}
+\end{empheq}
+ ovvero
+\begin{empheq}{align}
+    \nonumber \lim_{n\rightarrow +\infty} \sum_{k=0}^{n} \alpha_k &= S_a \in \R, \\
+    \nonumber \lim_{n\rightarrow +\infty} \sum_{k=0}^{n} \beta_k &= S_b \in \R.
+\end{empheq}
+Quindi per $n\rightarrow +\infty$ si avrà la seguente disuguaglianza triangolare
+\begin{empheq}{align*}
+    0 \leq |\sum_{k=0}^{n} a_k& - (S_a +iS_b)| = |\left(\sum_{k=0}^{n} \alpha_k - S_a \right) + i\left(\sum_{k=0}^{n} \beta_k - S_b \right)| \leq \\ &\leq |\sum_{k=0}^{n} \alpha_k - S_a| + |\sum_{k=0}^{n} \beta_k -S_b| \xrightarrow{n \rightarrow +\infty} 0.
+\end{empheq}
+Si conclude con il Teorema dei Due Carabinieri.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{Teorema}
+Sia $\{a_n\}_{n\in \N}\subseteq \C(\R)$. Se $\sum_{k=0}^{\infty} a_k$ converge, allora $\lim_{k\rightarrow +\infty} a_k=0$.\\
+\textcolor{grey}{(Se una serie è convergente il suo termine generale è infinitesimo)}
+
+\paragraph{Dimostrazione del teorema}
+$\sum_{k=0}^{\infty} a_k$ converge, allora mi procuro la ridotta n-esima.
+\begin{empheq}{align}
+  \nonumber  S_n&=\sum_{k=0}^{n} a_k \\
+  \nonumber  S_{n-1}&=\sum_{k=0}^{n-1} a_k\\
+  \nonumber  S_n-S_{n-1}&=\sum_{k=0}^{n} a_k - \sum_{k=0}^{n-1} a_k=\\
+  \nonumber &=a_n + \sum_{k=0}^{n-1} a_k - \sum_{k=0}^{n-1} a_k = a_n\\
+  \nonumber  \lim_{n \rightarrow +\infty} a_n &= \lim_{n \rightarrow +\infty}(S_{n}-S_{n-1})= \lim_{n \rightarrow +\infty}S_{n}-\lim_{n \rightarrow +\infty}S_{n-1}=0
+\end{empheq}
+Ove $S\in \C$ è la somma della serie.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Proposizione}}
+Siano $\sum_{k=0}^{\infty} a_k$ e $\sum_{k=0}^{\infty} b_k$ serie convergenti di somma $S_a$e $S_b$, allora $\sum_{k=0}^{\infty} (a_k+b_k)$ converge e la sua somma è $S_a+S_b$.
+
+\paragraph{{Dimostrazione della proposizione}}
+\begin{empheq}{equation}
+  \nonumber  \sum_{k=0}^{n} a_k+b_k = \sum_{k=0}^{n} a_k +\sum_{k=0}^{n} b_k \xrightarrow{n\rightarrow+\infty} S_a+S_b.
+\end{empheq}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Proposizione}}
+Sia $\sum_{k=0}^{\infty} a_k$ serie convergente di somma $S_a$ e sia $c \in \C$, allora $\sum_{k=0}^{\infty} (ca_k)$ converge e la sua somma è $cS_a$.
+
+\paragraph{{Dimostrazione della proposizione}}
+\begin{empheq}{equation}
+  \nonumber  \sum_{k=0}^{\infty} (ca_k) = c\sum_{k=0}^{\infty} a_k \xrightarrow{n\rightarrow+\infty} cS_a
+\end{empheq}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Proposizione}}
+Sia data la serie
+$\sum_{k=0}^{\infty} a_k$ e sia $n_0 \in \N, n_0 \geq 1$, allora $\sum_{k=0}^{\infty} a_k$ e $\sum_{k=n_0}^{\infty} a_k$ hanno lo stesso carattere.\\
+\textcolor{grey}{($\sum_{k=0}^{\infty} \frac{1}{k}$ e $\sum_{k=10^{10}}^{\infty} \frac{1}{k}$ hanno lo stesso carattere, $\sum_{k=10^{10}}^{\infty} \frac{1}{k}=+\infty$. 
+Il carattere di una serie dipende solo dalla coda della successione dei suoi termini.)}
+
+\paragraph{{Dimostrazione della proposizione}}
+Fissato $n > n_0$ si ha
+\begin{empheq}{equation}
+   \nonumber \sum_{k=0}^{n} a_k = \sum_{k=0}^{n_0-1} a_k +\sum_{k=n_0}^{n} a_k,
+\end{empheq}
+allora
+\begin{empheq}{equation}
+  \nonumber \exists \lim_{n \rightarrow +\infty} \sum_{k=0}^{n} a_k \Leftrightarrow \exists \lim_{n \rightarrow +\infty} \sum_{k=n_0}^{n} a_k
+\end{empheq}
+e in tal caso 
+\begin{empheq}{equation}
+  \nonumber  \lim_{n \rightarrow +\infty} \sum_{k=0}^{n} a_k= \sum_{k=0}^{n_0-1} a_k +\lim_{n \rightarrow +\infty} \sum_{k=n_0}^{n} a_k .
+\end{empheq}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsection{Criteri di Cauchy}
+\paragraph{{Definizione}}
+Sia  $\{a_n\}_{n \in \N}$ successione in $\R$ o in $\C$. Allora $\{a_n\}_{n\in \N}$ si dice di Cauchy se $\forall \epsilon > 0 $ esiste $ N > 0 $ tale che $ \forall n>N, \space p \geq 0$ tali che $|a_{n+p}-a_{n}|<\epsilon$
+
+\subsubsection{{Criterio di Cauchy per le successioni}}
+\paragraph{Teorema}
+Sia $\{a_n\}_{n \in \N}$ successione in $\R$ o in $\C$. Allora $\{a_n\}_{n \in \N}$ è convergente $\Leftrightarrow$ è di Cauchy.
+
+\paragraph{Definizione}
+Uno spazio metrico M è detto \underline{completo} se ogni successione di Cauchy a valori in M converge ad un elemento dello spazio (di M).
+
+\subsubsection{{Criterio di Cauchy per le Serie}}
+\paragraph{Teorema}
+Sia data una serie $\sum_{k=0}^{\infty} a_k$ in $\R$ o in $\C$. Allora la serie converge $\Leftrightarrow \forall \epsilon > 0 $ esiste $ N>0 $ tale che se $n>N$ e $p \geq 0$ allora $|\sum_{k=n}^{n+p} a_k| < \epsilon$.\\
+Si ricava dal criterio di Cauchy per le successioni osservando che 
+$\sum_{k=n}^{n+p} a_k =S_{n+p} - S_{n-1}$ con $\{S_n\}_{n\in \N}$ successione delle ridotte.
+
+\paragraph{{Proposizione}}
+Sia $\sum_{k=0}^{\infty} a_k$ serie a termini definitivamente non negativi ($ \exists N>0 \,\,|\,\,\forall k>N \Rightarrow a_k \geq 0 $). Allora la serie converge o diverge, non può essere indeterminata.
+
+\paragraph{{Dimostrazione della proposizione}}
+Per semplicità assumiamo $a_k \geq 0 \,\, \forall k \in \N$. \\
+Devo far vedere che, se $\{S_n\}_{n \in \N}$ è la successione delle ridotte, questa ha limite, finito o infinito.
+\begin{empheq}{equation}
+  \nonumber  S_{n+1}= \sum_{k=0}^{n+1} a_k = a_{n+1} + \sum_{k=0}^{n} a_k = a_{n+1} + S_n \geq S_n
+\end{empheq}
+$\{S_n\}_{n \in \N}$ è crescente e quindi ha limite (finito o $+\infty$).
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Proposizione}}
+Sia data la serie $\sum_{k=0}^{\infty} a_k$ e si supponga che  $\sum_{k=0}^{\infty} |a_k|$ converga \textcolor{grey}{(si dice che  $\sum_{k=0}^{\infty} a_k$ converge assolutamente)}.\\
+Allora anche  $\sum_{k=0}^{\infty} a_k$ converge e in tal caso 
+\begin{empheq}{equation}
+    \nonumber |\sum_{k=0}^{\infty} a_k| \leq  \sum_{k=0}^{\infty} |a_k|
+\end{empheq}
+
+\paragraph{{Dimostrazione della proposizione}}
+Dimostriamo che vale il teorema di Cauchy per la serie.\\
+Siccome  $\sum_{k=0}^{\infty} |a_k|$ converge, $\forall \epsilon > 0 $ esiste $ N>0 $ tale che se $n>N$ e $p \geq 0$
+\begin{empheq}{align}
+    \nonumber &\sum_{k=n}^{n+p} |a_k| < \epsilon\\
+    \nonumber |\sum_{k=n}^{n+p} a_k &| \leq  \sum_{k=n}^{n+p} |a_k| < \epsilon
+\end{empheq}
+$\Rightarrow$ la serie soddisfa la condizione di Cauchy e quindi converge. In tal caso, per disuguaglianza triangolare avremo
+\begin{empheq}{align}
+    \nonumber |\sum_{k=0}^{\infty} a_k| &= |\lim_{n\rightarrow + \infty} \sum_{k=0}^{n} a_k| = \lim_{n\rightarrow + \infty} |\sum_{k=0}^{n} a_k| \leq \lim_{n\rightarrow + \infty} \sum_{k=0}^{n} |a_k|= \sum_{k=0}^{\infty} |a_k|.
+\end{empheq}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Definizione}}
+Una serie si dice semplicemente convergente se converge, ma non necessariamente converge la serie dei moduli.
+
+\paragraph{{Osservazione Importante}}
+Il teorema non si può invertire. Una serie potrebbe convergere (semplicemente) ma non convergere assolutamente.
+
+\subsection{{Criteri di convergenza per serie di termini definitivamente positivi}}
+\subsubsection{{Criterio del Confronto}}
+\paragraph{{Teorema}}
+$\{a_k\}_{k \in \N},\{b_k\}_{k \in \N}$ successioni a termini definitivamente non negativi tali che $0 \leq a_k\leq b_k$ definitivamente per $ k \rightarrow+\infty$. Allora
+\begin{itemize}
+    \item Se $\sum_{k=0}^{\infty} b_k$ converge, allora $\sum_{k=0}^{\infty} a_k$ converge
+    \item Se $\sum_{k=0}^{\infty} a_k$ diverge, allora $\sum_{k=0}^{\infty} b_k$ diverge
+\end{itemize}
+\paragraph{{Dimostrazione del teorema}}
+\begin{empheq}{equation*}
+    S_{b}=\sum_{k=0}^{\infty} b_k, \,\,\,\,\,\,\,\, S_{a}=\sum_{k=0}^{\infty} a_k.
+\end{empheq}
+Per semplicità assumiamo che $a_k \leq b_k \forall k \geq0$, allora
+$\lim_{n\rightarrow +\infty} S_a $ e $\lim_{n\rightarrow +\infty} S_b$ esistono perchè le serie sono a termini definitivamente non negativi.\\
+Se $\sum_{k=0}^{\infty}  b_{k}$ converge $\Rightarrow \lim_{n\rightarrow +\infty} S_{b_n}=S_b <+\infty$, e se $a_k \leq b_k \forall k \Rightarrow S_{a_n} \leq S_{b_n} \forall n$ si ha che
+$\lim_{n\rightarrow +\infty} S_{a_n} \leq \lim_{n\rightarrow +\infty} S_{b_n} < +\infty \Rightarrow \sum_{k=0}^{\infty}  a_k $ converge.\\
+Se invece $\sum_{k=0}^{\infty}  a_k$ diverge $\Rightarrow \lim_{n\rightarrow +\infty} S_{a_n} = +\infty$ e quindi $S_{b_n} \geq S_{a_n} \forall n$ e quindi
+$ \lim_{n\rightarrow +\infty} S_{b_n}=+\infty$ per il teorema del confronto, ovvero $\sum_{k=0}^{\infty} b_k$ diverge.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{{Criterio del confronto asintotico}}
+\paragraph{{Teorema}}
+Siano $\{a_k\}_{k \in \N},\{b_k\}_{k \in \N}$ successioni definitivamente $\geq 0$ tali che 
+\begin{empheq}{equation}
+  \nonumber  \lim_{n \rightarrow +\infty} \frac{a_k}{b_k}=l \in[0,+\infty]
+\end{empheq}
+allora
+\begin{itemize}
+    \item[1)] se $l\in \R,l\neq0,+\infty$ allora $\sum_{k=0}^{\infty} a_k$ converge $\Leftrightarrow\sum_{k=0}^{\infty} b_k$ converge;
+    \item[2)] se $l=0$ e $\sum_{k=0}^{\infty} b_k$ converge, allora $\sum_{k=0}^{\infty} a_k$ converge;
+    \item[3)] se $l=+\infty $ e $ \sum_{k=0}^{\infty} b_k $ diverge, allora $\sum_{k=0}^{\infty} a_k$ diverge.
+\end{itemize}
+
+\paragraph{{Dimostrazione del teorema}}
+\begin{enumerate}
+    \item $l\in ]0,+\infty[,l=\lim_{n \rightarrow + \infty} \frac{a_k}{b_k}$ per la definizione di limite $\frac{l}{2}\leq\frac{a_k}{b_k} \leq 2l$ definitivamente perché l'intervallo $]\frac{l}{2},2l[$ è un intorno di l, quindi
+    \begin{itemize}
+        \item[$\Leftarrow)$] se $a_k\leq (2l)b_k$ definitivamente e $\sum_{k=0}^{\infty} b_k$ converge $\Rightarrow \sum_{k=0}^{\infty} a_k$ converge per il criterio del confronto;
+        \item[$\Rightarrow)$] se $b_k \leq \frac{2}{l} a_k$ defintivamente e $\sum_{k=0}^{\infty} a_k$ converge $\Rightarrow \sum_{k=0}^{\infty} \frac{2}{l} a_k$ converge $\Rightarrow \sum_{k=0}^{\infty} b_k$ converge per il criterio del confronto.
+    \end{itemize}
+    \item $l=0=\lim_{n \rightarrow +\infty} \frac{a_k}{b_k} \Rightarrow \frac{a_k}{b_k} \leq 1$ definitivamente, ovvero $0\leq a_k \leq b_k $ definitivamente. \\
+    Dunque se $\sum_{k=0}^{\infty} b_k $ converge $\Rightarrow \sum_{k=0}^{\infty} a_k $ converge
+    \item $l=+\infty = \lim_{n \rightarrow +\infty} \frac{a_k}{b_k} \Rightarrow \frac{a_k}{b_k} \geq 1$ definitivamente, cioè $a_k \geq b_k \geq 0$ definitivamente.
+    \\Se $\sum_{k=0}^{\infty} b_k$ diverge $ \Rightarrow \sum_{k=0}^{\infty} a_k$ diverge per il criterio del confronto.
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{{Criterio di Condensazione}}
+\paragraph{{Teorema}}
+Sia $ \{a_k\}_{k \in \N}$ una successione a termini positivi e decrescente \textcolor{grey}{(basta definitivamente: $0 \leq a_{k+1} \leq a_k$ definitivamente)}, allora $\sum_{k=0}^{\infty} a_k$ converge $\Leftrightarrow$ converge $\sum_{k=0}^{\infty} 2^k a_{2^k}$.
+
+\subsubsection{{Criterio del rapporto}}
+\paragraph{{Teorema}}
+$\{a_k \}_{k \in \N}$ successione a termini definitivamente positivi 
+\begin{enumerate}
+    \item Se $\exists r< 1 $ tale che $\frac{a_{k+1}}{a_k} \leq r$ definitivamente per $ k \rightarrow +\infty$, allora $\sum_{k=0}^{\infty} a_k $ converge;
+    \item Se $\frac{a_{k+1}}{a_k} \geq 1$ definitivamente per $ k\rightarrow +\infty$, allora $\sum_{k=0}^{\infty} a_k $ diverge.
+\end{enumerate}
+
+\paragraph{{Dimostrazione del teorema}}
+Per semplicità assumiamo che $a_k > 0 \forall k \in \N$
+\begin{enumerate}
+    \item $\exists r < 1 | \frac{a_{k+1}}{a_k} \leq r \forall k \in \N$ allora $\frac{a_k}{a_{k-1}} \leq r \forall k \geq 1$ , $ a_k \leq ra_{k-1} \leq r^2 a_{k-2} \leq r^3 a_{k-3} \leq ... \leq r^k a_0 \Rightarrow a_k \leq r^k a_0 \forall k \in \N$ e $\sum_{k=0}^{\infty} r^k$ converge perché è una serie geometrica di ragione $ r \in ]0,1[ \Rightarrow$ per il criterio del confronto $\sum_{k=0}^{\infty} a_k$ converge.
+    
+    \item $\frac{a_{k+1}}{a_k} \geq 1 \forall k \in \N$ allora $a_{k+1} \geq a_k \forall k \Rightarrow \{ a_k\}_{k \in \N}$ è successione crescente a termini strettamente positivi $\Rightarrow\lim_{k \rightarrow+\infty} a_k > 0 \Rightarrow \sum_{k=0}^{\infty} a_k$ diverge.   
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{{Criterio Asintotico del rapporto}}
+\paragraph{{Teorema}}
+$\{a_k\}_{k\in \N}$ successione a termini definitivamente positivi tale che 
+\begin{equation*}
+    \lim_{k \rightarrow +\infty} \frac{a_{k+1}}{a_k} = l \in [0,+\infty[
+\end{equation*}
+\begin{enumerate}
+    \item Se $l<1$ , la serie $\sum_{k=1}^{\infty} a_k$ converge.
+    \item Se $l> 1$ , la serie $\sum_{k=1}^{\infty} a_k$ diverge.
+\end{enumerate}
+
+\paragraph{{Osservazione}}
+Il teorema non dice nulla se $l=1$, infatti con $\sum_{k=1}^{\infty} \frac{1}{k}$ abbiamo $\lim_{k \rightarrow +\infty} \frac{a_{k+1}}{a_k}=1$ e la serie diverge mentre per $\sum_{k=1}^{\infty} \frac{1}{k^2} $ abbiamo $\lim_{k \rightarrow +\infty} \frac{a_{k+1}}{a_k}=1$ e la serie converge.
+
+\paragraph{{Dimostrazione del teorema}}
+\begin{enumerate}
+    \item $\lim_{k \rightarrow +\infty} \frac{a_{k+1}}{a_k}=l < 1$. Fissiamo $r \in ]l, 1[$ allora definitivamente $\frac{a_{k+1}}{a_k}\leq r \Rightarrow$ la serie diverge per il criterio del rapporto.
+
+    \item $\lim_{k \rightarrow +\infty} \frac{a_{k+1}}{a_k} = l > 1 \Rightarrow \frac{a_{k+1}}{a_k} \geq 1$ definitivamente $\Rightarrow$ la serie diverge per il criterio del rapporto.
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{{Criterio della Radice}}
+\paragraph{{Teorema}}
+Sia $\{ a_k\}_{k\in \N}$ una successione a termini definitivamente non negativi
+\begin{enumerate}
+    \item Se $\exists r< 1$ tale che $\sqrt[k]{a_k} \leq r$ definitivamente, allora $\sum_{k=0}^{\infty}$ converge.
+    \item Se $\sqrt[k]{a_k} \geq 1$ definitivamente, allora $\sum_{k=0}^{\infty}$  diverge.
+\end{enumerate}
+
+\paragraph{{Dimostrazione del teorema}}
+\begin{enumerate}
+    \item $\sqrt[k]{a_k}\leq r$ definitivamente $\Rightarrow 0 \leq a_k \leq r^k$ definitivamente e dunque $\sum_{k=0}^{\infty} r^k$ converge (perché $r \in [0,1[$) $\Rightarrow \sum_{k=0}^{\infty} a_k$ converge per il criterio del confronto.
+    \item $\sqrt[k]{a_k} \geq 1$ definitivamente $\Rightarrow a_k \geq 1$ definitivamente $\Rightarrow \lim_{k \rightarrow + \infty} a_k \geq 1$, se esiste $\Rightarrow \sum_{k=0}^{\infty} a_k$ diverge. 
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{{Criterio Asintotico della Radice}}
+\paragraph{{Teorema}}
+$\{a_k\}_{k \in \N}$ successione a termini definitivametne non negativi tale che $\lim_{k \rightarrow +\infty} \sqrt[k]{a_k} = l \in [0,+\infty[$.
+\begin{enumerate}
+    \item Se $l<1$ la serie $ \sum_{k=0}^{\infty} a_k$ converge.
+    \item Se $l> 1$ la serie $\sum_{k=0}^{\infty} a_k$ diverge.
+\end{enumerate}
+
+\paragraph{{Dimostrazione del teorema}}
+\begin{enumerate}
+    \item Per $\lim_{k \rightarrow +\infty} \sqrt[k]{a_k} = l < 1$ fisso $r\in \,\,]l,1[\,\, \Rightarrow \sqrt[k]{a_k} \leq r$  definitivamente $\Rightarrow \sum_{k=0}^{\infty} a_k$ converge per il criterio della radice.
+    \item Per $\lim_{k \rightarrow +\infty} \sqrt[k]{a_k} = l > 1 \Rightarrow \sqrt[k]{a_k}\geq 1$ definitivamente  $\Rightarrow \sum_{k=0}^{\infty} a_k$ diverge per il criterio della radice.
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Nota Bene}}
+Se $\{a_k\}_{k \in N}$ è a termini definitivamente positivi e  $\lim_{k \rightarrow +\infty} \frac{a_{k+1}}{a_k}=1$, allora $\lim_{k \rightarrow +\infty} \sqrt[k]{a_k}=l$.
+
+\subsection{{Criteri di convergenza per serie a termini di segno qualsiasi}}
+
+\subsubsection{{Criterio di Dirichlet}}
+\paragraph{{Teorema}}
+Sia $\{a_k\}_{k \in \N}$ successione a termini non negativi, decrescente, infinitesima \textcolor{grey}{(basta definitivamente: $\lim_{k \rightarrow +\infty} a_k=0$ e $0\leq a_{k+1} \leq a_k$ definitivamente per $k \rightarrow +\infty$)} e sia $\{b_k\}_{k\in \N}$ un'altra successione tale che $\exists C>0$ per cui vale
+\begin{empheq}{equation*}
+    \lvert \sum_{k=0}^{n} b_k \rvert \leq C \,\,\,\,\, \forall n \in \N
+\end{empheq}
+\textcolor{grey}{la successione delle ridotte della serie $\sum_{k=0}^{\infty} b_k$ è limitata}.\\
+Allora la serie $\sum_{k=0}^{\infty} a_kb_k$ converge.
+
+\subsubsection{{Criterio di Leibniz}}
+\paragraph{{Teorema}}
+Sia $\{a_k\}_{k\in \N}$ successione a termini non negativi, decrescente, infinitesima. Allora
+\begin{empheq}{equation*}
+    \sum_{k=0}^{\infty} (-1)^k a_k 
+\end{empheq}
+converge e, detta $S$ la sua somma, si ha
+\begin{empheq}{equation*}
+    |\sum_{k=0}^{\infty} (-1)^k a_k - S| \leq a_{k+1}
+\end{empheq}
+\begin{empheq}{equation*}
+    \textcolor{grey}{S=\lim_{k \rightarrow +\infty} \sum_{k=0}^{\infty} (-1)^k a_k}
+\end{empheq}
+
+\paragraph{{Dimostrazione del teorema}}
+\begin{enumerate}
+    \item $\{S_{2n}\}_{n\in\N}$, successione delle ridotte di indice pari, è decrescente, ovvero $S_{2n+2}\leq S_{2n} \forall n$ dunque, \textcolor{grey}{visto che la successione $\{a_k\}_{k\in\N}$ è decrescente}
+    \begin{empheq}{align*}
+        S_{2n+2} &= \sum_{k=0}^{2n+2} (-1)^k a_k= \sum_{k=0}^{2n} (-1)^k a_k + (-1)^{2n+1} a_{2n+1} + (-1)^{2n+2}a_{2n+2}=\\
+        &=\sum_{k=0}^{2n} (-1)^k a_k - a_{2n+1}+a_{2n+2}\leq S_{2n}.
+    \end{empheq}
+    \item $\{S_{2n+1}\}_{n \in \N}$, successione delle ridotte di indice dispari, è crescente, ovvero $S_{2n+3} \geq S_{2n+1} \forall n \in \N$ dunque, \textcolor{grey}{visto che la successione $\{a_k\}_{k\in\N}$ è decrescente}
+    \begin{empheq}{align*}
+        S_{2n+3} &= \sum_{k=0}^{2n+3} (-1)^k a_k = \sum_{k=0}^{2n+1} (-1)^k a_k + (-1)^{2n+2} a_{2n+2} +  (-1)^{2n+3} a_{2n+3}=\\
+        &= S_{2n+1} + a_{2n+2} - a_{2n+3} \geq S_{2n+1}.
+    \end{empheq}
+    \item 
+    \begin{empheq}{equation*}
+        S_{2n} = S_{2n-1} + (-1)^{2n} a_{2n}= S_{2n-1}+a_{2n} \geq S_{2n-1} \geq S_1
+    \end{empheq}
+    dunque $\{S_{2n}\}$ è una successione decrescente inferiormente limitata $\Rightarrow $ ha limite finito.
+    \begin{empheq}{equation*}
+        S_{2n+1}=S_{2n}+(-1)^{2n+1} a_{2n+1}=S_{2n} - a_{2n+1} \leq S_{2n} \leq S_0
+    \end{empheq}
+    dunque $\{S_{2n+1}\}_{n \in \N}$ è crescente e superiormente limitata $\Rightarrow $ ha limite finito.
+    \item
+    $\lim_{n \rightarrow +\infty} S_{2n}=S^0 \in \R, \,\,\, \lim_{n \rightarrow +\infty} S_{2n+1}=S^1 \in \R \Rightarrow S^0=S^1=S$, somma dellla serie
+    \begin{empheq}{align*}
+        |S_{2n+1}-S_{2n}|&=|a_{2n+1}|\rightarrow 0\\
+        |S^0-S^1|\leq|S^0-S_{2n}|+|&S_{2n}-S_{2n+1}|+|S_{2n+1}-S^1|\\
+        S^0=S^1=S \in \R &\Longrightarrow \,\, \text{la serie converge.}
+    \end{empheq}
+    \item $S_{2n+1}\leq S \leq S_{2n+2} \forall n$ perchè la prima è crescente e la seconda è decrescente.
+    \begin{empheq}{align*}
+        0\leq S-S_{2n+1} \leq S_{2n+2} - S_{2n+1} &= \sum_{k=0}^{2n+2} (-1)^k a_k - \sum_{k=0}^{2n+1}( -1)^k a_k =a_{2n+2}\\
+        0 \leq S_{2n}-S \leq S_{2n}-S_{2n+1}&=a_{2n+1} \Rightarrow |S_n -S| \leq a_{n+1}.
+    \end{empheq}
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+
+
+\section{\Large\textbf{Integrali impropri}}
+\subsection{{Ripasso degli integrali secondo Riemann}}
+\paragraph{Definizione}
+Data $f:[a,b]\rightarrow\R$ limitata si ha $a=x_0 < x_1 < ... < x_n =b$ si hanno
+\begin{empheq}{align*}
+    S(f)&=\sum_{i=1}^{n} \left(\sup_{[x_{i-1},x_i]} f(x)\right)\cdot (x_i-x_{i-1}) \,\,\,\,\, \text{somma superiore,}\\
+    s(f)&=\sum_{i=1}^{n} \left(\inf_{[x_{i-1},x_i]} f(x)\right)\cdot (x_i-x_{i-1}) \,\,\,\,\, \text{somma inferiore.}
+\end{empheq}
+Se $\inf_{a=x_0 < x_1 < ... < x_n =b} S(f) = \sup_{a=x_0 < x_1 < ... < x_n =b} s(f) =I \in \R$ allora $f$ si dice Riemann integrabile in $[a,b]$ e si pone 
+\begin{empheq}{equation*}
+    \int_{a}^{b} f(x)dx=I.
+\end{empheq}
+
+\subsection{Integrali impropri}
+\paragraph{Definizione}
+Sia $f:[a,b[\rightarrow \R, a,b \in \R \cup\{+\infty\}$ \textcolor{grey}{(voglio definire $\int_{a}^{b}f(x)dx$)} Riemann integrabile in $[a,c]\,\, \forall c \in [a,b[$. Se $\exists$ finito il $\lim_{c \rightarrow b^-} \int_{a}^{c}f(x)dx $, allora $f$ si dice integrale in senso improprio o generalizzato in $[a,b[$ e la quantità 
+\begin{empheq}{equation*}
+    \int_{a}^{b} f(x)dx = \lim_{c\rightarrow b^-} \int_{a}^{c} f(x)dx
+\end{empheq}
+si dice integrale improprio o generalizzato di $f$ in $[a,b[$.\\
+Analogamente, data $f:]a,b]\rightarrow \R, a,b \in \R \cup \{-\infty\}$, Riemann integrabile in $[c,b]\,\, \forall c \in ]a,b]$. Se $\exists$ finito il $\lim_{c \rightarrow a^+} \int_{c}^{b} f(x)dx$, allora $f$ si dice integrabile in senso improprio o generalizzato in $]a,b]$ e la quantità
+\begin{empheq}{equation*}
+    \int_{a}^{b} f(x)dx = \lim_{c \rightarrow a^+} \int_{c}^{b} f(x)dx
+\end{empheq}
+si dice integrale improprio o generealizzato di $f$ in $]a,b]$.\\
+Se $f$ è integrabile in senso improprio in un intervallo $I$, allora si dice anche che l'integrale (improprio) di $f$ in $I$ è convergente o che $f$ ha integrale (improprio) convergente in $I$.\\
+Se il limite che definisce l'integrale improprio di $f$ è infinito, si dice anche che l'integrale (improprio) di $f$ è divergente o che $f$ ha integrale (improprio) divergente in $I$.
+
+\paragraph{{Osservazione}}
+Vista la definizione, 
+\begin{empheq}{equation*}
+    \int_{1}^{+\infty}\frac{1}{x^\alpha}dx \,\,\,\,\, \text{converge} \Leftrightarrow \alpha > 1
+\end{empheq}
+
+\paragraph{{Osservazione}}
+Se $f:[a,b] \rightarrow \R$ è Riemann integrabile, allora è integrabile anche in senso improprio e i due integrali coincidono.
+
+\paragraph{{Definizione}}
+$f:[a,b] \rightarrow \R,\,\, a,b \in \R \cup \{\pm \infty\}$, Riemann integrabile in $[c,d]\,\, \forall a<c<d<b$. $f$ si dice integrabile in senso improprio in $ ]a,b[$ se, fissato $\xi \in ]a,b[$, lo è in $]a, \xi]$ e in $[\xi,b[$ \textcolor{grey}{(esistono finiti $\lim_{c \rightarrow a^+} \int_{c}^{\xi} f(x)dx$ e $\lim_{d\rightarrow b^-}\int_{\xi}^{d} f(x)dx$)} e in tal caso si pone 
+\begin{empheq}{equation*}
+    \int_{a}^{b} f(x)dx = \int_{a}^{\xi} f(x)dx + \int_{\xi}^{b} f(x) dx
+\end{empheq}
+Si verifica che la definizione non dipende da punto $\xi$ fissato.
+
+\paragraph{{Definizione}}
+In generale, data $f:]a,b[\rightarrow \R$ integrabile in senso improprio in $]x_0,x_1[,]x_1,x_2[,$ $...,]x_{n-1},x_n[$ con $a= x_0 <x_1<...<x_n=b$, allora $f$ si dice integrabile in senso improprio in $]a,b[$ e si pone 
+\begin{empheq}{equation*}
+    \int_{a}^{b}f(x)dx= \sum_{i=1}^{n} \int_{x_{i-1}}^{x_i}f(x)dx.
+\end{empheq}
+
+\subsection{{Criteri di convergenza per integrali di funzioni di segno finito}}
+\paragraph{{Proposizione}}
+Sia $f:[a,b[\rightarrow \R,\,\,\, b\in\R\cup \{+\infty\}$ tale che $f(x)\geq0$ definitivamente per $x \rightarrow b^-$ e tale che sia Riemann integrabile in $[a,c]\,\, \forall c\in [a,b[$. Allora esiste
+\begin{equation*}
+    \lim_{c \rightarrow b^-} \int_{a}^{c} f(x)dx
+\end{equation*}
+cioè l'integrale improprio $\int_{a}^{b} f(x)dx$ è ben definito \textcolor{grey}{(converge o diverge a $+\infty$)}.
+
+\paragraph{{Dimostrazione}}
+Per semplicità assumiamo $f(x)\geq 0 \,\,\, \forall\,\, x\in[a,b[$. Sia allora $F(x)=\int_{a}^{c} f(x)dx$,\\$c\in [a,b[$. Allora $F$ è monotona crescente, dunque, presi $c_2 > c_1$ si ha
+\begin{equation*}
+    F(c_2)-F(c_1)=\int_{a}^{c_2}f(x)dx - \int_{a}^{c_1} f(x)dx = \int_{c_1}^{c_2} f(x)dx \geq 0
+\end{equation*}
+perchè $f(x)\geq 0 \,\,\forall x \in [c_1,c_2] \Rightarrow F(c_2)\geq F(c_1)$.\\
+$F$ ha limite per $c \rightarrow b^-$, cioè esiste
+\begin{equation*}
+    \lim_{c \rightarrow b^-} F(c)=\lim_{c \rightarrow b^-} \int_{a}^{b} f(x)dx.
+\end{equation*}
+Un risultato analogo si enuncia per funzioni definitivamente $\leq 0$ per $ x\rightarrow b^-$ o per una funzione $f:]a,b]\rightarrow \R,\,\,\, a\in\R\cup\{-\infty\}$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{{Criterio del confronto}}
+\paragraph{{Teorema}}
+$f,g:[a,b[\rightarrow\R, \,\, b\in\R\cup\{+\infty\}$, Riemann integrabili in $[a,c] \,\, \forall c \in [a,b[$ e tali che $0\leq f(x) \leq g(x)$ definitivamente per $x \rightarrow b^-$.
+\begin{enumerate}
+    \item Se $\int_{a}^{b}g(x)dx$ converge, allora converge anche $\int_{a}^{b} f(x)dx$.
+    \item Se $\int_{a}^{b} f(x)dx$ diverge, allora diverge anche $\int_{a}^{b}g(x)dx$.
+\end{enumerate}
+Un risultato analogo vale per funzioni $f,g:]a,b]\rightarrow\R, \,\, a\in\R\cup\{-\infty\}$, con ovvie modifiche.
+
+\paragraph{{Dimostrazione}}
+Per semplicità assumiamo $0 \leq f(x)\leq g(x) \,\,\, \forall x \in [a,b[$.
+\begin{enumerate}
+    \item $\exists$ finito $\lim_{c \rightarrow b^-} \int_{a}^{c} g(x) dx \,\, \forall c \in [a,b[,\,\,\, \int_{a}^{c}f(x)dx \leq \int_{a}^{c} g(x)dx$ perchè $f(x)\leq g(x)$. Allora $\lim_{c \rightarrow b^-} \int_{a}^{c} f(x)dx \leq \lim_{c \rightarrow b^-} \int_{a}^{c} g(x)dx$ \textcolor{grey}{(che esistono perchè $f(x)\geq 0$)} e quindi $\lim_{c \rightarrow b^-} \int_{a}^{c} f(x)dx $ esiste finito e $\int_{a}^{b} f(x)dx$ è convergente.
+    \item $\lim_{c \rightarrow b^-} \int_{a}^{c} f(x) dx = +\infty $ \textcolor{grey}{($f(x)\geq 0$)}, allora $\int_{a}^{c} g(x)dx \geq \int_{a}^{c} f(x) dx \,\,\, \forall c \in [a,b[$ \\$\Rightarrow \lim_{c \rightarrow b^-} \int_{a}^{c} g(x)dx =+\infty$ per il teorema del confronto sui limiti.
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{{Criterio di assoluta integrabilità}}
+\paragraph{{Teorema}}
+$f:[a,b[\rightarrow \R, b \in \R \cup \{+\infty\}$ Riemann integrabile in $[a,c] \,\,\, \forall c \in [a,b[$ e tale che $|f|$ è integrabile in senso improprio in $[a,b[$ \textcolor{grey}{(si dice che l'integrale improprio di $f$ è assolutamente convergente o che converge assolutamente)}. Allora $\int_{a}^{b} f(x)dx$ converge.
+
+\paragraph{{Dimostrazione}}
+$f=f^+-f^-$ ove $f^+=\max\{f(x),0\} \geq 0$ e $f^-=\max\{-f(x),0\} \geq 0$ $\forall x \Rightarrow |f(x)|=f^+(x)+f^-(x)$\\
+$f^+$ e $f^-$ sono Riemann integrabili  in  $[a,c]\,\,\, \forall c\in [a,b[$ e inoltre
+\begin{equation*}
+\begin{cases}
+    & 0 \leq f^+(x) \leq |f(x)|\\
+    & 0 \leq f^-(x) \leq |f(x)|
+\end{cases}
+ \,\,\,\,\, \forall x \in [a,b[
+\end{equation*}
+$\Rightarrow$ per il criterio del confronto $\int_{a}^{b} f^+(x)dx$ e $\int_{a}^{b} f^-(x)dx$ convergono entrambi 
+\begin{equation*}
+    \Rightarrow \lim_{c \rightarrow b^-} \int_{a}^{c} f(x)dx = \lim_{c \rightarrow b^-} \left[ \int_{a}^{c}f^+(x)dx - \int_{a}^{c}f^-(x)dx \right],
+\end{equation*}
+esiste finito per il teorema sulla somma dei limiti $\Rightarrow \int_{a}^{b} f(x) dx$ converge.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Sia $f: [a,b[ \rightarrow \R, \,\, b\in\R\cup\{+\infty\}$ e se $\int_{a}^{b} f(x) dx$ converge, non è detto che $\int_{a}^{b}|f(x)|dx$ converga.
+Prendiamo
+\begin{equation*}
+    f(x)= \frac{\sin x}{x}, \,\,\,\,\, x \geq 1
+\end{equation*}
+e dimostriamo che $ \int_{1}^{+\infty} \frac{\sin x}{x} dx$ converge. Fissiamo $c>1$
+\begin{equation*}
+    \int_{1}^{c} \frac{\sin x}{x} dx= -\frac{\cos x}{x} |_{1}^{c} - \int_{1}^{c} \frac{\cos x}{x^2} dx = \cos 1 - \frac{\cos c}{c} -\int_{1}^{c} \frac{\cos x}{x^2} dx
+\end{equation*}
+\begin{equation*}
+    \lim_{c \rightarrow +\infty} \int_{1}^{c} \frac{\sin x}{x} dx =\lim_{c \rightarrow +\infty} \left[\cos 1 -\frac{\cos c}{c} - \int_{1}^{c} \frac{cosx}{x^2}dx\right] 
+\end{equation*}
+\textcolor{grey}{($\lim_{c \rightarrow +\infty} \int_{1}^{c} \frac{\cos x}{x^2} dx$ esiste finito)}\\
+$\frac{|\cos x|}{x^2} \leq \frac{1}{x^2} \,\,\, \forall x \geq 1$ e $ \int_{1}^{+\infty} \frac{1}{x^2} dx$ converge $\Rightarrow \int_{1}^{+\infty} \frac{|\cos x|}{x^2} dx$ converge per il criterio del confronto $\Rightarrow \int_{1}^{+\infty} \frac{\cos x}{x^2}dx$ converge per il criterio di assoluta integrabilità\\
+$\Rightarrow \lim_{c \rightarrow +\infty} \int_{1}^{c} \frac{\sin x}{x} dx = \cos 1 - \int_{1}^{+\infty} \frac{\cos x}{x^2} dx$ esiste finito e dunque $\int_{1}^{+\infty} \frac{\sin x}{x} dx$ converge ma $\int_{1}^{+\infty} |\frac{\sin x}{x}|dx =+\infty$.\\
+Presi $k \geq 1, \,\,\, k \in \N$ avremo $k\pi \leq x \leq (k+1)\pi \Longrightarrow \frac{1}{(k+1)\pi} \leq \frac{1}{x} \leq \frac{1}{k\pi} \Longrightarrow \int_{k\pi}^{(k+1)\pi} \frac{(\sin x)}{x}dx \geq \int_{k\pi}^{(k+1)\pi} \frac{1}{(k+1)\pi} (\sin x) dx = \frac{2}{(k+1)\pi} \Longrightarrow \int_{1}^{+\infty} \frac{|\sin{x}|}{x} dx \geq \sum_{k=1}^{\infty} \int_{k\pi}^{(k+1)\pi} \frac{|\sin{x}|}{x} dx \geq \sum_{k=1}^{\infty} \frac{2}{(k+1)\pi}=+\infty$  perchè $\frac{2}{(k+1)\pi} \sim \frac{1}{k}$.
+
+\subsubsection{{Criterio asintotico del confronto}}
+\paragraph{{Teorema}}
+$f,g: [a,b[\rightarrow \R, \,\,\ b\in \R \cup \{+\infty\}$, Riemann integrabili in $[a,c] \,\, \forall c \in [a,b[$ tali che $f(x),g(x)\geq 0$ definitivamente per $x \rightarrow b^-$ e $\lim_{x \rightarrow b^-} \frac{f(x)}{g(x)}=l \in [0,+\infty[$
+\begin{enumerate}
+    \item Se $l \in \,\, ]0,+\infty[$, allora $ \int_{a}^{b} f(x) dx$ converge $\Leftrightarrow \int_{a}^{b} g(x) dx$ converge.
+    \item Se $l=0$ e $\int_{a}^{b} g(x)dx $ converge, allora $\int_{a}^{b} f(x) dx$ converge.
+    \item Se $l=+\infty$ e $\int_{a}^{b} g(x) dx$ diverge, allora $\int_{a}^{b} f(x)dx$ diverge.
+\end{enumerate}
+
+\paragraph{Dimostrazione}
+\begin{enumerate}
+    \item $\lim_{x \rightarrow b^-}\frac{f(x)}{g(x)} = l \in \,\, ]0,+\infty[$ allora $\frac{l}{2}\leq \frac{f(x)}{g(x)}\leq 2l$ definitivamente per $x \rightarrow b^-$ perchè $]\frac{l}{2},2l[$ è un intorno di $l$. Dunque $f(x)\leq 2lg(x)$ e $g(x)\leq \frac{2}{l} f(x)$ definitivamente per $x \rightarrow b^-$. Se $\int_{a}^{b} g(x) dx$ converge $\int_{a}^{b} f(x) dx$ converge e se $\int_{a}^{b} f(x) dx$ converge $\int_{a}^{b} g(x) dx$ converge per il criterio del confronto.
+    \item $\lim_{x \rightarrow b^-} \frac{f(x)}{g(x)} = 0 \Rightarrow \frac{f(x)}{g(x)} \leq 1 $ definitivamente per $x\rightarrow b^- \Rightarrow f(x) \leq g(x)$ definitivamente per $x\rightarrow b^- \Rightarrow $ se $\int_{a}^{b} g(x)dx$ converge, allora $\int_{a}^{b} f(x)dx$ converge per il criterio del confronto.
+    \item $\lim_{x \rightarrow b^-}\frac{f(x)}{g(x)} = +\infty \Rightarrow \frac{f(x)}{g(x)} \geq 1$ definitivamente per $x \rightarrow b^- \Rightarrow f(x) \geq g(x)$ definitivamente per $x \rightarrow b^- \Rightarrow$ se $\int_{a}^{b} g(x)dx$ diverge, allora $\int_{a}^{b} f(x)dx$ diverge sempre per il criterio del confronto.
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsection{{Criteri di convergenza per integrali oscillanti}}
+\subsubsection{Criterio di Abel}
+\paragraph{Teorema}
+Sia $a\in\R,\,\,\,f,G:[a,+\infty[\rightarrow\R$ di classe $C^1$ tali che
+\begin{enumerate}
+    \item $f'(x)\leq 0 \,\,\, \forall x \geq a$ e $\lim_{x \rightarrow +\infty} f(x)=0$
+    \item $G$ è limitata, cioè $\exists C > 0 $ tale che $ |G(x)|\leq C \,\,\, \forall x \geq a$
+\end{enumerate}
+Allora $\int_{a}^{+\infty}f(x)G'(x)dx$ converge.
+
+\paragraph{{Dimostrazione}}
+\begin{align*}
+    \int_{a}^{+\infty}f(x)G'(x)dx&=\lim_{\omega \rightarrow+\infty}\int_{a}^{\omega}f(x)G'(x)dx \\
+    \int_{a}^{\omega}f(x)G'(x)dx&= f(x)G(x)|_{a}^{\omega}-\int_{a}^{\omega}f'(x)G(x)dx=\\
+    &=f(\omega)G(\omega)-f(a)G(a)-\int_{a}^{\omega}f'(x)G(x)dx\\
+    \int_{a}^{+\infty}f(x)G'(x)dx&=-f(a)G(a)-\lim_{\omega \rightarrow +\infty}\int_{a}^{\omega}f'(x)G(x)dx
+\end{align*}
+Se dimostro che $\lim_{\omega \rightarrow +\infty} \int_{a}^{\omega}f'(x)G(x)dx$ esiste finito, cioè che $\int_{a}^{+\infty}f'(x)G(x)dx$ è convergente, deduco che converge anche $\int_{a}^{+\infty}f(x)G'(x)dx$.\\
+Dimostriamo che l'integrale $\int_{a}^{+\infty}f'(x)G(x)dx$ converge assolutamente
+\begin{equation*}
+    \int_{a}^{+\infty}|f'(x)G(x)|dx= \lim_{\omega \rightarrow +\infty}\int_{a}^{\omega} |f'(x)G(x)|dx\leq Cf(a)< +\infty\\
+\end{equation*}
+\textcolor{grey}{(Il limite esiste ma devo far vedere che è finito)}
+\begin{equation*}
+    \int_{a}^{\omega}|f'(x)G(x)|dx\leq C\int_{a}^{\omega}|f'(x)|dx= -C\int_{a}^{\omega}f'(x)dx=C[f(a)-f(\omega)]\leq Cf(a)\,\,\, \forall \omega.
+\end{equation*}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\section{\Large\textbf{Spazi metrici e normati}}
+\paragraph{{Definizione}}
+$X$ spazio vettoriale su $\R$ o $\C$. Una \underline{norma} su $X$ è una funzione $\|\cdot\| : X\rightarrow \R$ tale che 
+\begin{enumerate}
+    \item $\| x\|\geq 0 \forall x \in X$ e $\| x\|=0 \Leftrightarrow x=0$
+    \item $\| \lambda x\|=|\lambda|\| x\| \forall$ scalare $\lambda$ e $\forall x \in X$
+    \item $\| x+y \| \leq \| x\| + \| y \| \,\,\, \forall x,y \in X$ (Disuguaglianza triangolare)
+\end{enumerate}
+La coppia ($X,\|\cdot\|$) si dice \underline{spazio normato}.
+
+\paragraph{{Definizione}}
+$X$ insieme non vuoto. Una distanza o metrica su $X$ è una funzione $d:X \times X\rightarrow \R$ tale che
+\begin{enumerate}
+    \item $d(x,y)\geq 0 \,\,\, \forall x,y \in X $ e $d(x,y)=0 \Leftrightarrow x=y$
+    \item $d(x,y)=d(y,x)$ (Proprietà simmetrica)
+    \item $d(x,y)\leq d(x,z)+d(z,y) \,\,\, \forall x,y,z \in X$ (Disuguaglianza triangolare)
+\end{enumerate}
+La coppia $(X,d)$ si dice \underline{spazio metrico}.
+
+\paragraph{Osservazione}
+Siano $(X,\|\cdot\|)$ spazio normato e $d(x,y)=\| x-y\|$ è metrica, allora
+\begin{enumerate}
+    \item $d(x,y)\geq 0$ (banalmente)\\
+          $d(x,y)=\| x-y\| =0 \Leftrightarrow x-y=0 \Leftrightarrow x=y$
+    \item$d(x,y)= \| x-y\|=\| y-x\| =d(y,x)$
+    \item $d(x,y)=\| x-y\|=\|(x-z)+(z-y)\|\leq \|x-z\|+\| z-y\|=d(x,z)+d(y,z)$
+\end{enumerate}
+\paragraph{Osservazione}
+Dato uno spazio vettoriale $X$ e $d$ metrica su $X$, esiste sempre una norma $\|\cdot\|$ su $X$ tale che $d(x,y)=\| x-y\|$?\\
+No, esistono metriche dentro lo spazio vettoriale che non derivano da una norma.
+
+\subsection{{Cenni di topologia}}
+\paragraph{Definizione}
+Sia $x\in X, r >0$, allora $B_r(x)=\{ y\in X|d(x,y) < r \}$ si dice \underline{palla} (aperta) di centro $x$ e raggio $r$.
+
+\paragraph{{Definizione}}
+$x\in X$. Un \underline{intorno} di $x$ è un qualsiasi sottoinsieme $A \subseteq X$ che contiene una palla aperta centrata in $x$, cioè per cui $\exists r >0 | B_r(x)\subseteq A.$
+
+\paragraph{{Definizione}}
+$A \subseteq X$ si dice \underline{aperto} se è intorno di ogni suo punto, cioè se $\forall x \in A\,\,\, \exists r>0\,\,|\,\, B_r(x)\subseteq A$.\\
+$A$ si dice \underline{chiuso} se $A^c = X \backslash A$ è aperto.
+
+\paragraph{{Osservazione}}
+$(X,d)$ spazio metrico, $X$ è aperto \textcolor{grey}{(banalmente se $x\in X, B_r(x) \subseteq X \forall r>0$)} e quindi $\emptyset = X^c = X \backslash X$ è chiuso. D'altra parte $\emptyset $ è aperto perchè l'implicazione $x \in \emptyset \Rightarrow \exists r >0 | B_r(x) \subseteq \emptyset$ è vera perchè $x \in \emptyset$  è falsa $\Rightarrow \emptyset^c=X \backslash \emptyset = X$ è chiuso. $\emptyset, X$ sono sia aperti che chiusi.
+
+\paragraph{{Teorema}}
+$(X,d)$ spazio metrico
+\begin{enumerate}
+    \item $A_1,A_2 \subseteq X$ aperti $\Rightarrow A_1 \cap A_2$ è un aperto. 
+    \item $\{A_i\}_{i\in I}$ è una famiglia di aperti, allora $\bigcup_{i\in I}A_i$ è un aperto.
+    \item Se $C_1,C_2 \subseteq X$ sono chiusi, allora $C_1 \cup C_2$ è chiuso.
+    \item $\{C_i\}_{i\in I}$ è famiglia di chiusi, allora $\bigcap_{i\in I} C_i$ è un chiuso.
+\end{enumerate}
+
+\paragraph{{Osservazione}}
+In generale se $\{ A_i\}_{i\in I}$ è una famiglia infinita di aperti, allora non è detto che $\bigcap_{i\in I} A_i$ sia un aperto e, se $\{C_i\}_{i \in I}$ è una famiglia infinita di chiusi, allora non è detto che $\bigcup_{i\in I} C_i$ sia un chiuso. 
+
+\paragraph{{Definizione}}
+$(X,d)$ spazio metrico, $A \subseteq X$, $x \in A$. $x$ si dice \underline{punto interno di A} se $\exists \,\,r>0 \,\,|\,\,B_r(x)\subseteq A$. L'interno di $A$ è l'insieme dei punti interni di $A$ ed è indicato con $\AA$
+
+\paragraph{{Proposizione}}
+$\AA$ è un insieme aperto ed è il più grande aperto, nel senso dell'inclusione, contenuto in $A$, cioè se $B \subseteq A$ è aperto, allora $B \subseteq \AA$
+
+%\paragraph{{Dimostrazione della proposizione}} Esercizio
+
+\paragraph{{Definizione}}
+$A \subseteq X, x \in X$ si dice punto di \underline{chiusura} per $A$ se, $\forall r>0$, $B_r(x) \cap A \neq \emptyset$, cioè ogni palla di centro $x$ interseca $A$. La chiusura di $A$ è l'insieme di tutti i punti di chiusura di $A$ ed è denotata con $\overline{A}$.
+
+\paragraph{{Proposizione}}
+$\overline{A} $ è un insieme chiuso ed è il più piccolo chiuso, nel senso dell'inclusione, contenente $A$, cioè, se $C \geq A$ è chiuso, allora $\overline{A}\subseteq C$
+
+%\paragraph{{Dimostrazione della proposizione}} Esercizio
+
+\paragraph{Osservazione}
+$\AA \subseteq A \subseteq \overline{A}$\\
+$A $ è aperto $\Leftrightarrow A= \AA$\\
+$A$ è chiuso $\Leftrightarrow A=\overline{A}$\\
+\textcolor{grey}{$\Leftarrow) A=\overline{A}$, $\overline{A}$ è un chiuso$\Rightarrow A$ è chiuso $\Rightarrow)$ Sia $A$ chiuso e dimostriamo che $A=\overline{A}$. Noi sappiamo che $A \subseteq \overline{A}$ quindi, se per assurdo $A \nsubseteq \overline{A}, \exists x \in \overline{A}| x \notin A$, cioè $x \in \overline{A}$ e $x \in A^c$. Ma $ A^c $ è aperto, perché $ A $ è chiuso, e quindi $ \exists r >0 $ tale che $ B_r (x) \subseteq A^c \Rightarrow B_r (x) \cap A = \emptyset$, assurdo perché $x \in \overline{A}$.}
+
+\paragraph{Definizione}
+$A \subseteq X, x \in X$ si dice \underline{punto di frontiera} per $A$ se, $\forall r>0$, $B_r(x) \cap A \neq \emptyset$ e $B_r(x) \cap A^c \neq \emptyset$, cioè se ogni palla di centro $x$ interseca sia $A$ che il suo complementare.\\
+L'insieme dei punti di frontiera di $A$ si dice frontiera di $A$ e si indica con $\partial A$. 
+
+\paragraph{{Osservazione}}
+\begin{itemize}
+    \item $\partial A = \overline{A} \cap \overline{A^c}$, $x \in \partial A$\\
+        $\Rightarrow B_r (x)\cap A \neq \emptyset \,\,\, \forall r>0$, $x\in \overline{A}$\\
+        $\Rightarrow B_r(x)\cap A^c \neq \emptyset \,\,\,\forall r>0$, $x\in \overline{A^c}$\\
+        $\Rightarrow x \in \overline{A} \cap \overline{A^c} \Rightarrow \partial A \subseteq \overline{A} \cap \overline{A^c}$\\
+        $x\in\overline{A}\cap \overline{A^c} \Rightarrow x\in \overline{A} $ e $x \in \overline{A^C}$\\
+        $x \in \overline{A} \Rightarrow B_r(x)\cap A\neq \emptyset\,\,\, \forall r>0$\\
+        $x \in \overline{A^c} \Rightarrow B_r(x)\cap A^c \neq \emptyset\,\,\, \forall r>0$\\
+        $\Rightarrow x\in \partial A \Rightarrow \overline{A} \cap \overline{A^c} \subseteq \partial A$
+    \item $\overline{A}=A \cup \partial A$\\
+        $A \subseteq \overline{A}$, $\partial A \subseteq \overline{A} \Rightarrow A \cup \partial A \subseteq \overline{A}$\\
+        Facciamo vedere che $\overline{A}\subseteq A \cup \partial A$.\\
+        $x\in \overline{A}$, supponiamo che $x\notin A$ e dimostriamo che $x \in \partial A$\\
+        $x\in \overline{A}  \Rightarrow B_r(x)\cap A \neq \emptyset \,\,\, \forall r>0$\\
+        $x \in B_r (x)\cap A^c \,\,\,\forall r >0$\\
+        $B_r(x)\cap A^c \neq \emptyset \,\,\, \forall r>0$\\
+        $\Rightarrow x\in \partial A$, come si voleva
+\end{itemize}
+
+\paragraph{{Osservazione}}
+$A$ è chiuso $\Leftrightarrow \partial A \subseteq A$, cioè se e solo se $A$ contiene la sua frontiera.
+
+\subsection{Successioni in spazi metrici}
+
+\paragraph{{Definizione}}
+$\{x_k\}_{k\in \N} \subseteq X$ successione, con $(X,d)$ spazio metrico. Si dice che $\{ x_k\}_{k\in\N}$ converge ad $x \in X$ e si scrive
+$x_k \rightarrow x$ o $\lim_{k\rightarrow +\infty} x_k = x \Leftrightarrow \lim_{k \rightarrow +\infty} d(x_k,x)=0$,
+\textcolor{grey}{(in $(\R,|\cdot|)$ ad esempio $\lim_{k \rightarrow+\infty} |x_k - x |=0$)} cioè $\Leftrightarrow \forall \,\, \epsilon >0 \,\, \exists\,\, N >0 $ tale che $k > N \Rightarrow d(x_k,x)<\epsilon$.
+$x$ viene detto limite della successione.
+
+\paragraph{{Teorema}}
+Sia $\{ x_k \}_{k \in \N} \subseteq X, (X,d)$ spazio metrico, tale che $ x_k \rightarrow l_1 \in X$ e $x_k \rightarrow l_2 \in X$. Allora $l_1=l_2$.
+
+\paragraph{{Proposizione}}
+$\{\overline{x_k}\}_{k\in\N} \subseteq R^n$ tale che $\overline{x_k } = (x_{k_1},x_{k_2},...,x_{k_n})$. Allora $\overline{x_k}\rightarrow \overline{x}=(x_1,...,x_n) \Leftrightarrow x_{kj} \rightarrow x_j \,\,  \forall \,\, j=1,...,n$ cioè $\Leftrightarrow \forall \,\, j = 1,...,n$ la successione di numeri reali $\{ x_{kj}\}_{k\in\N}$ converge a $x_j$.
+
+\paragraph{{Dimostrazione della proposizione}}
+$(\R^n, |\cdot|)$\\
+Se $\overline{y}=(y_1,..,y_n)\in \R^n$, allora $|y_j|\leq |\overline{y}|\leq \sum_{i=1}^{n}|y_i| \forall j$\\
+$|y_j| = \sqrt{|y_j|^2} \leq \sqrt{\sum_{i=1}^{n}|y_i|^2} = |\overline{y}|$.\\
+Abbiamo dimostrato che, se $0 <p<1$, $(a+b)^p\leq a^p+b^p \,\, \forall\,\, a,b \geq 0$.\\
+Questa disuguaglianza si può generalizzare.\\
+$(a_1+a_2+...+a_n)^p\leq a_1^p+a_2^p+...+a_n^p \,\, \forall\,\, a_i \geq 0$\\
+$|\overline{y}|=\sqrt{\sum_{i=1}^{n}|y_i|^2} \leq (|y_1|^2)^{\frac{1}{2}}+(|y_2|^2)^{\frac{1}{2}}+...+(|y_n|^2)^{\frac{1}{2}}= |y_1|+|y_2|+...+|y_n|= \sum_{i=1}^{n}|y_i|$\\
+$|y_j|\leq |\overline{y}| \leq \sum_{i=1}^{n}|y_i|$\\
+$\overline{x}_k \rightarrow \overline{x} \Leftrightarrow x_{k_j} \rightarrow x_j \,\, \forall\,\, j=1,...,n$\\
+$|x_{k_j}-x_j|\leq |\overline{x_k}-\overline{x}| \leq \sum_{i=1}^{n}|x_{k_i}-x_i|$.\\
+Se $|\overline{x_k} - \overline{x}|\rightarrow 0 $, cioè se $\overline{x_k}\rightarrow \overline{x}$, allora\\
+$0 \leq |x_{kj}-x_j|\leq |\overline{x_k}-\overline{x}| \Rightarrow x_{kj} \rightarrow x_j \,\, \forall \,\, j$\\
+D'altra parte, se $x_{ki} \rightarrow  x_i \,\, \forall \,\, i=1,...,n $\\
+$\Rightarrow \sum_{i=1}^{n}|x_{k_i}- x_i| \rightarrow 0 $ per $k \rightarrow + \infty$\\
+$\Rightarrow 0 \leq |x_{k}- x| \leq \sum_{i=1}^{n}|x_{k_i}- x_i| \Rightarrow \overline{x_k} \rightarrow \overline{x}$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{Caratterizzazione dei chiusi mediante le successioni}
+\paragraph{Teorema}
+$(X,d)$ spazio metrico, $A \subseteq X$. Allora $z\in \overline{A}\Leftrightarrow \exists$ una successione $\{x_k\}_{k\geq 1} \subseteq A $ tale che $x_k \rightarrow z$.
+
+\paragraph{{Corollario}}
+$(X,d)$ spazio metrico. $A \subseteq X$ è chiuso $\Leftrightarrow \forall\,\, \{x_k\}_{k \geq 1} \subseteq A$ convergente, il suo limite appartiene ad $A$.\\
+\textcolor{grey}{($A \subseteq X$ è chiuso $\Leftrightarrow A$ contiene i limiti delle successioni convergenti a valori in $A$.)}
+
+\paragraph{{Dimostrazione del corollario}}
+\begin{itemize}
+    \item $\Rightarrow)$ $A$ chiuso, $A = \overline{A}$. Sia $\{x_k\}_{k \geq 1} \subseteq A$ successione convergente a $z \in X$. Allora il teorema implica che $z \in \overline{A}= A$.
+    \item $\Leftarrow ) $ Dobbiamo dimostrare che, se $x \in \overline{A}$, allora $z \in A$\\ \textcolor{grey}{($A=\overline{A}$, perchè l'inclusione $A \subseteq \overline{A}$ è nota)}\\
+$z \in \overline{A} \Rightarrow \,\, \exists \{x_k\}_{k \geq 1} \subseteq A$ convergente a $z$. Allora $z \in A$ per ipotesi.
+\end{itemize}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Dimostrazione del teorema}}
+\begin{itemize}
+    \item $\Rightarrow ) $ Sia $z \in \overline{A}$. Costruiamo una successione $\{x_k\}_{k \geq 1} \subseteq A \,\,|\,\, x_k \rightarrow z, z\in \overline{A} \Leftrightarrow \forall r >0, B_r(z)\cap A \neq \emptyset$.\\
+    $r=1\,\,\,\,\,\, \exists\,\, x_1 \in B_1(z) \cap A$, $x_1 \in A$ e $d(x_1,z)<1$\\
+    $r=\frac{1}{2}\,\,\,\,\,\, \exists \,\,x_2 \in B_{\frac{1}{2}}(z) \cap A$, $ x_2 \in A $ e $ d(x_2,z)< \frac{1}{2}$\\
+    ...\\
+    $r=\frac{1}{k}\,\,\,\,\,\, \exists\,\, x_k \in B_{\frac{1}{k}}(z)\cap A$, $ x_k \in A $ e $ d(x_k,z)< \frac{1}{k}$\\
+    $\{x_k\}_{k \geq 1} \subseteq A$ tale che $0 \leq d(x_k,z)\leq \frac{1}{k} \Rightarrow \lim_{k \rightarrow +\infty} d(x_k,z)=0 \Rightarrow x_k \rightarrow z$.
+    \item $\Leftarrow )$ Ipotesi: $\exists \,\, \{x_k\}_{k\geq 1} \subseteq A$ tale che $x_k \rightarrow z$. Tesi: $z \in \overline{A}$.\\
+    Sia $r >0$. Poichè $x_k \rightarrow z \,\, \exists \,\, N> 0$ tale che $d(x_k,z)<r\,\, \forall \,\, k > N, x_k \in B_r(z) \cap A$\\
+    $ \Rightarrow B_r(z) \cap A \neq \emptyset \Rightarrow z \in \overline{A}$. 
+\end{itemize}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Siccome $C$ è chiuso $\Leftrightarrow C^c$ è aperto, il corollario al teorema che abbiamo appena dimostrato implica che $A \subseteq \R^n$ è aperto per $|\cdot|  \Leftrightarrow A $ è aperto per la topologia data da $\| \cdot \|_\infty \Leftrightarrow A$ è aperto per $\| \cdot \|_1$, cioè le 3 norme $|\cdot|, \| \cdot \|_\infty, \| \cdot \|_1$ descrivono la stessa toplogia.\\
+Si può dimostrare che in $\R^n$ (\underline{spazio di dimensione finita}) tutte le norme sono equivalenti, cioè se $A \subseteq \R^n$ è aperto per una norma, lo è per qualsiasi altra.
+
+\paragraph{{Definizione}}
+$(X,d)$ spazio metrico. $K \subseteq X$ si dice limitato se $\exists\,\, x \in X$ e $R>0$ tale che $ K \subseteq B_R(x)$, cioè $d(x,z)< R \,\, \forall \,\,z \in K$. 
+
+\paragraph{{Osservazione}}
+Se $(X, \| \cdot \|)$ è spazio normato, il punto $x \in X$ nella definizione di insieme limite può essere preso coincidente con $0$. Infatti se $K \subseteq B_R(x) \Rightarrow \| x-z \| < R \,\, \forall \,\, z \in K$\\
+$z \in K$, $\| z \| =\| z-x+x \| \leq \| x-z \| + \| x\| <R+\| x \| \Rightarrow z \in B_{R+\| x\|}(0)$\\
+Quindi, in uno spazio normato, $K \subseteq X$ è limitato se $\exists \,\, R >0 \,\,|\,\, K \subseteq B_R(0)$, cioè $\| z \| < R \,\,\forall\,\, z \in K$. \textcolor{grey}{(se $x = R$ e $\| \cdot \| = |\cdot|$, si ritrova quanto scritto sopra.)}
+
+\paragraph{{Proposizione}}
+$(X,d)$ spazio metrico. $\{x_k\}_{k\geq 1} \subseteq X$ successione convergente. Allora $\{x_k\}_{k \geq 1}$ è limitata, cioè $\exists x \in X$ e $R >0$ tale che $x_k \in B_R(x)\,\, \forall k \geq 1$.
+$(d(x_k,x)< R \,\, \forall \,\, k \geq 1)$.
+
+\paragraph{{Osservazione}}
+$K \subseteq \R^n$ è limitato per $|\cdot| \Leftrightarrow$ lo è per $\parallel \cdot \parallel_\infty \Leftrightarrow$ lo è per $\parallel \cdot \parallel_1$\\
+$\parallel \overline{x} \parallel_\infty \leq |\overline{x}|\leq \parallel \overline{x} \parallel_1 \leq n \parallel\overline{x} \parallel_\infty$
+
+\paragraph{{Osservazione}}
+Introduciamo in $\R^n$ il simbolo $\infty$. Un intorno di $\infty$ è un qualunque insieme $A \subseteq \R^n$ tale che $A$ contiene il complementare di una palla di centro l'origine, cioè $\exists R>0$ tale che $\overline{x} \in A \Rightarrow \parallel \overline{x} \parallel > R$.\\
+Una successione $\{\overline{x_k}\}_{k\geq 1} \subseteq \R^n$ si dice divergente a $\infty$ e si scrive $\lim_{k \rightarrow \infty} \overline{x_k}=\infty$ se $\lim_{k \rightarrow \infty} |\overline{x_k}|=+\infty$ cioè se $\forall\,\, R > 0\,\, \exists\, N >0\,\,|\,\,k>N \Rightarrow |\overline{x_k}|>R$
+
+\subsection{{Limiti di Funzione}}
+\paragraph{{Definizione}}
+$(X,d)$ spazio metrico, $A \subseteq X$, non vuoto. $x_0 \in X$ si dice \underline{punto di accumulazione} per $A$ se  $\forall \epsilon >0 \,\, \exists \,\, x \in A, x \neq x_0,$ tale che $x \in B_\epsilon(x_0)$, cioè se $B_\epsilon (x_0) \cap A$ contiene punti di $A$ diversi da $x_0$. $x_0 \in A$ si dice \underline{punto isolato} se non è di accumulazione, cioè se $\exists \epsilon >0$ tale che $B_\epsilon (x_0) \cap A =\{x_0\}$.
+
+\paragraph{{Definizione}}
+$(X,d_x),(Y,d_y)$ spazi metrici, $f:\dom f \rightarrow Y$, con $\dom f \subseteq X, x_0 \in X $ punto di accumulazione per $\dom f$. Si dice che $f$ ha limite $l \in Y$ per $x \rightarrow x_0$ e si scrive
+\begin{empheq}{equation*}
+    \lim_{x \rightarrow x_0} f(x)=l \,\,\,\,\,\, \text{oppure} \,\,\,\,\,\, f(x) \rightarrow l \,\,\,\, \text{per} \,\,\, x \rightarrow x_0
+\end{empheq}
+se per ogni intorno  $V$ di $l$  esiste un intorno $U$ di $x_0 $ tale che $ f(x) \in V$, $x \in U \cap \dom f, x \neq x_0$\\
+In altre parole, $\lim_{x \rightarrow x_0} f(x) =l $ se $ \,\,\forall\,\, \epsilon >0 \,\ \exists \,\, \delta >0 \,\,|$ se $0 < d(x,x_0) < \delta$ e $x \in \dom f $, allora $d_y(f(x),l)<\epsilon$.\\
+\textcolor{grey}{Se prendo la definizione data con $\epsilon$ e $\delta$ per $X=Y=\R$ e le distanze $d_x(x,y)=d_y(x,y)=|x-y|$, ottengo la definizione con $\epsilon$ e $\delta$ data in ambito reale.}
+
+\subsubsection{Teorema di unicità del limite}
+\paragraph{{Teorema}}
+$(X,d_x)$ e $(Y,d_y)$ spazi metrici, $f: domf \rightarrow Y$, $\dom f \subseteq X, x_0 \in X$ punto di accumulazione per $\dom f $.
+Se $\lim_{x \rightarrow x_0} f(x) = l_1 \in Y$ e $\lim_{x \rightarrow x_0} f(x) = l_2 \in Y$, allora $l_1=l_2$.
+
+\paragraph{Proposizione}
+$(X,d)$ spazio metrico, $\overline{f}: \dom\overline{f} \rightarrow \R^n,\,\, \overline{f}(x)=(f_1(x),...,f_n(x))$, $x_0 \in X$ punto di accumulazione per $\dom \overline{f} \subseteq X$, allora $\lim_{x \rightarrow x_0} \overline{f}(x)=\overline{l}=(l_1,...,l_n)\in \R^n \Leftrightarrow \lim_{x \rightarrow x_0} f_j(x)=l_j \forall j=1,2,...,n$.
+
+\subsubsection{Teorema della permanenza del segno}
+\paragraph{{Teorema}}
+$(X,d)$ spazio metrico, $f: \dom f \rightarrow\R$, $\dom f \subseteq X, x_0 \in X$ punto di accumulazione per $\dom f$.
+Se $\lim_{x \rightarrow x_0} f(x) = l >0$, allora $f(x)>0$ definitivamente per $ x \rightarrow x_0$, cioè $\exists \,\, \delta >0 \,\, |\,\, f(x)>0 \,\, \forall \,\, x \in B_\delta (x_0)\cap \dom f$, $x \neq x_0$. 
+
+\paragraph{{Teorema}}
+$(X,d)$ spazio metrico, $f,g: A \rightarrow\R$, $A \subseteq X, x_0 \in X$ punto di accumulazione per $A$, tale che $\lim_{x \rightarrow x_0} f(x) =l_f$, $\lim_{x \rightarrow x_0} g(x)=l_f$ e $f(x)\leq g(x)$ definitivamente per $x \rightarrow x_0$. \textcolor{grey}{$\exists \delta > 0 | f(x) \leq g(x) \forall x \in B_\delta (x_0) \cap A$, $x \neq x_0$.} Allora $l_f \leq l_g$.
+
+\subsubsection{Teorema del Confronto}
+\paragraph{Teorema}
+$(X,d)$ spazio metrico, $g,f,h : A \rightarrow \R, A \subseteq X, x_0$ punto di accumulazione per $A$, tali che $g(x) \leq f(x)\leq h(x)$ definitivamente per $x \rightarrow x_0$. Se $\lim_{x \rightarrow x_0} g(x)=\lim_{x \rightarrow x_0} h(x)=l$, allora $\lim_{x \rightarrow x_0} f(x)=l$.
+
+\paragraph{{Teorema}}
+$(X,d_x),(Y,d_y)$ spazi metrici, $f:X \rightarrow Y$. $f$ è continua $\Leftrightarrow f^{-1}(A)$ è aperto (in $X$) per ogni aperto $A \subseteq Y$.
+
+\paragraph{{Dimostrazione del teorema}}
+\begin{itemize}
+    \item $\Rightarrow)$ Ipotesi: $f$ continua. Tesi: Dato $A \subseteq Y$ aperto, $f^{-1}(A)\subseteq X$ è aperto.\\
+            Sia $x_0 \in f^{-1}(A)$. Dobbiamo trovare una palla centrata in $x_0$ contenuta in $f^{-1}(A)$.\\
+            $f(x_0) \in A$, che è aperto, $\exists \epsilon >0$ tale che $B_{\epsilon}^{Y}(f(x_0))\subseteq A$, $\exists \delta >0 $ tale che $B_{\delta}^{X}(x_0) \Rightarrow f(x)\in B_{\epsilon}^{Y}(f(x_0))\subseteq A$.\\
+            $B_{\delta}^{X}(x_0) \subseteq f^{-1} (A)$, come si voleva.
+    \item $\Leftarrow)$ Ipotesi: $f^{-1}(A)\subseteq X$ è aperto $\forall A \subseteq Y$ aperto. Tesi: $f$ è continua\\
+        Fissiamo $x_0 \in X$ e $\epsilon >0$.\\
+        Dobbiamo trovare $\delta >0 $ tale che $x \in B_{\delta}^{X} (x_0) \Rightarrow f(x) \in B_{\epsilon}^{Y} (f(x_0))$\\
+        $B_{\epsilon}^{Y} (f(x_0))$ è un aperto $\Rightarrow f^{-1}(B_{\epsilon}^{Y} (f(x_0)))$ è aperto e $x_0 \in f^{-1}(B_{\epsilon}^{Y} (f(x_0))) \Rightarrow \exists\,\, \delta >0 $ tale che $B_{\delta}^{X}(x_0) \subseteq f^{-1}(B_{\epsilon}^{Y}(f(x_0)))$ cioè, se $x \in B_{\delta}^{X}(x_0) \Rightarrow f(x) \in B_{\epsilon}^{Y}(f(x_0))$ come si voleva.
+\end{itemize}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Teorema}}
+$(X,d)$ spazio metrico. $A \subseteq X, f,g: A \rightarrow \R, x_0 \in A$, $f$ e $g$ continue in $x_0$. Allora $f+g, f\cdot g$ e $f/g$, se $g(x_0)\neq 0$, sono continue in $x_0$.
+
+\paragraph{{Proposizione}}
+$(X,d)$ spazio metrico, $A \subseteq X, \overline{f}: A \rightarrow \R^n$\\
+$\overline{f}(x)=(f_1(x),...,f_n(x))$, è continua in $x_0 \in A \Leftrightarrow$ sono continue in $x_0$ le sue componenti $f_j \forall j=1,...,n$.
+
+\section{\Large\textbf{Successioni di funzioni}}
+\paragraph{{Definizione}}
+$(X,d)$ spazio metrico.\\
+Una successione di funzioni da $X$ in $\R$ è una funzione che ad ogni numero naturale $k$ associa una ed una sola funzione $f_k:X\rightarrow \R$. 
+
+\paragraph{{Definizione}}
+Sia $\{ f_k \}_{k\in\N}, f_k:X \rightarrow \R$, successione di funzioni. Si dice che la successione \underline{converge puntualmente} in $D \subseteq X$ se $\{f_k(x)\}_{k\in\N}$ converge $\forall x \in D$, cioè se $\forall x \in D$ esiste finito
+\begin{equation*}
+    \lim_{k\rightarrow +\infty} f_k(x)=f(x),
+\end{equation*}
+limite puntuale della successione $f : D \rightarrow \R$. L'insieme degli $x \in X$ dove $\{f_k \}_{k \in \N}$ converge puntualmente si dice \underline{insieme di convergenza puntuale} della successione.
+
+\paragraph{{Definizione}}
+$f_k:X \rightarrow \R, k \in \N$, successione di funzioni. Si dice che $\{ f_k\}_{k\in\N}$ \underline{converge} \underline{uniformemente} in $D \subseteq X$ ad una funzione $f: D\rightarrow \R$ se 
+\begin{equation*}
+    \lim_{k\rightarrow+\infty}\sup_{x\in D}|f_k(x)-f(x)|=0
+\end{equation*}
+e si scrive $f_k \rightrightarrows f$ in $D$\\
+\textcolor{grey}{$\forall \epsilon >0 \exists N | k >N$\\ 
+$\sup_{x\in D}|f_k(x)-f(x)| <\epsilon$, e quindi, in particolare $|f_k(x)-f(x)|<\epsilon \forall x \in D$ cioè $f(x)-\epsilon <f_k(x)<f(x)+\epsilon \forall x \in D$}\\
+$(X,d)$ spazio metrico\\
+$B(x)=\{f:X \rightarrow \R | f$ è limitata$\}$ \textcolor{grey}{$\exists M >0 | |f(x)| \leq M \forall x \in X$}\\
+$f\in B(x)$, $\parallel f \parallel_\infty =\sup_{x\in X}|f(x)|$, norma infinito di $f$\\
+$f_k \rightrightarrows f$ in $X$ se $\parallel f_k - f \parallel_\infty \rightarrow 0$ per $k \rightarrow +\infty$\\
+cioè la convergenza uniforme è la convergenza per $\parallel \cdot \parallel_\infty$.
+
+\paragraph{{Proposizione}}
+Se $f_k \rightrightarrows f$ in $ D $, allora $\{ f_k \}_{k \in \N}$ converge puntualmente ad $f$ in $D$.
+
+\paragraph{{Dimostrazione della proposizione}}
+Se $x \in D$, $0 \leq |f_k(x) -f(x)| \leq \sup_{y\in D}|f_k(y)-f(y)| \Rightarrow |f_k(x)-f(x)|\rightarrow 0$ per $ k \rightarrow +\infty$ cioè $f(x)=\lim_{k \rightarrow +\infty} f_k (x) \forall x \in D$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{Teorema}
+$(X,d)$ spazio metrico, $f_k:X \rightarrow \R$, $\{f_k\}_{k \in \N}$ successione di funzioni tale che $f_k \rightrightarrows f$ in $D$. Se $f_k$ è continua in $x_0 \in X \,\, \forall\,\, k \in \N$, allora $f$ è continua in $x_0$. In particolare, se $f_k \in C^\circ(X)\,\, \forall \,\, k \in \N$, allora $f \in C^\circ(X)$ \textcolor{grey}{(il limite uniforme di funzioni continue è continuo)}.
+
+\paragraph{Osservazione}
+$f_k(x)=\frac{kx}{1+k|x|}$ non può convergere uniformemente a $\sgn$ in $\R$ perché $f_k \in C^\circ (\R)\,\, \forall \,\, k$, ma $\sgn$ ha un punto di salto in $x=0$.
+
+\paragraph{{Dimostrazione del teorema}}
+$x_0 \in X$. Fissiamo $\epsilon >0$.\\
+Dobbiamo dimostrare che $\exists \delta >0\,\, |\,\, d(x,x_0) <\delta \Rightarrow |f(x)-f(x_0)|<\epsilon$
+\begin{itemize}
+    \item $f_k$ è continua in $x_0 \,\, \forall \,\, k$
+    \item $f_k \rightrightarrows f$ in $X$
+\end{itemize}
+$f_k \rightrightarrows f$ in $X \Rightarrow \exists\,\, N >0 \,\,|\,\, k >N \Rightarrow |f_k (x)-f(x)|< \frac{\epsilon}{3} \,\, \forall \,\, x \in X$ perchè $\sup_{x\in X}|f_k(x)-f(x)|<\frac{\epsilon}{3}$.\\
+Fissiamo $\overline{k}>N$, cosicchè $|f_{\overline{k}}(x) -f(x)|<\frac{\epsilon}{3} \,\,\forall \,\, x \in X$ e sia $\delta >0 \,\,|\,\, d(x,x_0) <\delta$\\$\Rightarrow |f_{\overline{k}}(x) -f_{\overline{k}}(x_0)| <\frac{\epsilon}{3}$ ($\delta$ esiste perchè $f_{\overline{k}}$ è continua in $x_0$).\\
+$|f(x)-f(x_0)| =|(f(x)-f_{\overline{k}}(x))+(f_{\overline{k}}(x)-f_{\overline{k}}(x_0))+(f_{\overline{k}}(x_0)-f(x_0))|\leq |f(x)-f_{\overline{k}}(x)|+|f_{\overline{k}}(x)-f_{\overline{k}}(x_0)|+|f_{\overline{k}}(x_0)-f(x_0)| < \frac{\epsilon}{3}+\frac{\epsilon}{3}+\frac{\epsilon}{3}=\epsilon$ a patto che $d(x,x_0)< \delta$
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Tutto quello che abbiamo detto e che diremo  per successioni di funzioni a valori in $\R$ vale per successioni di funzioni a valori in $\C$.
+
+\paragraph{{Teorema}}
+$\{f_k\}_{k\in\N}, f_k:[a,b]\rightarrow\R,a,b\in\R$, successione di funzioni Riemann integrabili in $[a,b]$ tale che $f_k \rightrightarrows f$ in $[a,b]$. Allora $f$ è Riemann integrabile in $[a,b]$ e 
+\begin{equation*}
+    \int_{a}^{b}f(x)dx=\lim_{k\rightarrow+\infty}\int_{a}^{b}f_k(x)dx\,\, \textcolor{grey}{ = \int_{a}^{b}\lim_{k \rightarrow +\infty} f_k(x)dx}
+\end{equation*}
+
+\paragraph{{Dimostrazione del teorema}}
+Per semplicità, assumiamo che $f_k \in C^\circ([a,b])\forall k \in \N$. Allora $f\in C^\circ([a,b])$ perchè limite uniforme di una successione di funzioni continue, e quindi, in particolare, è Riemann integrabile in $[a,b]$. Resta da dimostrare il passaggio a limite sotto segno di integrale. Dobbiamo stimare 
+\begin{align*}
+    |\int_{a}^{b}f_k(x) dx -\int_{a}^{b}f(x)dx|&=|\int_{a}^{b} [f_k(x)-f(x)]dx|\leq \int_{a}^{b}|f_k(x)-f(x)|dx\\ &\leq \int_{a}^{b}\sup_{y \in [a,b]} |f_k(y)-f(y)|dx= (b-a)\sup_{y \in [a,b]} |f_k(y)-f(y)| \xrightarrow{k \rightarrow+\infty} 0
+\end{align*}
+perchè $f_k \rightrightarrows f$ in $[a,b]$, e si conclude.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Non è possibile enunciare lo stesso teorema per gli integrali generalizzati. In generale, se $f_k \rightrightarrows f$ in $[1,+\infty[$ e le funzioni $f_k$ sono integrabili in senso improprio in $[1,+\infty[$ non è detto che $f$ lo sia.
+
+\paragraph{Teorema}
+$I \subseteq \R$ intervallo limitato, $\{f_k\}_{k \in \N}, f_k: I \rightarrow \R$, successione di funzioni derivabili in $I$. Se 
+\begin{enumerate}
+    \item $\exists x_0 \in I\,\, |\,\, \{f_k(x_0)\}_{k \in \N} $ converge;
+    \item $\exists g:I \rightarrow \R \,\, |\,\, f_k' \rightrightarrows g$ in $I$
+\end{enumerate}
+allora $\exists f: I \rightarrow \R$ derivabile tale che $f_k\rightrightarrows f$ in $I$ e $f' (x)= g(x) \,\, \forall x \in I$.
+
+\paragraph{{Dimostrazione del teorema}}
+Per semplicità, assumiamo che $f_k\in C^1(I)\,\, \forall k \in \N$, cosicchè $f_k' \in C^\circ(I) \,\, \forall k \in \N$, ed essendo $f_k' \rightrightarrows g$ in $I$, si deduce che $g \in C^\circ (I)$. Sia $\alpha = \lim_{k \rightarrow +\infty}f_k(x_0) \in \R$, allora $f_k(x) = f_k(x_0)+\int_{x_0}^{x}f_k' (t)dt\,\,\, x \in I $.\\
+Sia $f(x) = \alpha + \int_{x_0}^{x}g(t) dt$, cosicchè, siccome $g$ è continua, per il teorema fondamentale del calcolo $f$ è derivabile e $f'(x) =g(x)$. Devo dimostrare che $f_k \rightrightarrows f$ in $I$, \\
+$|f_k(x)-f(x)|= |f_k(x_0)+ \int_{x_0}^{x}f_k' (t) dt+\alpha - \int_{x_0}^{x}g(t) dt|\leq |f_k(x_0)-\alpha|+|\int_{x_0}^{x}[f_k'(t)-g(t)] dt|\leq |f_k(x_0)-\alpha| + |\int_{x_0}^{x}|f_k'(t)-g(t)|dt|\leq |f_k(x_0)-\alpha| + |\int_{x_0}^{x}\sup_{y \in I}|f_k'(y)-g(y)|dt|=|f_k(x_0)-\alpha|+ |x-x_0|\sup_{y \in I}|f_k'(y)-g(y)|\leq |f_k(x_0)-\alpha|+|I|\sup_{y\in I}|f_k'(y)-g(y)|$ che non dipende da $x$, ma solo da $k$.\\
+Dunque $\forall x \in I$, $|f_k(x)-f(x)| \leq |f_k(x_0)-\alpha|+|I|\sup_{y\in I}|f_k'(y)-g(y)| $\\
+$\sup_{x\in I}|f_k(x)-f(x)|\leq |f_k(x_0)-\alpha|+|I|\sup_{y \in I}|f_k'(y)-g(y)|\rightarrow0$ per $k \rightarrow +\infty$ $\Rightarrow f_k \rightrightarrows f$ in $I$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\section{\Large\textbf{Proprietà topologiche degli spazi metrici}}
+\subsection{{Compattezza negli spazi metrici}}
+\paragraph{{Definizione}}
+$(X,d)$ spazio metrico. $K \subseteq X$ si dice \underline{(sequenzialmente) compatto} se ogni successione a valori in $K$ ammette una sottosuccessione convergente ad un elemento di $K$.
+
+\paragraph{{Teorema}}
+$(X,d_x),(Y,d_y)$ spazi metrici, $K \subseteq X$ compatto e $f:K \rightarrow Y$ continua. Allora $f(K)$ è compatto in $Y$ \textcolor{grey}{(l'immagine continua di un compatto è compatta)}.
+
+\paragraph{{Corollario (Teorema di Weierstrass)}}
+$(X,d)$ spazio metrico, $K \subseteq X$ compatto, $f:K \rightarrow\R$ continua. Allora $f$ ha massimo e minimo.
+
+\paragraph{Dimostrazione del corollario}
+$f(K)\subseteq \R$ è un compatto, quindi è chiuso e limitato $\Rightarrow$ è un insieme con $\max$ e $\min$, che banalmente coincidono con massimo e minimo di $f$ per definizione. 
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Dimostrazione del teorema}}
+Sia $\{y_j\}_{j\in\N}\subseteq f(K)$ una successione. Dobbiamo trovare una sottosuccessione convergente ad un elemento di $K$.\\
+$\forall j \in \N \,\,\exists\,\, x_j\in K \,\,|\,\, f(x_j)=y_j$\\
+$\{x_j\}_{j \in \N} \subseteq K$ è una successione, $K$ è compatto $\Rightarrow \,\, \exists\,\, x \in K$ e una sottosuccessione $\{x_{j_i}\}_{i\in \N}$ tali che $x_{j_i}\rightarrow x$ in $(X,d_x)$.\\
+Sia $y_{j_i}=f(x_{j_i})$, cosicchè $\{y_{j_i}\}_{i\in\N}$ è sottosuccessione di $\{y_j\}_{j\in\N}$.\\
+$f:K\rightarrow Y$ è continua\\
+$x_{j_i}\rightarrow x \in K$ in $(X,d_x)$\\
+$y_{j_i}=f(x_{j_i})\rightarrow f(x) \in f(K)$ in $(Y,d_y)$
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{Teorema di Heine-Borel}
+\paragraph{Teorema}
+$K \subseteq \R^n$ è compatto $\Leftrightarrow K$ è chiuso e limitato. \textcolor{grey}{(In $\R^n$ c'è la topologia data dalla norma euclidea o da qualsiasi altra norma.)}
+
+\paragraph{{Dimostrazione del teorema}}
+Per ora dimostriamo la sufficienza \textcolor{grey}{(chiuso e limitato $\Rightarrow$ compatto)} perchè la necessità seguirà da un risultato più generale.\\
+$K \subseteq \R^n$ chiuso e limitato.\\
+Per semplicitià assumiamo $n=2$.\\
+$K \subseteq \R^2$. Sia $\{(x_j,y_j)\}_{j \in \N} \subseteq K$ una successione.\\
+$|x_j|\leq |(x_j,y_j)|\leq C \,\, \forall j$ e $ \exists\,\, C >0$\\
+$|y_j|\leq |(x_j,y_j)|\leq C \,\, \forall j$ e $ \exists\,\, C >0$\\
+$\Rightarrow \{x_j\}_{j\in\N} \subseteq \R$ è successione limitata $\Rightarrow$ per Bolzano-Weierstrass ha una sottosuccesione $\{x_{j_i}\}_{i\in\N}$ convergente ad un elemento $x \in \R$. Anche la sottosuccessione $\{y_{j_i}\}_{i\in\N}$ è limitata $\Rightarrow$ a sua volta ha una sottosuccessione $\{y_{j_{i_l}}\}_{l\in\N}$ convergente ed un elemento $y \in \R$.\\ Consideriamo la sottosuccessione $\{(x_{j_{i_l}},y_{j_{i_l}})\}_{l \in \N}$ di $\{(x_j,y_j)\}_{j\in\N}$ allora $\{x_{j_{i_l}}\}_{l \in \N}$ essendo sottosuccessione di $\{x_{j_i}\}_{i\in\N}$ converge a $x$\\
+$y_{j_{i_l}}\rightarrow y$ per $l\rightarrow+\infty$\\
+$\{(x_{j_{i_l}},y_{j_{i_l}})\}_{l\in \N} \subseteq K$, che è chiuso $\Rightarrow (x,y)\in K$, perchè $K$ contiene i limiti delle successioni convergenti a valori in esso $\Rightarrow K$ è compatto.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Teorema}}
+$(X,d)$ spazio metrico, $K \subseteq X$ compatto. Allora $K$ è chiuso e limitato.
+
+\paragraph{{Dimostrazione del teorema}}
+$(X,d)$ spazio metrico. $K \subseteq X$ compatto
+\begin{itemize}
+    \item $K$ è chiuso.\\
+    $\{x_j\}_{j\in\N}\subseteq K$ una successione convergente ad un elemento $x \in X$ e dimostriamo che $x \in K$.\\
+    $K$ è compatto $\Rightarrow \exists$ una sottosuccessione $\{x_{j_i}\}_{i\in\N}$ convergente ad un elemento $y \in K$. Però, $x_{j_i} \rightarrow x$, perchè sottosuccessione di $\{x_j\}_{j  \in \N} \Rightarrow x = y \in K$ per l'unicità del limite.
+    \item $K $ è limitato.\\
+    Ragioniamo per assurdo e supponiamo $K$ illimitato, cioè \textcolor{grey}{($K$ limitato $\Leftrightarrow \exists x \in X$ e $R>0 \,\, |\,\, K \subseteq B_k(x)$)} preso $x \in X \,\,\exists\,\, x_j \in K\,\, |\,\, d(x_j,x)\geq j\geq 1$, ($x_j\notin B_j(x)$)\\
+    $\{x_j\}_{j\geq 1}\subseteq K$ è una successione\\ $K$ è compatto $ \Rightarrow$ ha una sottosuccessione $\{x_{j_i}\}_{i\geq 1}$ convergente ad un elemento $x_0 \in K$\\
+    $d(x_{j_i},x_0)\rightarrow 0$ per $i \rightarrow+\infty$\\
+    Per la disuguaglianza triangolare\\ $j_i \leq d(x_{j_i},x)\leq d(x_{j_i},x_0)+d(x_0,x)$\\
+    $d(x_{j_i,x_0})\geq j_i - d(x_0,x)\rightarrow +\infty$ per $i \rightarrow +\infty$\\
+    assurdo perchè $d(x_{j_i},x_0)\rightarrow 0$
+\end{itemize}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsection{Spazi metrici completi}
+\paragraph{Definizione}
+$(X,d)$ spazio metrico, la successione $\{x_k\}_{k \in\N}\subseteq X$ si dice di Cauchy se $\forall \epsilon >0 \,\, \exists N >0 \,\,|\,\, k >N$ e $\forall p\geq 1$ vale $d(x_k,x_{k+p})<\epsilon$.\\
+\textcolor{grey}{(Se $X=\R, \{x_k\}_{k \in\N}\subseteq\R$ è di Cauchy se $\forall \epsilon >0 \exists N >0 \,\, |\,\, \forall k>N$ e $\forall p \geq 1\,\, |x_k - x_{k+p}|<\epsilon$.)}
+
+\paragraph{{Definizione}}
+Uno spazio metrico $(X,d)$ si dice completo se ogni successione di Cauchy a valori in esso è convergente.
+
+\subsubsection{Spazi di Banach}
+\paragraph{{Definizione}}
+Se $(X, \|\cdot  \|)$ è spazio normato completo (per la metrica $d(x,y)=\|x-y\|$ definita dalla norma) allora $X$ si dice \underline{spazio di Banach}.
+
+\paragraph{{Proposizione}}
+$(X,d)$ spazio metrico, $\{x_k\}_{k \geq 1} \subseteq X$ successione di Cauchy tale che ammette una sottosuccessione $\{x_{k_j}\}_{j\geq 1}$ convergente ad un elemento $x \in X$. Allora l'intera successione $\{x_k\}_{k\geq 1}$ converge ad $x$.
+
+\paragraph{{Dimostrazione}}
+Dobbiamo dimostrare che $\forall \epsilon >0 \,\,\exists \,\, N >0 \,\,|\,\, k > N \Rightarrow d(x_k,x)< \epsilon$. Fissiamo $\epsilon >0$. Siccome $\{x_k\}_{k\geq 1}$ è di Cauchy, $\exists N >0 \,\, |$ se  $k,l >N \Rightarrow d(x_k,x_l)< \frac{\epsilon}{2}$\\
+$\exists \,\, k_j > N \,\,|\,\, d(x_{k_j},x)< \frac{\epsilon}{2}$ perchè $x_{k_j} \rightarrow x$\\
+Preso $k > N$ si ha $d(x_k, x)\leq d(x_k,x_{k_j})+d(x_{k_j},x)<\frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Proposizione}}
+$(X,d)$ spazio metrico, $\{x_k\}_{k \geq 1} \subseteq X$ successione di Cauchy. Allora $\{x_k\}_{k \geq 1}$ è limitata, cioè $\exists x \in X$ e $C >0 \,\, |\,\, d(x_k,x)\leq C \forall k \geq 1$.
+
+%\paragraph{Dimostrazione}
+%Utile esercizio per casa. Bisogna ripercorrere quanto fatto nel caso $X = \R$.
+
+\subsubsection{Teorema di completezza di uno spazio metrico}
+\paragraph{Teorema}
+$(X,d)$ spazio metrico, $K \subseteq X$ compatto. Allora \underline{$(C^\circ(K), \|\cdot\|_\infty)$ è completo}. In particolare, se $a < b, a, b \in \R$, $(C^\circ([a,b]),\|\cdot\|_\infty)$ è completo.
+
+\paragraph{{Dimostrazione}}
+$f \in C^\circ(K) \Rightarrow \| f\|_\infty = \sup_{x \in K}|f(x)|= \max_{x \in K}|f(x)|< +\infty$ per Weierstrass.\\
+Sia $\{f_n\}_{n \geq 1}\subseteq C^\circ(K)$ di Cauchy per il $\| \cdot\|_\infty \Rightarrow \forall \epsilon >0\,\,  \exists \,\, N >0 \,\, |\,\, n , l >N \Rightarrow \| f_n-f_l \|_\infty <\epsilon$\\
+In particolare, fissati $x \in K$ e $n,l >N$, $|f_n(x)-f_l(x)|\leq \| f_n-f_l \|< \epsilon \Rightarrow$ la successione $\{f_n(x)\}_{n \geq 1}$ è di Cauchy in $\R$ e quindi converge $\Rightarrow \{f_n\}_{n \geq 1}$ converge puntualmente. Sia $ f: K \rightarrow \R$ il suo limite puntuale. Dimostriamo che $ f_n \rightrightarrows f$, e che quindi $f \in C^\circ(K)$ essendo limite uniforme di funzioni continue.\\
+Devo dimostrare che, fissato $\epsilon >0  \exists N >0  \,\, | \,\, n >N \Rightarrow \| f_n-f\|_\infty \leq \epsilon$. So che $\exists N >0 \,\, | \,\, n,l>0 \Rightarrow |f_n(x)-f_l(x)|< \epsilon \forall x \in K$ \\
+$|f_n(x)-f(x)| \leq \epsilon \forall n > N$ e $\forall x \in K$\\
+$\| f_n-f\|_\infty = \sup_{x \in K}|f_n(x)-f(x)| \leq \epsilon \forall n > N$, come si voleva.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Lo stesso risultato vale in $C^\circ_B(X) =\{f:X \rightarrow \R \,\, | \,\, f$ è continua e limitata$\}$ con $\|f\|_\infty = \sup_{x \in X}|f(x)|$.\\
+$(C^\circ_B(X),\|\cdot\|_\infty)$ è spazio di Banach.
+
+\subsubsection{Lemma alle contrazioni di Banach-Caccioppoli}
+%\begin{wrapfigure}[8]{l}{0.24\textwidth}
+%    \vspace{-15pt}
+%    \centering
+%    \includegraphics[width=0.24\textwidth]{Caccioppoli.jpg}
+%    \textbf{\small{Renato Caccioppoli}}
+%\end{wrapfigure}
+\paragraph{Definizione}
+$(X,d)$ spazio metrico. Una funzione $T:X\rightarrow X $ si dice \underline{contrazione} se $\exists\,\, \lambda \in ]0,1[$ tale che $d(T(x),T(y))\leq \lambda d(x,y) \,\, \forall\,\, x,y \in X$. 
+
+\paragraph{{Osservazione}}
+Se $T:X \rightarrow X$ è una contrazione, allora è una funzione continua, perché lipschitziana di costante di Lipschitz $\lambda \in ]0,1[$. 
+
+\paragraph{{Teorema}}
+$(X,d)$ spazio metrico completo. $T:X \rightarrow X$ contrazione. Allora $\exists! \,\, x \in X \,\, | \,\, T(x) = x$, cioè $T$ ha un unico punto fisso.
+
+\paragraph{Dimostrazione del Teorema}
+Dimostriamo l'unicità. Per assurdo, assumiamo che $\exists \,\, x,y\in X, x \neq y \,\, | \,\, T(x)=x$ e $T(y)=y$. $0 < d(x,y)=d(T(x),T(y))\leq \lambda d(x,y) < d(x,y) \Rightarrow d(x,y) < d(x,y)$, assurdo.\\
+Prendiamo $x_0 \in X$ e definiamo $x_1 = T(x_0)$, $x_2 = T(x_1)= T(T(x_0))$, $x_3 = T(x_2)$....
+In generale $x_{k+1}=T(x_k)$, $k \in \N$, cioè $\{x_k\}_{k \in \N}$ è una successione definita per induzione con $x_{k+1}=T(x_k)$ e $x_0$ fissato. Se dimostriamo che $\{x_k\}_{k \in \N}$ è di Cauchy, questa converge ad un elemento $x \in X$, essendo $(X,d)$ completo, e $x$ è il punto fisso cercato $x_{k+1}=T(x_k) \Rightarrow x = T(x)$.\\
+$d(x_{k+1},x_k)=d(T(x_k),T(x_{k-1}))\leq \lambda d(x_k,x_{k-1}) = \lambda d(T(x_{k-1}),T(x_{k-2}))\leq \lambda \cdot \lambda d(x_{k-1},x_{k-2})=\lambda^2d(x_{k-1},x_{k-2}) \leq \lambda^3 d() \leq...\leq \lambda^k d(x_1,x_0)$.\\
+Dobbiamo far vedere che $\forall \epsilon >0 \,\, \exists \,\, N \,\, | \,\, n >N$ e $p \geq 1$ tali che $d(x_{n+p},x_n)< \epsilon$.\\
+$d(x_{n+p},x_n) \leq d(x_{n+p},x_{n+p-1})+d(x_{n+p-1},x_n)\leq d(x_{n+p},x_{n+p-1})+d(x_{n+p-1},x_{n+p-2})+$$d(x_{n+p-2},x_n)\leq \sum_{k=n}^{n+p-1} d(x_{k+1},x_k)\leq \sum_{k=n}^{n+p-1} \lambda^k d(x_{1},x_0)\leq d(x_1,x_0)\sum_{k=n}^{\infty} \lambda^k$ che è il resto n-esimo di una serie geometrica convergente perché $\lambda \in ]0,1[$. In particolare, $\lim_{n\rightarrow +\infty} \sum_{k=n}^{\infty}\lambda^k=0 \Rightarrow \exists\,\, N \,\, |$ se $n> N\left(\sum_{k=n}^{\infty}\lambda^k\right)d(x_1,x_0)<\epsilon \Rightarrow d(x_{n+p},x_n)<\epsilon \forall n > N$ e $p \geq 1$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{Corollario}
+$(X,d)$ spazio metrico completo, $C\subseteq X$ chiuso, $T: C \rightarrow C$ contrazione. Allora $\exists!\,\, x \in C \,\, | \,\, T(x)=x$.
+
+\paragraph{Dimostrazione del corollario}
+E' sufficiente dimostrare che $(C,d)$ è completo. Sia $\{x_k\}_{k \in \N}\subseteq C$ successione di Cauchy. In particolare $\{x_k\}_{k \in \N} \subseteq X $ e quindi converge ad un elemento $x \in X$, essendo $(X,d)$ completo. Poiché $C$ è chiuso, $x \in C$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\section{\Large\textbf{Serie di funzioni}}
+\paragraph{{Definizione}}
+$(X,d)$ spazio metrico, $\{f_k\}_{k \in \N}, f_k : X \rightarrow \R $ (o $\C$) una successione di funzioni $\sum_{k=0}^{\infty} f_k$, $\sum_{k=0}^{\infty}f_k(x)$. Una \underline{serie di funzioni} è una coppia $(\{f_k\}_{k \in \N},\{S_n\}_{n \in \N})$ dove $\{f_k\}_{k \in \N}, f_k: X \rightarrow \R$, è successione di funzioni e $\{S_n\}_{n \in \N}$, $ S_n = \sum_{k=0}^{n}f_k$, è la successione delle ridotte. La serie è indicata con $\sum_{k=0}^{\infty}f_k$ o $\sum_{k=0}^{\infty}f_k (x)$.
+
+\paragraph{{Definizione}}
+Una serie di funzioni $\sum_{k=0}^{\infty} f_k$ si dice \underline{puntualmente convergente} in $D \subseteq X$ se la sua successione delle ridotte converge puntualmente. In tal caso il limite puntuale si dice (funzione) somma della serie ed è indicato con $\sum_{k=0}^{\infty}f_k(x), x \in D$.\\ Una serie di funzioni $\sum_{k=0}^{\infty}f_k$ si dice \underline{uniformemente convergente} in $D \subseteq X$ se la sua successione delle ridotte converge uniformemente in $D$.\\
+\textcolor{grey}{$\sum_{k=0}^{\infty}f_k$ converge puntualmente in $D$ se le serie numeriche $\sum_{k=0}^{\infty}f_k(x)$ convergono $\forall x \in D$.}\\
+\textcolor{grey}{$\sum_{k=0}^{\infty}f_k$ converge uniformemente in $D$, $\sup_{x \in D}|\sum_{k=0}^{\infty}f_k(x)-f(x)|\xrightarrow{k \rightarrow+\infty}0$}\\
+
+\subsubsection{{Teorema di passaggio al limite sotto segno di integrale}}
+\paragraph{{Teorema}}
+Sia $\sum_{k=0}^{\infty}f_k$ una serie di funzioni $f_k: [a,b]\rightarrow \R$, Riemann integrabili in $[a,b]$, uniformemente convergente in $[a,b]$ ad una funzione $f$, somma della serie. Allora $f$ è Riemann integrabile in $[a,b]$ e 
+\begin{align*}
+    \int_{a}^{b}f(x)dx&=\sum_{k=0}^{\infty}\int_{a}^{b}f_k(x)dx,\\
+    \int_{a}^{b}\lim_{n\rightarrow +\infty}S_n(x)dx =\lim_{n\rightarrow +\infty}\int_{a}^{b}S_n (x)dx &=
+    \lim_{n\rightarrow +\infty}\int_{a}^{b}\sum_{k=0}^{n}f_k(x)dx = \sum_{k=0}^{\infty}\int_{a}^{b}f_k(x)dx.
+\end{align*}
+
+\subsubsection{{Teorema di passaggio al limite sotto segno di derivata}}
+\paragraph{{Teorema}}
+$I \subseteq \R$ intervallo. $\{f_k\}_{k \in \N}, f_k: I \rightarrow \R$, successione di funzioni derivabili. Se 
+\begin{enumerate}
+    \item $\exists\,\, x_0\in I \,\, |\,\, \sum_{k=0}^{\infty}f_k(x_0)$ converge;
+    \item la serie di funzioni $\sum_{k=0}^{\infty}f_k'$ converge uniformemente in $I$;
+\end{enumerate}
+allora la serie di funzioni $\sum_{k=0}^{\infty}f_k$ converge uniformemente in $I$ ad una funzione somma $f$ derivabile e tale che $f'(x)= \sum_{k=0}^{\infty}f_k'(x)$, $x \in I$, cioè $f'$ è la somma della serie delle derivate.
+\textcolor{grey}{
+\begin{enumerate}
+    \item $\exists x_0 \in I \,\, |\,\, \{S_n(x_0)\}_{n \in \N}, S= \sum_{k=0}^{\infty}f_k$, converge
+    \item $\{S_n'\}_{n \in \N}$ converge uniformemente in $I$ ad una funzione $g$.
+\end{enumerate}
+Allora $\{S_n\}_{n \in \N}$ converge uniformemente in $I$ ad una funzione derivabile $f$ tale che $f'=g=\lim_{n\rightarrow +\infty} S_n' =\lim_{n\rightarrow +\infty} \sum_{k=0}^{n} f_k'=\sum_{k=0}^{\infty}f_k'$.
+}
+
+\paragraph{{Proposizione}}
+Sia $\sum_{k=0}^{\infty} f_k$ serie uniformemente convergente in $D \subseteq X$, $(X,d)$ spazio metrico. Allora 
+\begin{equation*}
+    \lim_{k\rightarrow+\infty}\sup_{x \in D} |f_k(x)|=0,
+\end{equation*}
+cioè $f_k \rightrightarrows 0$ in $D$.\\
+\textcolor{grey}{Se $f_k \nrightrightarrows 0$ in $D$, la serie $\sum_{k=0}^{\infty}f_k$ non può convergere uniformemente.}
+
+\paragraph{{Dimostrazione della proposizione}}
+$f:D \rightarrow \R$ somma della serie. Se $\{S_n\}_{n \in \N}$ è la successione delle ridotte, si ha 
+\begin{equation*}
+    \lim_{n \rightarrow + \infty} \sup_{x \in D} |S_n(x)-f(x)|=0
+\end{equation*}
+perché $S_n \rightrightarrows f(x)$ in $D$.\\
+Fissato $\epsilon >0 \,\, \exists\,\, N >0\,\, |\,\, n > N,\,\,\sup_{x \in D} |S_n(x)-f(x)|< \epsilon \Rightarrow$ se $n > N, |S_n(x)-f(x)|< \epsilon \,\, \forall \,\, x \in D$\\
+$n > N +1$\\
+$|f_n(x)|=|S_n(x)-S_{n-1}(x)|\leq |S_n (x)-f(x)|+|S_{n-1}(x)-f(x)| < 2 \epsilon \,\, \forall \,\, x \in D$\\
+$n > N+1 \Rightarrow \sup_{x \in D}|f_n(x)| < 2 \epsilon \Rightarrow f_n \rightrightarrows 0$ in $D$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Definizione}}
+Una serie di funzioni $\sum_{k=0}^{\infty}f_k$ si dice \underline{totalmente convergente} in $D \subseteq X$ se converge la serie numerica 
+\begin{equation*}
+    \sum_{k=0}^{\infty}\sup_{x\in D}|f_k(x)|.
+\end{equation*}
+
+\paragraph{{Osservazione}}
+Se $\exists\,\, \{a_k\}_{k \in \N}\subseteq \R$ tale che 
+\begin{enumerate}
+    \item $|f_k(x)|\leq a_k \,\, \forall \,\, x \in D$ e $\forall\,\, k \in \N $
+    \item $\sum_{k=0}^{\infty}a_k$ converge 
+\end{enumerate}
+allora $\sum_{k=0}^{\infty}f_k$ converge totalmente in $D$.\\
+Infatti, se $|f_k(x)|\leq a_k \,\,\forall \,\,x \in D \Rightarrow \sup_{x \in D} |f_k (x)|\leq a_k \,\,\forall\,\, k \in \N \Rightarrow$ la serie $\sum_{k=0}^{\infty} \sup_{x \in D}|f_k(x)|$ converge per il criterio del confronto.
+
+\subsubsection{{Criterio di Weierstrass}}
+\paragraph{{Teorema}}
+Sia $\sum_{k=0}^{\infty}f_k$ serie di funzioni totalmente convergente in $ D \subseteq X$, $ (X,d)$ spazio metrico. Allora $\sum_{k=0}^{\infty}f_k$ converge uniformemente in $D$.
+
+\paragraph{Dimostrazione del Teorema}
+$\sum_{k=0}^{\infty}\sup_{y \in D} |f_k(y)|$ converge.\\
+Siccome $|f_k(x)|\leq \sup_{y \in D}|f_k(y)|\,\, \forall\,\, x \in D$ per il criterio del confronto $\sum_{k=0}^{\infty}|f_k(x)|$ converge $\forall \,\, x \in D$ e quindi, per il criterio di convergenza assoluta, converge $\forall\,\, x \in D$ la serie $\sum_{k=0}^{\infty} f_k(x)$.\\ 
+Sia $f(x)=\sum_{k=0}^{\infty}f_k(x)$ la sua somma, $x \in D$.\\
+Stimiamo $|S_n(x)-f(x)|$ dove $S_n(x)=\sum_{k=0}^{n}f_k(x)$.\\ $\sum_{k=n+1}^{\infty}f_k(x)=f(x)-S_n(x)$ è ben definita $\forall \,\, n$, perché è il resto di una serie convergente
+\textcolor{grey}{($\exists$ finito $\lim_{p \rightarrow+\infty}\sum_{k=n+1}^{p}f_k(x)$)}.\\ 
+$|S_n(x)-f(x)|=|\sum_{k=n+1}^{\infty}f_k(x)|\leq \sum_{k=n+1}^{\infty}|f_k(x)| \leq \sum_{k=n+1}^{\infty} \sup_{y \in D}|f_k(y)|$ perché è il resto di una serie convergente $\Rightarrow \sup_{x \in D}|S_n(x)-f(x)|\leq \sum_{k=n+1}^{\infty}\sup_{y \in D} |f_k(y)| \Rightarrow S_n \rightrightarrows f$ in $D$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{Osservazione}
+La convergenza totale non è equivalente a quella uniforme, cioè una serie può convergere uniformemente senza convergere totalmente.
+
+\subsection{{Serie di potenze}}
+\paragraph{{Definizione}}
+Una serie di potenze centrata nel punto $z_0 \in \C$ è una serie di funzioni del tipo 
+\begin{equation*}
+    \sum_{k=0}^{\infty} a_k(z-z_0)^k,
+\end{equation*}
+dove $\{a_k\}_{k\in\N}$ è una successione di numeri complessi.
+
+%\paragraph{{Esempio}}
+%Serie esponenziale
+%\begin{equation*}
+%e^z=\sum_{k=0}^{\infty}\frac{z^k}{k!},\,\,\,\, z_0=0,\,\,\, a_k=\frac{1}{k!}
+%\end{equation*}
+
+\paragraph{{Osservazione}}
+Non è restrittivo assumere $z_0=0$. Infatti, posto $w=z-z_0$, la serie $\sum_{k=0}^{\infty} a_k(z-z_0)^k$ si riscrive come $\sum_{k=0}^{\infty} a_k w^k$, cioè come una serie di potenze di centro $z_0=0$.
+
+\subsubsection{{Criterio di Cauchy-Hadamard}}
+\paragraph{{Teorema}}
+Sia data la serie di potenze
+\begin{equation*}
+    \sum_{k=0}^{\infty} a_kz^k,\,\,\, z \in \C
+\end{equation*}
+e sia $R\in [0,+\infty]$ la quantità definita da 
+\begin{equation*}
+    \frac{1}{R}=\limsup_{k \rightarrow+\infty} \sqrt[k]{|a_k|},
+\end{equation*}
+dove, se
+\begin{equation*}
+    \limsup_{k \rightarrow+\infty} \sqrt[k]{|a_k|} =0 \Rightarrow R=+\infty
+\end{equation*}
+e se
+\begin{equation*}
+    \limsup_{k \rightarrow+\infty} \sqrt[k]{|a_k|} =+\infty \Rightarrow R=0.
+\end{equation*}
+Allora
+\begin{enumerate}
+    \item la serie converge assolutamente in $B_R(0)=\{z\in\C|\,\,\,|z|<R\}$, detto disco o cerchio di convergenza;
+    \item la serie converge totalmente, e quindi uniformemente, in $B_\delta (0)=\{z \in \C|\,\,\,|z|< \delta\}$ per ogni $0< \delta < R$;
+    \item la serie non converge per $|z|>R$.
+\end{enumerate}
+$R$ è detto raggio di convergenza della serie.
+
+\paragraph{{Osservazione}}
+Il teorema non fornisce informazioni sulla convergenza della serie per $|z|=R$.
+
+\paragraph{{Definizione}}
+Data una successione $\{\alpha_k\}_{k\in\N}\subseteq \R$, 
+\begin{equation*}
+    \limsup_{k\rightarrow+\infty} \alpha_k=\inf_{k\in\N}\left(\sup_{l>k} \alpha_l\right)=\lim_{k \rightarrow+\infty}\left(\sup_{l>k}\alpha_l\right)
+\end{equation*}
+ed esiste sempre.\\
+\textcolor{grey}{Se $\exists \lim_{k\rightarrow+\infty}\alpha_k$, allora $\limsup_{k\rightarrow+\infty}\alpha_k=\lim_{k\rightarrow+\infty}\alpha_k$.\\ Nel criterio di Hadamard, se $\exists \lim_{k\rightarrow+\infty}\sqrt[k]{|\alpha_k|}$, allora $\frac{1}{R}=\lim_{k\rightarrow+\infty}\sqrt[k]{|a_k|}$}
+
+\paragraph{{Osservazione}}
+Si ricorda che, se $\lim_{k\rightarrow+\infty}|\frac{a_{k+1}}{a_k}|=l$, allora $\lim_{k\rightarrow+\infty}\sqrt[k]{|a_k|}=l$.
+
+\paragraph{{Dimostrazione del teorema}}
+Lo dimostriamo assumendo che esista $\lim_{k\rightarrow+\infty}\sqrt[k]{|a_k|}=\frac{1}{R}$.
+\begin{enumerate}
+    \item Dobbiamo dimostrare che la serie $\sum_{k=0}^{\infty}|a_kz^k|=\sum_{k=0}^{\infty}|a_k||z|^k$ converge se $|z|<R$.\\ Applichiamo il criterio della radice e calcoliamo $\lim_{k \rightarrow+\infty}\sqrt[k]{|a_k||z|^k}=\frac{|z|}{R}$. Se $\frac{|z|}{R}<1$, la serie converge.
+    \item Dobbiamo dimostrare che, fissato $0<\delta<k$, la serie $\sum_{k=0}^{\infty}\sup_{|z|<\delta} |a_kz^k|$ converge.\\ Se $|z|<\delta \Rightarrow |a_kz^k|=|a_k||z|^k<|a_k|\delta^k$ e la serie $\sum_{k=0}^{\infty}|a_k|\delta^k$ converge perchè $\lim_{k \rightarrow+\infty} \sqrt[k]{|a_k|\delta^k}=\frac{\delta}{R}<1$. Allora $\sup_{|z|<\delta}|a_kz^k|<|a_k|\delta^k\,\, \forall k$ e quindi deduco la convergenza totale della serie in $B_{\delta}(0)$.
+    \item Se $\frac{|z|}{R}>1$, il termine generale della serie non è infinitesimo, e quindi la serie non converge.
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsection{{Cenno alla funzioni olomorfe}}
+
+\paragraph{{Definizione}}
+$A \subseteq \C$ aperto, $f:A\rightarrow \C$, $z_0\in A$. $f$ si dice derivabile (in senso complesso) in $z_0$ se $\exists$ finito 
+\begin{equation*}
+    \lim_{z \rightarrow z_0} \frac{f(z)-f(z_0)}{z-z_0}=f'(z_0).
+\end{equation*}
+In particolare, $f$ si dice \underline{olomorfa} in $A$ se è derivabile in senso complesso in ogni punto di $A$.
+
+\paragraph{{Osservazione}}
+Se $f:\R\rightarrow\R$ è di classe $C^\infty$, non è detto che sia somma della sua serie di Taylor.
+
+\section{\Large\textbf{Calcolo differenziale in $\R^n$}}
+\paragraph{Definizione}
+$A \subseteq \R^n$, $\overline{x_0}\in \R^n$ punto di accumulazione per $A$, $f:A\rightarrow \R$. $ \lim_{\overline{x}\rightarrow\overline{x_0} }f(\overline{x})=l \in \R\Leftrightarrow \forall$ intorno $V$ di $l\,\, \exists\,\,$ un intorno $U$ di $\overline{x_0}\mid \overline{x}\in U \cap A$, $\overline{x}\neq \overline{x_0}\Rightarrow f(\overline{x})\in V \Leftrightarrow \forall \epsilon >0\,\, \exists\,\, \delta >0\mid 0 < \|\overline{x}-\overline{x_0} \| <\delta$, $\overline{x}\in A\Rightarrow |f(\overline{x})-l|< \epsilon \Leftrightarrow |f(\overline{x})-l|\xrightarrow{\overline{x}\rightarrow\overline{x_0}}0$
+
+\subsection{{Limiti all'infinito}}
+Avevamo introdotto il simbolo  $\infty$ in $\R^n$. Gli intorni di infinito sono complementari di palle di centro l'origine.\\
+Dire che $\overline{x} \rightarrow \infty \Leftrightarrow \|\overline{x}\|\rightarrow +\infty$, $f:\dom f\rightarrow\R$, $\infty$ punto di accumulazione per $\dom f \subseteq \R^n$ allora $\lim_{\overline{x}\rightarrow \infty} f(\overline{x})=l\in \R \Leftrightarrow \forall \,\, \epsilon >0 \,\, \exists\,\, M >0 \,\, |\,\, \|\overline{x}\|>M, \overline{x}\in \dom f \Rightarrow |f(\overline{x})-l|<\epsilon$.\\
+\textcolor{grey}{($\forall$ intorno $V$ di $l$ $\exists$ un intorno $U$ di $\infty \mid \overline{x}\in U \cap \dom f\Rightarrow f(\overline{x})\in V$.)}
+
+\subsection{{Teorema sui limiti lungo restrizioni}}
+\paragraph{{Teorema}}
+$f:\dom f\rightarrow\R$, $\dom f \subseteq\R^n$, $\overline{x_0}\in \R^n\cup\{\infty\}$ punto di accumulazione per $\dom f$. Allora $\lim_{\overline{x}\rightarrow\overline{x_0}}f(\overline{x})=l\Leftrightarrow \forall\,A \subseteq \dom f$ tale che $\overline{x_0}$ è punto di accumulazione per $A$ si ha che 
+\begin{equation*}
+    \lim_{\overline{x}\rightarrow\overline{x_0}}f|_A(\overline{x})=l.
+\end{equation*}
+\textcolor{grey}{ove $f|_A:A\rightarrow \R$, $\overline{x}\mapsto f(\overline{x})$ restrizione di $f$ ad $A$.}
+
+\paragraph{{Osservazione}}
+Solitamente il teorema viene utilizzato per dimostrare che un limite non esiste, ad esempio trovando due restrizioni con due limiti diversi.%, come fatto negli esempi precedenti.
+
+\paragraph{Utilizzo delle coordinate polari}
+$(x_0,y_0)\in \R^2$\\
+%IMMAGINE\\
+Coordinate polari di centro $(x_0,y_0)$\\
+$\begin{cases}
+    & x=x_0+\rho \cos(\theta)\\
+    & y=y_0+\rho \sin(\theta)
+\end{cases}$\\
+$\lim_{(x,y)\rightarrow(x_0,y_0)}f(x,y)=l\in \R $\\
+$\forall\,\, \epsilon >0 \,\, \exists \,\, \delta >0 \mid 0 < \|(x,y)-(x_0,y_0)\|< \delta$, $(x,y)\in \dom f \Rightarrow |f(x,y)-l|< \epsilon$\\
+$ \forall \,\, \epsilon >0 \,\, \exists \delta >0 \mid 0<\rho < \delta$\\
+$(x_0+\rho \cos(\theta), y_0+\rho \sin(\theta))\in \dom f \Rightarrow |f(x_0+\rho \cos(\theta), y_0+\rho \sin(\theta))-l|<\epsilon \forall\theta \in [0,2\pi[$\\
+$\sup_{\theta \in [0,2\pi[}|f(x_0+\rho \cos(\theta), y_0+\rho \sin(\theta))-l|\leq\epsilon$\\
+$\lim_{\rho\rightarrow0}\sup_{\theta \in [0,2\pi[}|f(x_0+\rho \cos(\theta), y_0+\rho \sin(\theta))-l|=0$.
+
+\paragraph{{Teorema}}
+$f:\dom f \rightarrow\R$, $\dom f \subseteq\R^2$, $(x_0,y_0)\in \R^2$ punto di accumulazione per $\dom f$. Supponiamo \textcolor{grey}{(per semplicità)} che esista un intorno $U$ di $(x_0,y_0)\mid U\backslash \{(x_0,y_0)\}\subseteq \dom f$
+\begin{enumerate}
+    \item $\lim_{(x,y)\rightarrow(x_0,y_0)}f(x,y)=l\in\R \Leftrightarrow \lim_{\rho \rightarrow 0 } \sup_{\theta \in [0,2\pi[}|f(x_0+\rho\cos(\theta),y_0+\rho\sin(\theta))-l|=0$ 
+    \item $\lim_{(x,y)\rightarrow(x_0,y_0)}f(x,y)=+\infty \Leftrightarrow \lim_{\rho\rightarrow 0}\inf_{\theta \in[0,2\pi[}|f(x_0+\rho \cos(\theta), y_0+\rho \sin(\theta))|=+\infty$
+    \item $\lim_{(x,y)\rightarrow(x_0,y_0)}f(x,y)=-\infty\Leftrightarrow \lim_{\rho\rightarrow 0}\sup_{\theta \in[0,2\pi[}|f(x_0+\rho \cos(\theta), y_0+\rho \sin(\theta))|=-\infty$
+\end{enumerate}
+
+\subsection{{Derivate parziali e direzionali}}
+%$f:\R\rightarrow\R$, $x_0\in\R$
+%\begin{equation*}
+%    \lim_{x \rightarrow x_0}\frac{f(x)-f(x_0)}{x-x_0}=f'(x_0)
+%\end{equation*}
+%$f(x)=f(x_0)+f'(x_0)(x-x_0)+o(x-x_0)$\\
+%$f:\R^2\rightarrow\R$\\
+%IMMAGINE\\
+%\textcolor{grey}{Studio il comportamento di $f$ lungo questa retta fissata.}
+%\begin{itemize}
+%    \item $f:\dom f\rightarrow\R$, $domf \subseteq \R^n$
+%    \item $\overline{x_0}\in \dom f$, punto interno
+%    \item $\overline{v}\in \R^n$ versore
+%\end{itemize}
+%Considero la restrizione di $f$ lungo la retta passante per $\overline{x_0}$ e parallela a $\overline{v}$, $\phi_{\overline{v}}(t)=f(\overline{x_0}+t\overline{v})$, ben definita in un intorno di $t=0$ perché $\overline{x_0}$ è interno a $\dom f$.
+
+\paragraph{{Definizione}}
+Se $\phi_{\overline{v}}$ è derivabile in $t=0$ allora 
+\begin{equation*}
+    \phi_{\overline{v}}'(0)=\lim_{t\rightarrow0}\frac{\phi_{\overline{v}}(t)-\phi_{\overline{v}}(0)}{t}=\lim_{t\rightarrow 0}\frac{f(\overline{x_0}+t\overline{v})-f(\overline{x_0})}{t}=D_{\overline{v}}f(\overline{x_0})
+\end{equation*}
+si dice derivata di $f$ in $\overline{x_0}$ nella direzione $\overline{v}$ e $f$ si dice derivabile in $\overline{x_0}$ nella direzione $\overline{v}$ o lungo $\overline{v}$.
+
+\paragraph{Definizione}
+Se $\overline{v}=\overline{e_k}$, $k-$esimo vettore della base canonica, $D_{\overline{e_k}}f(\overline{x_0})$ si dice derivata parziale di $f$ in $x_0$ rispetto a $x_k$ \textcolor{grey}{$(\overline{x}=(x_1,x_2,...,x_n))$} ed è indicata con uno dei simboli $\partial_{x_k}f(\overline{x_0})$, $\frac{\partial f}{\partial x_k}(\overline{x_0})$, $D_{x_k}f(\overline{x_0})$, $f_{x_k}'(\overline{x_0})$, $D_kf(\overline{x_0})$.\\
+Se esistono tutte $n$ le derivate parziali di $f$ in $\overline{x_0}$, $\partial_{x_1}f(\overline{x_0}),\partial_{x_2}f(\overline{x_0}),...,\partial_{x_n}f(\overline{x_0})$, f si dice derivabile in $\overline{x_0}$ e il vettore $(\partial_{x_1}f(\overline{x_0}),\partial_{x_2}f(\overline{x_0}),...,\partial_{x_n}f(\overline{x_0}))$ si dice gradiente di $f$ in $\overline{x_0}$ e si scrive $\nabla f(\overline{x_0})$ o grad$f(\overline{x_0})$.
+
+\paragraph{{Osservazione}}
+$f,g:A\rightarrow\R$, $A\subseteq\R^n$ aperto e derivabile
+\begin{equation*}
+    \partial_{x_k}(\alpha f+\beta g)(\overline{x_0})=\alpha\partial_{x_k}f(\overline{x_0})+\beta\partial_{x_k}g(\overline{x_0}) \text{  per  }   \alpha,\beta\in\R
+\end{equation*}
+\begin{equation*}
+    \partial_{x_k}(f\cdot g)(\overline{x_0})=g(\overline{x_0})\partial_{x_k}f(\overline{x_0})+f(\overline{x_0})\partial_{x_k}g(\overline{x_0})
+\end{equation*}
+\begin{equation*}
+    \partial_{x_k}\left(\frac{f}{g}\right)(\overline{x_0})=\frac{g(\overline{x_0})\partial_{x_k}f(\overline{x_0})-f(\overline{x_0})\partial_{x_k}g(\overline{x_0})}{(g(\overline{x_0}))^2} \text{  per  } g(\overline{x_0})\neq 0.
+\end{equation*}
+Regola della catena: $A\subseteq \R^n$ aperto, $g:A\rightarrow \R$, derivabile in $\overline{x_0}\in A$, $f:I\rightarrow\R$, $I$ intervallo, derivabile in $g(\overline{x_0})\in I$, allora $f\circ g$ è derivabile in $\overline{x_0}$ e 
+\begin{align*}
+    \nabla(f \circ g)(\overline{x_0})&=f'(g(\overline{x_0}))\nabla g(\overline{x_0}),\\
+    \partial_{x_k}(f\circ g)(\overline{x_0})&=f'(g(\overline{x_0}))\partial_{x_k}g(\overline{x_0})
+\end{align*}Se $f:\R\rightarrow\R$ è derivabile in $x_0$, allora
+\begin{enumerate}
+    \item $f$ è continua in $x_0$
+    \item posso definire la retta tangente al grafico di $f$ in $x_0$ come la retta di equazione
+    \begin{equation*}
+        y=f(x_0)+f'(x_0)(x-x_0).
+    \end{equation*}
+\end{enumerate}
+
+\subsection{Differenziabilità}
+$f:\R\rightarrow\R$ è derivabile in $x_0\in \R \Leftrightarrow \exists \,\, a \in \R \mid f(x)=f(x_0)+a(x-x_0)+o(x-x_0)$ per $x \rightarrow x_0$ e in tal caso $a=f'(x_0)$.\\
+$f:\R^n\rightarrow\R, \overline{x_0}\in\R^n$, $\exists\overline{a}\in\R^n \mid f(\overline{x})=f(\overline{x_0})+ \langle \overline{a},\overline{x}-\overline{x_0} \rangle +o(\overline{x}-\overline{x_0})$, $\lim_{\overline{x}\rightarrow\overline{x_0}}\frac{o(\overline{x}-\overline{x_0})}{\|\overline{x}-\overline{x_0}\|}=0$.\\
+Se vale quanto sopra, $f$ è continua e posso definire l'iperpiano tangente al grafico di $f$ in $(\overline{x_0},f(\overline{x_0}))$ come l'iperpiano $\Gamma_f$ in $\R^{n+1}$ di equazione
+\begin{equation*}
+    x_{n+1}=f(\overline{x_0})+\langle \overline{a},\overline{x}-\overline{x_0}\rangle
+\end{equation*}
+\begin{equation*}
+    f(\overline{x})-f(\overline{x_0})-\langle \overline{a},\overline{x}-\overline{x_0} \rangle=o(\overline{x}-\overline{x_0})
+\end{equation*}
+\begin{equation*}
+    \Gamma_f=\{(\overline{x},f(\overline{x}))\mid \overline{x} \in \R^n\}\subseteq\R^{n+1},\,\,\,\,\,\,\,\,\,(x_1,...,x_n,x_{n+1})
+\end{equation*}
+
+\paragraph{{Definizione}}
+$A\subseteq\R^n$ aperto, $f:A\rightarrow \R$, $\overline{x_0}\in A$. $f$ si dice \underline{differenziabile} in $\overline{x_0}$ se $\exists\,\, \overline{a}\in \R^n$ tale che
+\begin{equation*}
+    \lim_{\overline{x}\rightarrow\overline{x_0}}\frac{f(\overline{x})-f(\overline{x_0})-\langle \overline{a},\overline{x}-\overline{x_0}\rangle}{\|\overline{x}-\overline{x_0}\|}=0.
+\end{equation*}
+
+\paragraph{{Teorema}}
+$A\subseteq\R^n$ aperto, $f:A\rightarrow\R$ differenziabile in $\overline{x_0}\in A$. Allora 
+\begin{enumerate}
+    \item $f$ è continua e derivabile in $\overline{x_0}$;
+    \item vale 
+    \begin{equation*}
+         \lim_{\overline{x}\rightarrow\overline{x_0}}\frac{f(\overline{x})-f(\overline{x_0})-\langle \nabla f(\overline{x_0}),\overline{x}-\overline{x_0}\rangle}{\|\overline{x}-\overline{x_0}\|}=0;
+    \end{equation*}
+    \item (Formula del gradiente) $\forall$ versore $\overline{v}\in\R^n\exists$ la derivata direzionale di $f$ lungo $\overline{v}$ in $\overline{x_0}$ e vale
+    \begin{equation*}
+        D_{\overline{v}}f(\overline{x_0})=\langle \nabla f(\overline{x_0}), \overline{v} \rangle.
+    \end{equation*}
+\end{enumerate}
+
+\paragraph{{Osservazione}}
+Se $f$ è funzione di una variabile reale, $f: \dom f\rightarrow\R$, $\dom f \subseteq\R$, $f$ è differenziabile in $x_0\in \dom f \Leftrightarrow$ è derivabile in $x_0$.
+
+\paragraph{{Osservazione}}
+La tesi 2. del teorema dice che il vettore $\overline{a}$ che compare nella definizione di differenziabilità è $\nabla f(\overline{x_0})$. Quindi, si può riparafrasare la definizione di differenziabilità dicendo che $f$ è differenziabile in $\overline{x_0}$ se è derivabile in $\overline{x_0}$ e vale 
+\begin{equation*}
+         \lim_{\overline{x}\rightarrow\overline{x_0}}\frac{f(\overline{x})-f(\overline{x_0})-\langle \nabla f(\overline{x_0}),\overline{x}-\overline{x_0}\rangle}{\|\overline{x}-\overline{x_0}\|}=0.
+\end{equation*}
+
+\paragraph{{Dimostrazione}}
+\begin{enumerate}
+    \item $f(\overline{x})=f(\overline{x_0})+\langle \overline{a},\overline{x}-\overline{x_0} \rangle+o(\overline{x}-\overline{x_0})$\\
+    $\lim_{\overline{x}\rightarrow\overline{x_0}}f(\overline{x})=\lim_{\overline{x}\rightarrow\overline{x_0}}f(\overline{x_0})+\langle \overline{a},\overline{x}-\overline{x_0} \rangle+o(\overline{x}-\overline{x_0})=f(\overline{x_0})\Rightarrow f$ è continua in $\overline{x_0}$.\\
+    Calcoliamo $\partial_{x_k}f(\overline{x_0})$\\
+    $\partial_{x_k}f(\overline{x_0})=\lim_{t\rightarrow0}\frac{f(\overline{x_0}+t\overline{e}_k)-f(\overline{x_0})}{t}$\\
+    $f(\overline{x})=f(\overline{x_0})+\langle\overline{a},\overline{x}-\overline{x_0}\rangle+o(\overline{x}-\overline{x_0})$\\
+    $f(\overline{x_0}+t\overline{e_k})=f(\overline{x_0})+\langle\overline{a},t\overline{e_k}\rangle+o(t\overline{e_k})=f(\overline{x_o})+ta_k+o(t) $\\
+    dove $\overline{a}=(a_1,...,a_n)$, cioè $a_k$ è la $k$-esima componente del vettore $\overline{a}$.\\
+    $\partial_{x_k}f(\overline{x_0})=\lim_{t \rightarrow 0}\frac{f(\overline{x_0})+ta_k+o(t)-f(\overline{x_0})}{t}=a_k \Rightarrow f$ è derivabile in $\overline{x_0}$ e $\nabla f(x_0)=\overline{a}$.
+    \item E' conseguenza del fatto che $\lim_{\overline{x}\rightarrow\overline{x_0}}\frac{f(\overline{x})-f(\overline{x_0})-\langle\overline{a},\overline{x}-\overline{x_0}\rangle}{\|\overline{x}-\overline{x_0}\|}=0$ e che $\overline{a}=\nabla f(\overline{x_0})$.\\
+    In particolare, $f(\overline{x})=f(\overline{x_0})+\langle \nabla f(\overline{x_0}),\overline{x}-\overline{x_0} \rangle +o(\overline{x}-\overline{x_0})$.
+    \item Sia $\overline{v}\in \R^n$ versore. Calcoliamo $D_{\overline{v}}f(\overline{x_0})=\lim_{t\rightarrow0}\frac{f(\overline{x_0}+t\overline{v})-f(\overline{x_0})}{t}$.\\
+    Utilizziamo quanto dimostrato in 2. con $\overline{x}=\overline{x_0}+t\overline{v}$\\
+    $f(\overline{x_0}+t\overline{v})=f(\overline{x_0})+\langle \nabla f(\overline{x_0}), t\overline{v} \rangle + o(t\overline{v})=f(\overline{x_0})+t\langle \nabla f(\overline{x_0}),\overline{v} \rangle +o(t)$\\
+    $D_{\overline{v}}f(\overline{x_0})=\lim_{t\rightarrow 0}\frac{f(\overline{x_0})+t\langle\nabla f(\overline{x_0}),\overline{v}\rangle+o(t)-f(\overline{x_0})}{t}=\langle \nabla f(\overline{x_0}),\overline{v} \rangle$.
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Una funzione può essere continua e derivabile in un punto senza essere differenziabile.
+
+\paragraph{{Osservazione}}
+Somma, prodotto, quoziente (con denominatore non nullo) e composizioni di funzioni differenziabili sono differenziabili.
+
+\paragraph{{Osservazione (direzione di massima crescita)}}
+$f:\R^2\rightarrow\R$, differenziabile in $(x_0,y_0)$, consideriamo tutte le rette passanti per $(x_0,y_0)$ e le restrizioni di $f$ lungo tali rette. Qual è la retta lungo cui $f$ cresce più velocemente?\\
+%IMMAGINE\\
+$f:A \rightarrow\R$, $A\subseteq\R^n$ aperto, $\overline{x_0}\in A$, $f$ differenziabile in $\overline{x_0}$. Voglio trovare il versore $\overline{v}$ di $\R^n$ per cui la restrizione di $f$ lungo la retta per $\overline{x_0}$ parallela a $\overline{v}$, $\phi_{\overline{v}}t\mapsto f(\overline{x_0}+\overline{v})$ cresce più velocemente in un intorno di $\overline{x_0}$, $\phi_{\overline{v}}'(0)=D_{\overline{v}}f(\overline{x_0})$.\\
+Cerco $\overline{v}$ in modo che $\phi_{\overline{v}}'(0)=D_{\overline{v}}f(\overline{x_0})$ sia massima. $D_{\overline{v}}f(\overline{x_0})=\langle \nabla f(x_0),\overline{v} \rangle$ è massima se $\overline{v}=\frac{\nabla f(\overline{x_0})}{\|\nabla f(\overline{x_0})\|}$ ($\nabla f(\overline{x_0})\neq \overline{0}$).\\
+Quindi $\nabla f(\overline{x_0})$ fornisce la direzione di massima crescita di $f$ in $\overline{x_0}$.\\
+%IMMAGINE\\
+
+\paragraph{{Definizione}}
+$A\subseteq\R^n$ aperto, $f:A \rightarrow \R$ differenziabile in $\overline{x_0}\in A$. Si definisce \underline{iperpiano tangente} al grafico di $f$ in $(\overline{x_0},f(\overline{x_0}))$ l'iperpiano di $\R^{n+1}$ di equazione
+\begin{align*}
+    x_{n+1}&=f(x_0)+\langle \nabla f(\overline{x_0}), \overline{x}-\overline{x_0} \rangle\\
+    \overline{x}&=(x_1,...,x_n).
+\end{align*}
+In particolare, se $A \subseteq \R^2$ e $f$ è differenziabile in $(x_0,y_0)$, il piano tangente al grafico di $f$ in $((x_0,y_0),f(x_0,y_0))$ è il piano di equazione
+\begin{align*}
+    z&=f(x_0,y_0)-\langle \nabla f(x_0,y_0),(x-x_0,y-y_0) \rangle\\
+    z&=f(x_0,y_0)+\partial_xf(x_0,y_0)(x-x_0)+\partial_yf(x_0,y_0)(y-y_0).
+\end{align*}
+
+\subsection{{Teorema del differenziale totale}}
+\paragraph{{Teorema}}
+$A \subseteq \R^n$, $f:A\rightarrow \R$ derivabile in un intorno di $\overline{x_0}\in A$. Se le derivate parziali di $f$ sono continue in $\overline{x_0}$, cioè
+\begin{equation*}
+    \lim_{\overline{x}\rightarrow\overline{x_0}}\partial_{x_k}f(\overline{x})=\partial_{x_k}f(\overline{x_0})\,\,\, \forall \,\,k=1,...,n,
+\end{equation*}
+allora $f$ è differenziabile in $\overline{x_0}$.
+
+\paragraph{{Definizione}}
+Una funzione $f$ definita in un sottoinsieme di $\R^n$ si dice differenziabile in $A \subseteq\R^n$ se è differenziabile in ogni punto di $A$. Si dice di classe $C^1$ in $A$ e si scrive $f \in C^1(A)$ se è derivabile in $A$ e le sue derivate parziali sono continue in $A$.
+
+\paragraph{Corollario}
+$A\subseteq\R^n$ aperto, $f\in C^1(A)$. Allora $f$ è differenziabile in $A$.
+
+\paragraph{{Osservazione}}
+Il teorema del differenziale totale fornisce una condizione sufficiente, \underline{ma non necessaria}, per la differenziabilità, cioè una funzione può essere differenziabile in un punto senza avere le derivate parziali continue in quel punto.
+
+\paragraph{{Notazione}}
+$\overline{x_1},\overline{x_2}\in\R^n$\\
+$[\overline{x_1},\overline{x_2}]=\{\overline{x_1}+\lambda(\overline{x_2}-\overline{x_1})\mid\lambda\in[0,1]\}$\\
+$]\overline{x_1},\overline{x_2}[=\{\overline{x_1}+\lambda(\overline{x_2}-\overline{x_1})\mid\lambda\in]0,1[\}$\\
+$[\overline{x_1},\overline{x_2}[=\{\overline{x_1}+\lambda(\overline{x_2}-\overline{x_1})\mid\lambda\in[0,1[\}$\\
+$]\overline{x_1},\overline{x_2}]=\{\overline{x_1}+\lambda(\overline{x_2}-\overline{x_1})\mid\lambda\in]0,1]\}$\\
+segmenti di estremi $\overline{x_1}$ e $\overline{x_2}$.
+
+\subsection{{Teorema del valor medio}}
+\paragraph{{Teorema}}
+$A \subseteq \R^n$ connesso per archi, $f:A\rightarrow \R$, $\overline{x_1},\overline{x_2}\in A$ tali che $[\overline{x_1},\overline{x_2}]\subseteq A$. Se $f$ è continua in $[\overline{x_1},\overline{x_2}]$ e differenziabile in $]\overline{x_1},\overline{x_2}[$, allora $\exists\,\, \overline{\xi} \in]\overline{x_1},\overline{x_2}[$ tale che $f(\overline{x_2})-f(\overline{x_1})=\langle \nabla f(\overline{\xi}),\overline{x_2}-\overline{x_1} \rangle$.
+
+\paragraph{{Dimostrazione}}
+Sia $\overline{v}=\frac{\overline{x_2}-\overline{x_1}}{\|\overline{x_2}-\overline{x_1}\|}$ versore.\\
+$\phi_{\overline{v}}:[0,\|\overline{x_2}-\overline{x_1}\|]\rightarrow\R$\\
+$\phi_{\overline{v}}(t)=f(\overline{x_1}+t\overline{v})$\\
+$\phi_{\overline{v}}$ è continua nel suo dominio e derivabile in $]0,\| \overline{x_2}-\overline{x_1} \|[$ per la formula del gradiente e $\phi_{\overline{v}}'(t)=\langle\nabla f(\overline{x_1}+t\overline{v}),\overline{v}\rangle$. \\
+Per il teorema di Lagrange $\exists\,\, \overline{t}\in]0,\|\overline{x_2}-\overline{x_1}\|[\,\, \mid \phi_{\overline{v}}(\|\overline{x_2}-\overline{x_1}\|)-\phi(0)=\phi'(\overline{t})(\|\overline{x_2}-\overline{x_1}\|-0)\Rightarrow f(\overline{x_2})-f(\overline{x_1})=\langle\nabla f(\overline{\xi}),\overline{x_2}-\overline{x_1}\rangle$
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\paragraph{{Corollario}}
+Sia $A \subseteq \R^n$ aperto connesso per archi, $f:A \rightarrow \R$ derivabile con $\nabla f(\overline{x})=\overline{0}\,\, \forall \,\, \overline{x} \in A$. Allora $f$ è costante. 
+
+\paragraph{{Dimostrazione}}
+$f \in C^1(A)$ e quindi è differenziabile in $A$. Supponendo per semplicità $A$ convesso. $\overline{x_1},\overline{x_2}\in A\Rightarrow [\overline{x_1},\overline{x_2}]\subseteq A \,\,\exists \,\, \overline{\xi}\in ]\overline{x_1},\overline{x_2}[\,\,\mid\,\, f(\overline{x_2})-f(\overline{x_1})=\langle\nabla f(\overline{\xi}),\overline{x_2}-\overline{x_1}\rangle =0 \Rightarrow f$ è costante.
+%IMMAGINE\\
+%$f(\overline{x_1})=f(\overline{y_1})=f(\overline{y_2})=f(\overline{x_2})$.
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsection{{Ricerca di punti di estremo}}
+\paragraph{Ripasso in $\R$}
+$f:]a,b[\rightarrow \R$, derivabile.
+\begin{enumerate}
+    \item Teorema di Fermat: i punti di massimo e minimo di $f$ sono punti stazionari, cioè soddisfano $f'(x)=0$.
+    $f: A \rightarrow \R$, $A \subseteq \R^n$ aperto, $\overline{x_0}\in A$ punto di estremo per $f \Rightarrow \nabla f(\overline{x_0})=\overline{0}$
+    \item Se $x_0 \in ]a,b[$ è punto stazionario, come faccio a capire se è di massimo, di minimo o di flesso orizzontale?\\
+    $f''(x_0)<0 \Rightarrow x_0$ punto di massimo\\
+    $f''(x_0)>0 \Rightarrow x_0$ punto di minimo\\
+    $f''(x_0)=0 \Rightarrow x_0$ è candidato punto di flesso.
+\end{enumerate}
+
+\paragraph{{Definizione}}
+$f:\dom f \rightarrow \R$, $\dom f \subseteq \R^n$. $\overline{x_0}\in \dom f$ si dice punto di massimo relativo per $f$ se $\exists r >0 \mid f(\overline{x_0})\geq f(\overline{x})\forall\overline{x}\in B_r(\overline{x_0})\cap \dom f$, $\overline{x_0}\in \dom f$ si dice punto di minimo relativo se $\exists r >0 \mid f(\overline{x_0})\leq f(\overline{x})\forall \overline{x} \in B_r(\overline{x_0})\cap \dom f$. $\overline{x_0} \in \dom f$ di massimo o minimo relativo si dice anche punto di estremo relativo.\\
+$\overline{x_0}\in \dom f$ si dice di massimo (assoluto o globale) se $f(\overline{x_0})\geq f(\overline{x})\forall \overline{x} \in \dom f$. Definizione analoga si dà per un punto di minimo (assoluto o globale).
+
+\subsubsection{{Teorema di Fermat}}
+\paragraph{{Teorema}}
+$A \in \R^n$ aperto, $f: A \rightarrow \R$ derivabile in $\overline{x_0} \in A$, punto di estremo relativo per $f$. Allora $\nabla f(\overline{x_0})=\overline{0}$, cioè $\partial_{x_k}f(\overline{x_0})=0 \forall k =1,...,n$.
+
+\paragraph{{Dimostrazione}}
+$\exists \delta >0 \mid B_\delta (\overline{x_0})\subseteq A$ perché $A$ è aperto. Fissato $k=1,...,n$ sia $\phi_k(t)=f(\overline{x_0}+t\overline{e_k})$, $ t \in ]-\delta,\delta[$ restrizione di $f$ lungo un segmento parallelo  a $\overline{e_k}$ passante per $\overline{x_0}$ e di lunghezza $2\delta$.\\
+Per fissare le idee assumiamo che $\overline{x_0}$ sia di massimo relativo. Prendendo $\delta$ abbastanza piccolo, possiamo assumere che $f(\overline{x_0})\geq f(\overline{x})\forall \overline{x} \in B_\delta (\overline{x_0})$.\\
+$\phi(0)=f(\overline{x_0})\geq f(\overline{x_0}+t\overline{e_k})=\phi_k(t)\forall \,\, t \in ]-\delta,\delta[$ perché $\overline{x_0}+t \overline{e_k} \in B_\delta (\overline{x_0})\forall t \in ]-\delta,\delta[ \Rightarrow t=0$ è punto di massimo per $\phi \Rightarrow \phi'(0)=\partial_{x_k}f(\overline{x_0})=0$ per il teorema di Fermat in una variabile.
+\begin{flushright}
+    \textbf{QED}
+\end{flushright}
+
+\paragraph{{Definizione}}
+$f:\dom f \rightarrow \R$, $\overline{x_0}\in \dom f \subseteq \R^n$. $f$ derivabile in $\overline{x_0}$. Se $\nabla f(\overline{x_0})=\overline{0}$, allora $\overline{x_0}$ si dice \underline{punto stazionario o critico} per $f$.
+
+\paragraph{{Definizione}}
+$f: \dom f \rightarrow \R$, $ \overline{x_0}\in \dom f \subseteq \R^n$ punto stazionario. Se $\overline{x_0}$ non è punto di estremo relativo, allora si dice \underline{punto di sella} per $f$.
+
+\subsubsection{{Derivate di ordine superiore e polinomio di Taylor}}
+\paragraph{Ripasso in $\R$}
+$f: \R \rightarrow \R$, $x_0\in\R \mid f'(x_0)=0$. Guardo $f''(x_0)$.\\ 
+%$f''(x_0)<0$ %IMMAGINE\\
+%$f''(x_0)>0$ %IMMAGINE\\
+$f(x)=f(x_0)+f'(x_0)(x-x_0)+\frac{1}{2}f''(x_0)(x-x_0)^2+o((x-x_0)^2)=f(x_0)+\frac{1}{2}f''(x_0)(x-x_0)^2+o((x-x_0)^2)$\\
+$y=f(x_0)+\frac{1}{2}f''(x_0)(x-x_0)^2$\\
+$f(x)=f(x_0)+\frac{1}{2}f''(x_0)(x-x_0)^2+o((x-x_0)^2)=f(x_0)+(x-x_0)^2\left[ \frac{1}{2} f''(x_0)+o(1) \right]$ che è $> f(x_0)$ o $< f(x_0)$ vicino a $x_0$ se $f''(x_0)< 0$ o $f''(x_0)>0$.\\
+Il criterio della derivata seconda per studiare la natura di un punto critico discende dalla possibilità di scrivere una formula di Taylor al secondo ordine.
+
+\paragraph{{Definizione}}
+$A \subseteq \R^n$ aperto, $f: A \rightarrow \R$ derivabile rispetto a $x_i$ in un intorno $U$ di $\overline{x_0}$. Se $\partial_{x_i}f:U\rightarrow \R$, $\overline{x} \mapsto \partial_{x_i}f(\overline{x})$ è derivabile rispetto a $x_j$ in $\overline{x_0}$, allora si dice che $f$ ha derivata parziale seconda in $\overline{x_0}$, $\partial_{x_j}(\partial_{x_i}f)(\overline{x_0})$ ed è indicata con $\partial_{x_jx_i}^2f(\overline{x_0})$, $ \frac{\partial^2 f}{\partial_{x_j}\partial_{x_i}}(\overline{x_0})$, $D_{x_jx_i}^2f(\overline{x_0})$.
+\begin{itemize}
+    \item $f$ si dice derivabile due volte in $\overline{x_0} $ se in $\overline{x_0}$ ha tutte le $n^2$ derivate parziali seconde.
+    \item $f$ si dice differenziabile due volte in $\overline{x_0}$ se è differenziabile in un intorno di $\overline{x_0}$ e le sue derivate parziali prime sono differenziabili in $\overline{x_0}$.
+    \item $f$ si dice di classe $C^2$ in $A$ e si scrive $f \in C^2(A)$ se è derivabile due volte in $A$ e le sue derivate parziali seconde sono continue in $A$. In tal caso $f$ è differenziabile due volte in $A$ per il teorema differenziale totale. 
+\end{itemize}
+
+\paragraph{{Definizione}} 
+In generale, se $A \subseteq \R^n$ è aperto e $f:A\rightarrow\R$, $f$ si dice di classe $C^k$ in $A$ e si scrive $f \in C^k(A)$, $k \geq 1$, se $f$ è derivabile $k$ volte in $A$ e le sue derivate parziali di ordine $k$ sono continue. $f$ si dice di classe $C^\infty$ in $A$ e si scrive $f \in C^\infty(A)$ se $f\in C^k(A) \,\, \forall \,\, k \geq 1$.
+
+\subsubsection{{Teorema di Schwarz}}
+\paragraph{{Teorema}}
+$A \subseteq\R^n$ aperto, $f:A\rightarrow\R$ tale che $\partial_{x_ix_j}^2f$ e $\partial_{x_jx_i}^2f$ ($i$ e $j$ fissati) esistono in un intorno $U$ di $\overline{x_0}\in A$ e sono continue in $\overline{x_0}$. Allora
+\begin{equation*}
+    \partial_{x_jx_i}^2f(\overline{x_0})=\partial_{x_ix_j}^2f(\overline{x_0}).
+\end{equation*}
+In particolare, se $f \in C^2(A)$, si ha 
+\begin{equation*}
+     \partial_{x_jx_i}^2f(\overline{x})=\partial_{x_ix_j}^2f(\overline{x})\,\,\, \forall\,\, \overline{x} \in A\,\, \forall \,\,i,j=1,...,n. 
+\end{equation*}  
+
+\paragraph{{Definizione}}
+$A \subseteq \R^n$ aperto, $f: A \rightarrow \R$ derivabile due volte in $\overline{x}\in A$. Si dice \underline{matrice hessiana} di $f$ in $\overline{x}$ la matrice
+\begin{equation*}
+    D^2f(\overline{x})=\begin{pmatrix}
+        \partial_{x_1x_1}^2f(\overline{x})& \partial_{x_1x_2}^2f(\overline{x})  & \cdots & \partial_{x_1x_n}^2f(\overline{x})\\
+        \partial_{x_2x_1}^2f(\overline{x})& \partial_{x_2x_2}^2f(\overline{x}) & \cdots & \partial_{x_2x_n}^2f(\overline{x})\\
+        \vdots&\vdots & \ddots &\vdots \\
+        \partial_{x_nx_1}^2f(\overline{x})& \partial_{x_nx_2}^2f(\overline{x})& \cdots & \partial_{x_nx_n}^2f(\overline{x}) \\
+    \end{pmatrix}
+\end{equation*}
+
+\paragraph{{Osservazione}} Se $f \in  C^2(A)$, $D^2f(\overline{x})$ è matrice simmetrica per il teorema di Schwarz.
+
+\subsubsection{{Formula di Taylor}}
+$f: \R \rightarrow \R$ derivabile due volte in $x_0 \in \R$\\
+$\Rightarrow f(x)=f(x_0)+f'(x_0)(x-x_0)+\frac{1}{2}f''(x_0)(x-x_0)^2+o(|x-x_0|^2)$\\
+$f: \R^n \rightarrow \R$, differenziabile due volte in $\overline{x_0} \in \R^n $\\
+$\Rightarrow f(\overline{x})=f(\overline{x_0})+\langle \nabla f(\overline{x_0}), \overline{x}-\overline{x_0} \rangle + \frac{1}{2} \langle D^2f(\overline{x_0})(\overline{x}-\overline{x_0}), \overline{x}-\overline{x_0} \rangle + o(\|\overline{x}-\overline{x_0}\|^2)=f(\overline{x_0})+\langle \nabla f(\overline{x_0}), \overline{x}-\overline{x_0} \rangle + \frac{1}{2} (\overline{x}-\overline{x_0})^TD^2 f(\overline{x_0})(\overline{x}-\overline{x_0})+o(\|\overline{x}-\overline{x_0}\|^2)$
+\begin{equation*}
+    T(\overline{x})=f(\overline{x_0}) +\langle\nabla f(\overline{x_0}),\overline{x}-\overline{x_0} \rangle +\frac{1}{2} \langle D^2f(\overline{x_0})(\overline{x} -\overline{x_0}),\overline{x}-\overline{x_0} \rangle
+\end{equation*}
+polinomio di Taylor di ordine o grado $2$ di $f$ di centro $\overline{x_0}$.
+
+\paragraph{{Teorema}}
+$A \subseteq \R^n$ aperto, $f: A \rightarrow \R$
+\begin{enumerate}
+    \item Se $f$ è differenziabile $2$ volte in $\overline{x_0} \in A$, allora $f(\overline{x})=T(\overline{x})+o(\|\overline{x}-\overline{x_0}\|^2)$ per $\overline{x}\rightarrow \overline{x_0}$ e $T$ è l'unico polinomio di grado al più $2$ che sodddisfa  la formula di Taylor di ordine $2$ di $f$ di centro $\overline{x_0}$.
+    \item Se $f$ è differenziabile due volte in $A$ e $[\overline{x_0},\overline{x}]\subseteq A$, $\overline{x_0},\overline{x}\in A$ allora $ \exists\,\, \overline{\xi}\in ]\overline{x_0},\overline{x}[$ tale che $f(\overline{x})=f(\overline{x_0})+\langle \nabla f(\overline{x_0}),\overline{x} -\overline{x_0}\rangle +\frac{1}{2}\langle D^2 f(\overline{\xi})(\overline{x}-\overline{x_0}),\overline{x}-\overline{x_0} \rangle$.
+\end{enumerate} 
+
+\paragraph{{Dimostrazione della formula di Taylor}}
+$\overline{x_0}, \overline{x}\in A$, $\overline{x}\neq \overline{x_0}$, $\phi:[0, \|\overline{x}-\overline{x_0}\|]\rightarrow \R$, $\overline{v}=\frac{\overline{x}-\overline{x_0}}{\|\overline{x}-\overline{x_0}\|}$\\
+$\phi(t)=f(\overline{x_0}+t\overline{v})$, restrizione di $f$ lungo il segmento $[\overline{x_0},\overline{x}]$.\\
+$\phi$ è derivabile due volte in $t=0$ perché $f$ lo è in $\overline{x_0}$.\\
+$\phi(t)=\phi(0)+\phi'(0)t+\frac{1}{2}\phi''(0)t^2+o(t^2)$ per $t \rightarrow 0$.\\
+$\phi'(t)=\langle\nabla f(\overline{x_0}+t\overline{v}),\overline{v}\rangle$\\
+$\phi'(0)=\langle \nabla f(\overline{x_0}), \frac{\overline{x}-\overline{x_0}}{\|\overline{x}-\overline{x_0}\|}\rangle$\\
+$\phi''(t)=\langle D^2f(\overline{x_0}+t\overline{v})\overline{v},\overline{v} \rangle$\\
+$\phi''(0)=\langle D^2 f(\overline{x_0})\frac{\overline{x}-\overline{x_0}}{\|\overline{x}-\overline{x_0}\|}, \frac{\overline{x}-\overline{x_0}}{\|\overline{x}-\overline{x_0}\|}\rangle$.\\
+$\phi(\|\overline{x}-\overline{x_0}\|)=\phi(0)+\phi'(0) \|\overline{x}-\overline{x_0}\|+\frac{1}{2}\phi''(0)\| \overline{x}-\overline{x_0}\|^2+o(\|\overline{x}-\overline{x_0}\|^2)$\\
+$f(\overline{x})=f(\overline{x_0})+\langle \nabla f(\overline{x_0}), \frac{\overline{x}-\overline{x_0}}{\|\overline{x}-\overline{x_0}\|} \rangle \|\overline{x} -\overline{x_0}\|+ \frac{1}{2}\langle D^2 f(\overline{x_0})\frac{\overline{x}-\overline{x_0}}{\|\overline{x}-\overline{x_0}\|},\frac{\overline{x}-\overline{x_0}}{\|\overline{x}-\overline{x_0}\|}  \rangle \|\overline{x}-\overline{x_0}\|+o(\|\overline{x}-\overline{x_0}\|)$
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+\subsubsection{{Studio della natura dei punti critici}}
+Sia $Q: \R^n$ forma quadratica. $Q(\overline{x})=\overline{x}^T A \overline{x}$, con $A$ matrice simmetrica $n\times n$.
+\paragraph{{Definizione}}
+\begin{enumerate}
+    \item $Q$ si dice \underline{definita positiva} se $Q(\overline{x}) >0\,\, \forall\,\, \overline{x} \neq \overline{0}$.
+    \item $Q$ si dice \underline{definita negativa} se $Q(\overline{x})<0 \,\, \forall \,\, \overline{x} \neq \overline{0}$.
+    \item $Q$ si dice \underline{semidefinita positiva} se $Q(\overline{x})\geq 0 \,\, \forall \,\, \overline{x} \in \R^n$.
+    \item $Q$ si dice \underline{semidefinita negativa} se $Q(\overline{x})\leq 0 \,\, \forall \,\, \overline{x} \in \R^n$.
+    \item $Q$ si dice \underline{indefinita} se $\exists \,\,\overline{x_1},\overline{x_2}\in \R^{n}$ tali che $Q(\overline{x_1})>0$ e $Q(\overline{x_2})<0$.
+\end{enumerate}
+
+\paragraph{{Proposizione}}
+$Q$ forma quadratica su $\R^n$. Sia $A$ la matrice simmetrica $n \times n$ associata a $Q$ e siano $\lambda_1,...,\lambda_n$ gli autovalori di $A$ contati con la loro molteplicità.
+\begin{enumerate}
+    \item $Q$ è definita positiva $\Leftrightarrow \lambda_i >0 \,\, \forall i =1,...,n$ e in tal caso $\exists \,\, c >0 \mid Q(\overline{x})\geq c\|\overline{x}\|^2\,\, \forall \overline{x} \in \R^n$.
+    \item $Q$ è semidefinita positiva $\Leftrightarrow \lambda_i \geq 0 \,\, \forall i=1,...,n$.
+    \item $Q$ è definita negativa $\Leftrightarrow \lambda_i <0 \,\, \forall i =1,...,n$ e in tal caso $\exists \,\, c >0 \mid Q(\overline{x})\leq -c\|\overline{x}\|^2\,\, \forall \overline{x} \in \R^n$.
+    \item $Q$ è semidefinita negativa $\Leftrightarrow \lambda_i \leq 0 \,\, \forall i=1,...,n$.
+    \item $Q$ è indefinita $\Leftrightarrow \exists\,\, i,j \in \{1,...,n\} \mid \lambda_i <0$ e $\lambda_j>0$.
+\end{enumerate}
+
+\paragraph{{Osservazione}}
+Se $Q$ è la forma quadratica nulla, è contemporaneamente semidefinita positiva e semidefinita negativa.
+\paragraph{Definizione}
+Sia $A$ matrice $n \times n$ nella forma
+\begin{equation*}
+    A= \begin{pmatrix}
+    a_{11}&a_{12} &\cdots &a_{1n} \\
+    a_{21}&a_{22} &\cdots &a_{2n} \\
+    \vdots&\vdots &\ddots &\vdots \\
+    a_{n1}&a_{n2} &\cdots &a_{nn} \\
+\end{pmatrix}
+\end{equation*}
+I minori principali di $A$ sono i determinanti delle sottomatrici lungo la diagonale principale cioè $\alpha_1=a_{11}$, $\alpha_2=\det\begin{pmatrix}
+    a_{11}&a_{12} \\
+    a_{21}&a_{22}
+\end{pmatrix}$, $\alpha_3=\det\begin{pmatrix}
+    a_{11}&a_{21}&a_{31} \\
+    a_{21}&a_{22}&a_{32} \\
+    a_{31}&a_{23}&a_{33} 
+\end{pmatrix}$
+etc.
+
+\paragraph{{Proposizione}}
+Sia $Q$ forma quadratica, sia $A$ la matrice simmetrica ad essa associata e sia $\alpha_1,...,\alpha_n$ i suoi minori principali.
+\begin{enumerate}
+    \item $Q$ è definita positiva $\Leftrightarrow \alpha_i >0\,\, \forall \,\, i =1,...,n$
+    \item $Q$ è definita negativa $\Leftrightarrow \alpha_i <0 $ per i dispari e $\alpha_i>0$ per i pari. 
+\end{enumerate}
+In particolare, se $A$ è matrice $2 \times 2$, allora
+\begin{enumerate}
+    \item se $\det A <0 \Rightarrow Q$ è indefinita,
+    \item se $\det A=0 \Rightarrow Q$ è semidefinita.
+\end{enumerate}
+
+\paragraph{Notazione}
+Con abuso di notazione si usa dire
+\begin{enumerate}
+    \item $Q$ definita positiva: $A >0$; 
+    \item $Q$ definita negativa: $A<0$;
+    \item $Q$ semidefinita positiva: $A \geq 0$;
+    \item $Q$ semidefinita negativa: $A \leq 0$.
+\end{enumerate}
+
+\paragraph{{Teorema}}
+$A \subseteq \R^n$ aperto, $f:A \rightarrow  \R$ differenziabile due volte in $\overline{x_0}\in A$, punto stazionario per $f$.
+\begin{enumerate}
+    \item Se $D^2f(\overline{x_0})>0 $ allora $\overline{x_0}$ è punto di minimo relativo per $f$.
+    \item Se $D^2f(\overline{x_0})<0$ allora $\overline{x_0}$ è punto di massimo relativo per $f$. 
+    \item Se $D^2f(\overline{x_0})$ è indefinita, allora $\overline{x_0}$ è punto di sella per $f$.
+    \item Se $\overline{x_0}$ è punto di minimo relativo, allora $D^2f(\overline{x_0})\geq0$.
+    \item Se $\overline{x_0}$ è punto di massimo relativo per $f$, allora $D^2f(\overline{x_0})\leq0$.
+\end{enumerate}
+
+\paragraph{{Osservazione}}
+I punti 4. e 5. sono conseguenza di 1., 2. e 3.
+
+\paragraph{{Dimostrazione del Teorema}}
+\begin{enumerate}
+    \item $f(\overline{x})=f(\overline{x_0})+\langle \nabla f(\overline{x_0}), \overline{x}-\overline{x_0} \rangle+\frac{1}{2}\langle D^2f(\overline{x_0})(\overline{x}-\overline{x_0}),(\overline{x}-\overline{x_0}) \rangle+o(\| \overline{x}-\overline{x_0} \|^2)=f(\overline{x_0})+\frac{1}{2}\langle D^2f(\overline{x_0})(\overline{x}-\overline{x_0}),(\overline{x}-\overline{x_0})\rangle+o(\|\overline{x}-\overline{x_0}\|^2)$\\
+    $D^2f(\overline{x_0})>0 \Rightarrow \exists \,\, c >0 \mid \langle D^2f(\overline{x_0})(\overline{x}-\overline{x_0}),\overline{x}-\overline{x_0} \rangle \geq c\|\overline{x}-\overline{x_0} \|^2\Rightarrow f(\overline{x})\geq f(\overline{x_0})+\frac{c}{2}\|\overline{x}-\overline{x_0}\|^2+o(\|\overline{x}-\overline{x_0}\|^2)=-f(\overline{x_0})+\|\overline{x}-\overline{x_0} \|^2(\frac{c}{2}+o(1))\Rightarrow \exists\,\, r>0 \mid \frac{c}{2}+o(1)\geq \frac{c}{4}$in $B_r(\overline{x_0})$ per il teorema della permanenza del segno\\
+    $\Rightarrow \forall\,\, \overline{x}\in B_r(\overline{x_0})$ si ha
+    $f(\overline{x})\geq f(\overline{x_0})+\frac{c}{4}\|\overline{x}-\overline{x_0}\|^2 \geq f(\overline{x_0}) \Rightarrow \overline{x_0}$ è punto di minimo relativo.
+    \item Analoga al punto 1. Si sfrutta il fatto che $\exists \,\, c>0 \mid \langle D^2f(\overline{x_0})(\overline{x}-\overline{x_0}),\overline{x}-\overline{x_0} \rangle \leq -c\|\overline{x}-\overline{x_0}\|^2$.
+    \item $D^2f(\overline{x_0})$ è indefinita, quindi ha due autovalori $\lambda_1$ e $\lambda_2$ tali che $\lambda_1<0$ e $\lambda_2>0$.\\
+    Siano $\overline{r_1}$ e $\overline{r_2}$ i rispettivi autovettori tali che $D^2f(\overline{x_0})\overline{r_1}=\lambda_1\overline{r_1}$, $D^2f(\overline{x_0})\overline{r_2}=\lambda_2\overline{r_2}$, che supponiamo avere norma uno, $\|\overline{r_1} \|=\|\overline{r_2}\|=1$.\\
+    $f(\overline{x})=f(\overline{x_0})+\frac{1}{2}\langle D^2f(\overline{x_0})(\overline{x}-\overline{x_0}),\overline{x}-\overline{x_0} \rangle + o(\|\overline{x}-\overline{x_0}\|^2)$\\
+    $\overline{x}=\overline{x_0}+t\overline{r_1}$, $t \in \R$, sufficientemente piccolo in modo che $\overline{x_0}+t\overline{r_1}\in A$.\\
+    $f(\overline{x_0}+t\overline{r_1})=f(\overline{x_0})+\frac{1}{2}\langle D^2f(\overline{x_0})t\overline{r_1},t\overline{r_1} \rangle + o(t^2)=f(\overline{x_0})+\frac{1}{2}\langle \lambda_1 +\overline{r_1},t\overline{r_1}\rangle + o(t^2)=f(\overline{x_0})+\frac{1}{2}\lambda_1 t^2 + o(t^2)=f(\overline{x_0})+t^2(\frac{1}{2}\lambda_1+o(1)) \Rightarrow \frac{1}{2}\lambda_1+o(1) < \frac{1}{4}\lambda_1$ in un intorno di $t=0$\\
+    $f(\overline{x_0}+t\overline{r_1})<f(\overline{x_0})+\frac{1}{4}\lambda_1 t^2< f(\overline{x_0})$ in un intorno di $t=0$, $t\neq 0$.\\
+    Analogamente $f(\overline{x_0}+t\overline{r_2})=f(\overline{x_0})+\frac{1}{2}\langle D^2f(\overline{x_0})t\overline{r_2},t\overline{r_1} \rangle +o(t^2)=f(\overline{x_0})+\frac{1}{2}\lambda_2t^2+o(t^2)>f(\overline{x_0})$ in un intorno di $t=0$, $t \neq 0$\\
+    $\Rightarrow \overline{x_0}$ non è punto di estremo per $f \Rightarrow \overline{x_0}$ è punto di sella per $f$. 
+\end{enumerate}
+\begin{flushright}
+\textbf{QED}
+\end{flushright}
+
+
+\subsection{{Matrice Jacobiana}}
+$A \subseteq \R^n$ aperto, $\overline{f}: A \rightarrow \R^p$, $p \geq 1$, $\overline{f}(\overline{x})=(f_1(\overline{x}),f_2(\overline{x}),...,f_p(\overline{x}))$, $f_i:A \rightarrow \R$, $ i =1,...,p$.
+
+\paragraph{{Definizione}}
+$\overline{f}$ si dice derivabile in $\overline{x_0}$ nella direzione $\overline{v}\in \R^n$, $\overline{v}$ versore, se tali sono $f_1,...,f_p$ e in tal caso si pone
+\begin{equation*}
+    D_{\overline{v}}\overline{f}(\overline{x_0})=\begin{pmatrix}
+        D_{\overline{v}}f_1(\overline{x_0})\\
+        D_{\overline{v}}f_2(\overline{x_0})\\
+        \vdots\\
+        D_{\overline{v}}f_p(\overline{x_0})
+    \end{pmatrix}
+\end{equation*}
+In particolare, $\overline{f}$ è derivabile in $\overline{x_0}$ se ciascuna componente $f_1,...,f_p$ lo è e in tal caso si pone 
+\begin{equation*}
+    \partial_{x_k}\overline{f}(\overline{x_0})=\begin{pmatrix}
+        \partial_{x_k}f_1(\overline{x_0})\\
+        \partial_{x_k}f_2(\overline{x_0})\\
+        \vdots\\
+        \partial_{x_k}f_p(\overline{x_0})
+    \end{pmatrix}
+\end{equation*}
+
+\paragraph{{Definizione}}
+$\overline{f}$ è differenziabile in $\overline{x_0}\in A  \Leftrightarrow$ lo sono tutte le sue componenti. Se $\overline{f}$ è derivabile in $\overline{x_0}$, poniamo 
+\begin{equation*}
+    D\overline{f}(\overline{x_0})=\overline{d_f}(\overline{x_0})=\begin{pmatrix}
+    (\nabla f_1(\overline{x_0}))^T\\
+    (\nabla f_2(\overline{x_0}))^T\\
+    \vdots\\
+    (\nabla f_p(\overline{x_0}))^T
+\end{pmatrix}=\begin{pmatrix}
+    \partial_{x_1}f_1(\overline{x_0})&\partial_{x_2}f_1(\overline{x_0})&\cdots&\partial_{x_n}f_1(\overline{x_0})\\
+    \partial_{x_1}f_2(\overline{x_0})&\partial_{x_2}f_2(\overline{x_0})&\cdots&\partial_{x_n}f_2(\overline{x_0})\\
+    \vdots&\vdots&\ddots&\vdots \\
+    \partial_{x_1}f_p(\overline{x_0})&\partial_{x_2}f_p(\overline{x_0})&\cdots&\partial_{x_n}f_p(\overline{x_0})
+\end{pmatrix}
+\end{equation*}
+che viene detta \underline{matrice jacobiana} di $\overline{f}$ in $\overline{x_0}$.
+
+\paragraph{{Teorema}}
+Se $\overline{f}$ è differenziabile in $\overline{x_0}$, allora $\overline{f}(\overline{x})=\overline{f}(\overline{x_0})+Df(\overline{x_0})(\overline{x}-\overline{x_0})+o(\|\overline{x}-\overline{x_0}\|)$.\\
+\textcolor{grey}{$f: \R \rightarrow \R$, differenziabile in $x_0$, $f(x)=f(x_0)+f'(x_0)(x-x_0)+o(x-x_0)$.\\
+$f:\R^n \rightarrow \R$ differenziabile in $\overline{x_0}$, $f(\overline{x})=f(\overline{x_0})+\langle \nabla f(\overline{x_0}), \overline{x}-\overline{x_0} \rangle + o(\|\overline{x}-\overline{x_0} \|)$.\\
+$\overline{f}: \R^n \rightarrow \R^p$ differenziabile in $\overline{x_0}$, $\overline{f}(\overline{x})=\overline{f}(\overline{x_0})+D\overline{f}(\overline{x_0})(\overline{x}-\overline{x_0})+o(\|\overline{x}-\overline{x_0}\|)$}.
+
+\paragraph{Osservazione}
+$\overline{f}:\R^n \rightarrow \R^p$ lineare, $\overline{f}(\overline{x})=M \overline{x}$, $M$ matrice $p \times n$, allora $D \overline{f}(\overline{x})=M$.
+
+\subsection{{Regola della catena}}
+\paragraph{{Teorema}}
+$A \subseteq \R^n$ e $B \subseteq \R^p$ aperti, $\overline{f}: B \rightarrow \R^k$ e $\overline{g}:A \rightarrow B$
+\textcolor{grey}{($\overline{f}\circ \overline{g}: A \rightarrow \R^k$)}.\\
+Se $\overline{g}$ è differenziabile in $\overline{x_0}\in A$ e $\overline{f}$ è differenziabile in $\overline{g}(\overline{x_0})\in B$, allora $\overline{f}\circ \overline{g}$ è differenziabile in $\overline{x_0}$ e in tal caso
+\begin{equation*}
+    D(\overline{f}\circ \overline{g})(\overline{x_0})=D\overline{f}(\overline{g}(\overline{x_0}))D\overline{g}(\overline{x_0}).
+\end{equation*}
+
+\section{\Large\textbf{Curve e Forme Differenziali}}
+\paragraph{Definizione}
+$(X,d)$ spazio metrico. Una \underline{curva} in $X$ è una funzione continua $\overline{\gamma}:I \rightarrow X$, con $I \subseteq \R$ intervallo. L'immagine di $\overline{\gamma}$, $\Gamma=\overline{\gamma}(\overline{t})=\{\overline{\gamma}(t)\mid t \in I \}\subseteq X$, si dice \underline{sostegno della curva}.\\
+La funzione $\overline{\gamma}$ è anche detta \underline{parametrizzazione della curva}.\\
+Una curva in $X$ è una coppia $(\overline{\gamma},\Gamma)$ tale che
+\begin{itemize}
+    \item $\overline{\gamma}:I\rightarrow X$, $I \subseteq \R$ funzione continua, detta parametrizzazione della curva
+    \item $\Gamma=\overline{\gamma}(\overline{t})$ è detta sostegno della curva.
+\end{itemize}
+\textcolor{grey}{$\rightarrow \overline{\gamma}$ è la legge oraria di una particella\\
+$\rightarrow \Gamma$ è il percorso della particella.}
+
+\paragraph{{Nomenclatura}}
+Una curva si dice
+\begin{itemize}
+    \item \underline{chiusa} se $I = [a,b]$ e $\overline{\gamma}(a)=\overline{\gamma}(b)$ \textcolor{grey}{(Parte e arriva nello stesso punto)}
+    \item \underline{semplice} se $\overline{\gamma}(t_1)\neq \overline{\gamma}(t_2)$ per $t_1 \neq t_2$, con l'unica eccezione $I =[a,b]$ e $\overline{\gamma}(a)=\overline{\gamma}(b)$ \textcolor{grey}{($\overline{\gamma}$ non passa per due volte per lo stesso punto, tranne al più arrivo e partenza)}
+    %IMMAGINE
+    \item \underline{circuito} se è semplice e chiusa \textcolor{grey}{(giro lanciato in Formula 1)}
+    \item \underline{piana} $X =\R^2$ \textcolor{grey}{(per alcuni autori se il sostegno di $\overline{\gamma}$ è contenuto in un piano)}
+\end{itemize}
+\begin{itemize}
+\item Le \underline{equazioni parametriche} di una curva in $\R^n$ sono le equazioni $\overline{x}=\overline{\gamma}(t)$, $\overline{x}=(x_1,...,x_n)$, $\overline{\gamma}(t)=(\gamma_1(t),...,\gamma_n(t))$\\
+$n=3$, $\overline{\gamma}(t)=(\gamma_1(t),\gamma_2(t),\gamma_3 (t))$, $\overline{x}=(x,y,z)$\\
+Equazioni parametriche:
+$\begin{cases}
+    x=\gamma_1(t)\\
+    y=\gamma_2(t)\\
+    z=\gamma_3(t)
+\end{cases}$
+\item \underline{Curva cartesiana} è una curva in $\R^2$ parametrizzata da $\overline{\gamma}(t)=(t,f(t))$, $f:I \rightarrow \R$ continua, $I \subseteq \R$ intervallo. Una curva cartesiana è semplice\\
+$t_1 \neq t_2 \Rightarrow \overline{\gamma}(t_1)=(t_1,f(t_1))\neq (t_2,f(t_1))=\overline{\gamma}(t_2)$\\
+Il sostegno di $\overline{\gamma}$ è il grafico di $f$.
+ \end{itemize}
+
+\subsection{{Curve Regolari}}
+\paragraph{Definizione}
+$\overline{\gamma}; I \rightarrow \R^n$, $\overline{\gamma}(t)=(\gamma_1(t),...,\gamma_n(t))$\\
+$\overline{\gamma}$ è differenziabile in $t_0 \in I \Leftrightarrow \gamma_i$ è differenziabile (derivabile) in $t_0 \in I \,\, \forall\,\, i =1,...,n \Leftrightarrow \overline{\gamma}$ è derivabile in $t_0 \in I$ e in tal caso
+\begin{equation*}
+    \overline{\gamma}'(t_0)=\left( \gamma_1'(t_0),...,\gamma_n'(t_0) \right).
+\end{equation*}
+
+\paragraph{{Definizione}}
+Se $\overline{\gamma}$ è derivabile in $t_0 \in I$ e $\overline{\gamma}' (t_0)\neq \overline{0}$, allora la retta di equazioni parametriche
+\begin{equation*}
+    \overline{x}=\overline{\gamma}(t_0)+\overline{\gamma}'(t_0)(t-t_0) \,\,\,\,\,\longleftrightarrow\,\,\,\,\,
+    \begin{cases}
+        &x_1=\gamma_1(t_0)+\gamma_1'(t_0)(t-t_0)\\
+        &x_2=\gamma_2(t_0)+\gamma_2'(t_0)(t-t_0)\\
+        &\vdots\\
+        &x_n=\gamma_n(t_0)+\gamma_n'(t_0)(t-t_0)
+    \end{cases}
+\end{equation*}
+è detta \underline{retta tangente} alla curva in $\overline{\gamma}(t_0)$.
+
+\paragraph{{Definizione}}
+Se $\overline{\gamma}'(t_0)\neq \overline{0}$, $\overline{\gamma}'(t_0)$ si dice vettore tangente alla curva in $\overline{\gamma}(t_0)$ e $\frac{\overline{\gamma}'(t_0)}{\|\overline{\gamma}'(t_0)\|}$ è il versore tangente.
+
+\paragraph{{Definizione}}
+$\overline{\gamma}'(t_0)$ è detta anche velocità vettoriale e $v= \|\overline{\gamma}'(t_0)\|$ velocità scalare.
+
+\paragraph{{Nomenclatura}}
+Una curva $\overline{\gamma}: I \rightarrow \R^n$, $I \subseteq \R$ intervallo, si dice
+\begin{itemize}
+    \item $C^1$ se $\overline{\gamma} \in C^1(I)$
+    \item regolare se $\overline{\gamma} \in C^1(I)$ e $\overline{\gamma}'(t)\neq \overline{0} \,\, \forall \,\, t \in I$
+    \item $C^1$ a tratti se, detti $a$ e $b$, $a < b$, gli estremi di $I$, esistono $a=t_0 <t_1<...<t_p=b$ tali che $\overline{\gamma} \in C^1([t_1,t_{i+1}]) \,\forall\,\, i =0,..., p-1$
+    \item regolare a tratti se, con le stesse notazioni di prima, la restrizione di $\overline{\gamma}$ a ciascun intervallo  $[t_i,t_{i+1}]$, $i=0,...,p-1$ è regolare.
+\end{itemize}
+
+\subsection{{Regola della Catena}}
+\paragraph{{Teorema}}
+$\overline{\gamma}: I \rightarrow \R^n$ curva derivabile in $t_0 \in I$, $A \subseteq \R^n$ aperto, $\overline{f}: A \rightarrow \R^p$ differenziabile in $\overline{\gamma}(t_0)\in A$. Allora 
+$\overline{f}\circ \overline{\gamma}: I \rightarrow \R^p$, $t \mapsto \overline{f}(\overline{\gamma}(t))$ è differenziabile (derivabile) in $t_0$ e $(\overline{f}\circ \overline{\gamma})'(t_0)=D\overline{f}(\overline{\gamma}(t_0))\overline{\gamma}'(t_0)$
+
+\subsection{{Cambio di parametrizzazione}}
+\paragraph{{Definizione}}
+$\overline{\gamma}:[a,b]\rightarrow \R^p$ curva e $\phi: [c,d]\rightarrow [a,b]$ invertibile\textcolor{grey}{, cioè iniettiva e suriettiva,} di classe $C^1$ con $\phi'(u)\neq 0 \,\, \forall \,\, u \in [c,d]$ \textcolor{grey}{(e quindi $\phi$ è monotona con inversa derivabile)}. Sia $\overline{\zeta}(u)=\overline{\gamma}(\phi(u))$, $u \in [c,d]$. Allora $\overline{\zeta}$ si dice ottenuta da $\overline{\gamma}$ per cambiamento di parametro e che è una riparametrizzazione di $\overline{\gamma}$. Le due curve $\overline{\zeta}$ e $\overline{\gamma}$ si dicono equivalenti.
+
+\paragraph{{Osservazione}}
+Due curve equivalenti hanno lo stesso sostegno.
+
+\paragraph{{Definizione}}
+Con le notazioni di prima, se $\phi$ è crescente \textcolor{grey}{($\phi'(u)>0 \forall u$)} si dice che $\overline{\gamma}$ e $\overline{\zeta}$ hanno lo stesso verso; se $\phi$ è decrescente \textcolor{grey}{($\phi'(u)<0 \forall u $)} si dice che $\overline{\gamma}$ e $\overline{\zeta}$ hanno verso opposto.
+
+%\subsection{\textcolor{red}{Equazione polare di una curva}}
+%Considero nel piano cartesiano le coordinate polari e individuo il sostegno di una curva tramite un'equazione del tipo $\rho=f(\theta)$, $\theta \in I$. Il sostegno sarà dato da tutti e soli i punti le cui coordinate polari soddisfano l'equazione data. $f(\theta) \geq 0\,\, \forall\,\, \theta \in I$.\\
+%Come trovo una parametrizzazione di una curva il cui sostegno è assegnato tramite un'equazione polare?\\
+%$\begin{cases}
+%    x=\rho \cos \theta\\
+%    y=\rho \sin \theta
+%\end{cases}$\\
+%$\overline{\gamma}(\theta)=(f(\theta)\cos \theta, f(\theta)\sin \theta)$, $\theta \in I$ è una parametrizzazione. Se $f\in C^1(I)\Rightarrow \overline{\gamma} \in C^1(I)$. Calcoliamo $\overline{\gamma}'(\theta)$.\\
+%$\overline{\gamma}'(\theta)=(f'(\theta)\cos \theta - f(\theta)\sin \theta, f'(\theta)\sin \theta + %f(\theta)\cos \theta)$.\\
+%Studiamo la regolarità: $\overline{\gamma}'(\theta)=(0,0)\Leftrightarrow \|\overline{\gamma}(\theta)|^2=0$, $\|\overline{\gamma}'(\theta)\|^2=(f'(\theta))^2\cos^2\theta+(f(\theta))^2\sin^2\theta- 2f'(\theta)f(\theta)\cos\theta\sin\theta+(f'(\theta))\sin^2\theta+(f(\theta))\cos^2\theta+2f'(\theta)f(\theta)\cos \theta\sin\theta=(f'(\theta))^2+(f(\theta))^2$\\
+%$\|\overline{\gamma}(\theta)\|^2=0 \Leftrightarrow f(\theta)=f'(\theta)=0$.\\
+%In particolare, se $f \in C^1(I)$ e $(f(\theta), f'(\theta))\neq (0,0)\,\, \forall \theta \in I$, %$\overline{\gamma}$ è regolare.
+
+\subsection{{Integrazione di funzioni a valori vettoriali}}
+\paragraph{{Definizioni}}
+Data $\overline{\gamma}:[a,b]\rightarrow \R^n$, $a,b\in \R$, $\overline{\gamma}(t)=(\gamma_1(t),...,\gamma_n(t))$, essa si dice integrabile in $[a,b]$ se tali sono $\gamma_1,...,\gamma_n$ e in tal caso si pone
+\begin{equation*}
+    \int_{a}^{b}\overline{\gamma}(t)dt=\left(\int_{a}^{b}\gamma_1(t)dt,\int_{a}^{b}\gamma_2(t)dt,...,\int_{a}^{b}\gamma_n(t)dt\right).
+\end{equation*}
+
+\subsubsection{{Teorema fondamentale del calcolo}}
+\paragraph{{Teorema}}
+Data $\overline{\gamma}:[a,b]\rightarrow \R^n$ curva $C^1$ si ha
+\begin{equation*}
+    \int_a^b\overline{\gamma}'(t)dt=\overline{\gamma}(b)-\overline{\gamma}(a).
+\end{equation*}
+\paragraph{{Dimostrazione}}
+$\overline{\gamma}(t)=(\gamma_1(t),...,\gamma_n(t))$
+\begin{align*}
+    \int_a^b\overline{\gamma}'(t)dt&=\left( \int_a^b \gamma_1'(t)dt,...,\int_a^b \gamma_n'(t)dt \right)\\
+    &=\left( \gamma_1(b)-\gamma_1(a),\gamma_2(b)-\gamma_2(a),...,\gamma_n(b)-\gamma_n(a)\right) =\overline{\gamma}(b)-\overline{\gamma}(a).
+\end{align*}
+\begin{flushright}
+ \textbf{QED}
+\end{flushright}
+
+\paragraph{{Teorema}}
+Data $\overline{\gamma}: [a,b]\rightarrow \R^n$ integrabile, allora $t \mapsto \|\overline{\gamma}(t)\|$, $t\in[a,b]$, è integrabile e 
+\begin{equation*}
+    \|\int_a^b\overline{\gamma}(t)dt\|\leq \int_a^b\|\overline{\gamma}(t)\|dt.
+\end{equation*}
+
+\subsection{{Curve rettificabili}}
+$\overline{\gamma}:[a,b]\rightarrow\R^n$ curva. $D=\{a=t_0,t_1,t_2,...,t_n=b\mid t_0<t_1<...<t_n\}$ suddivisione di $[a,b]$. Poniamo $L(\overline{\gamma},D)=\sum_{i=1}^{n}\| \overline{\gamma}(t_i)-\overline{\gamma}(t_{i-1}) \|$.
+
+\paragraph{{Definizione}}
+La curva $\overline{\gamma}$ si dice \underline{rettificabile} se $\sup_D L(\overline{\gamma},D)<+\infty$. In tal caso il valore di $\sup_D L(\overline{\gamma},D)$ si dice lunghezza della curva $L(\overline{\gamma})$. 
+
+\paragraph{{Proposizione}}
+Siano $\overline{\gamma}$ e $\overline{\xi}$ due curve equivalenti. Allora $\overline{\gamma}$ è rettificabile $\Leftrightarrow $ lo è $\overline{\xi}$ e in tal caso $L(\overline{\gamma})=L(\overline{\xi})$.
+
+\paragraph{{Dimostrazione}}
+\begin{align*}
+    &\overline{\gamma}:[a,b]\rightarrow \R^n\\
+    &\overline{\xi}:[c,d]\rightarrow \R^n
+\end{align*}
+$\exists \,\,\phi: [c,d]\rightarrow [a,b]$ invertibile e derivabile tale che $\overline{\xi}(u)=\overline{\gamma}(\phi(u))$, $u \in [c,d]$. Per fissare le idee assumiamo $\phi$ strettamente crescente.\\
+$D_1=\{ u_0,u_1,...,u_p \mid c=u_0<u_1<...<u_p=d \}$ suddivisione di $[c,d]$\\
+$D_2=\{\phi(u_0),\phi(u_1),...,\phi(u_p)\mid a = \phi (u_0)<\phi(u_1)<...<\phi(u_p)=b \}$ suddivisione di $[a,b]$\\
+$|\overline{\xi} (u_i)-\overline{\xi}(u_{i-1})|=|\overline{\gamma}(\phi(u_i))-\overline{\gamma}(\phi(u_{i-1}))|\,\,\, \forall i=1,...p$\\
+$L(\overline{\xi},D_1)=\sum_{i=1}^p|\overline{\xi}(u_i)-\overline{\xi}(u_{i-1})|=\sum_{i=1}^p|\overline{\gamma}(\phi(u_i))-\overline{\gamma}(\phi(u_{i-1}))|=L(\overline{\gamma},D_2)$.\\
+Se $\overline{\gamma}$ è rettificabile, $L(\overline{\gamma},D_2)< +\infty \Rightarrow \overline{\xi}$ è rettificabile e $L(\overline{\xi})\leq L(\overline{\gamma})$.\\
+Ripetendo lo stesso argomento con $\phi^{-1}:[a,b]\rightarrow [c,d]$, cosicché $\overline{\gamma}(t)=\overline{\xi}(\phi^{-1}(t))$, si ottiene che, se $\overline{\xi}$ è rettificabile, anche $\overline{\gamma}$ lo è e $L(\overline{\gamma})\leq L(\overline{\xi})$.
+\begin{flushright}
+ \textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Se $\overline{\gamma}$ è semplice e rettificabile, $L(\overline{\gamma})$ rappresenta la lunghezza del sostegno di $\Gamma$.
+
+\paragraph{{Teorema}}
+Sia $\overline{\gamma}:[a,b]\rightarrow \R^n$, $[a,b] \subseteq \R$ intervallo, curva $C^1$ a tratti. Allora $\overline{\gamma}$ è rettificabile e 
+\begin{equation*}
+    L(\overline{\gamma})=\int_{a}^{b}|\overline{\gamma}'(t)|dt.
+\end{equation*}
+
+\subsection{{Integrali di Prima Specie}}
+\paragraph{{Definizione}}
+$f:\dom f \rightarrow \R$, $\dom f \subseteq \R^n$ funzione, $\overline{\gamma}:[a,b]\rightarrow \R^n$ curva regolare con $\overline{\gamma}([a,b])\subseteq \dom f$. Si dice \underline{integrale di linea di prima specie di $f$ lungo $\overline{\gamma}$} la quantità
+\begin{equation*}
+    \int_{\overline{\gamma}}f ds = \int_a^bf(\overline{\gamma}(t))|\overline{\gamma}'(t)|dt
+\end{equation*}
+nel senso che il primo integrale esiste $\Leftrightarrow$ esiste il secondo e in tal caso sono uguali.
+
+\paragraph{{Osservazione}}
+$\phi(t)=f(\overline{\gamma}(t))|\overline{\gamma}'(t)|$, $t\in[a,b]$\\
+$\phi: [a,b]\rightarrow \R$\\
+$\int_a^b \phi(t)dt=\int_{\overline{\gamma}}f ds$\\
+%IMMAGINE\\
+\textcolor{grey}{Guardo la restrizione di $f$ lungo il sostegno di $\overline{\gamma}$.}
+
+\paragraph{{Proposizione}}
+Sia $f: \dom f \rightarrow \R$ funzione, $\dom f \subseteq \R^n$, e siano $\overline{\gamma}$ e $\overline{\zeta}$ curve equivalenti regolari con sostegno contenuto in $\dom f$. Allora
+\begin{equation*}
+    \int_{\overline{\gamma}}f ds = \int_{\overline{\zeta}}f ds
+\end{equation*}
+
+\paragraph{{Dimostrazione}}
+$\overline{\gamma}:[a,b]\rightarrow \dom f$, $\overline{\zeta}:[c,d]\rightarrow \dom f$\\
+$\phi: [c,d]\rightarrow [a,b]$ è un cambio di parametro, $\overline{\zeta}(u)=\overline{\gamma}(\phi(u))$, $u\in [c,d]$\\
+$\int_{\overline{\zeta}}f ds = \int_c^d f(\overline{\zeta}(u))|\overline{\zeta}'(u)|du= \int_c^d f(\overline{\gamma}(\phi(u)))|\overline{\gamma}'(\phi(u))\phi'(u)|du=\int_a^b f(\overline{\gamma}(t))|\overline{\gamma}'(t)|dt=\int_{\overline{\gamma}} f ds$.
+\begin{flushright}
+    \textbf{QED}
+\end{flushright}
+
+\paragraph{{Applicazioni}}
+\subparagraph{{\textbf{Baricentro  di una curva}}}
+$\overline{\gamma}:[a,b]\rightarrow \R^3$ curva regolare di densità $\rho(\overline{x})$ nel punto $\overline{x}=\overline{\gamma}(t)$. Siano allora $(x_B,y_B,z_B)$ coordinate del baricentro. Avremo
+\begin{align*}
+    x_B&=\frac{1}{\int_{\overline{\gamma}}\rho ds}\int_{\overline{\gamma}}x\rho ds=\frac{1}{\int_a^b \rho(\overline{\gamma}(t))|\overline{\gamma}'(t)|dt}\int_a^b \gamma_1(t)\rho(\overline{\gamma}(t))|\overline{\gamma}'(t)|dt\\
+y_B&=\frac{1}{\int_{\overline{\gamma}}\rho ds}\int_{\overline{\gamma}}y \rho ds= \frac{1}{\int_a^b \rho(\overline{\gamma}(t))|\overline{\gamma}'(t)|dt}\int_a^b \gamma_2(t)\rho(\overline{\gamma}(t))|\overline{\gamma}'(t)|dt\\
+z_B&=\frac{1}{\int_{\overline{\gamma}}\rho ds}\int_{\overline{\gamma}}z \rho ds= \frac{1}{\int_a^b \rho(\overline{\gamma}(t))|\overline{\gamma}'(t)|dt}\int_a^b \gamma_3(t)\rho(\overline{\gamma}(t))|\overline{\gamma}'(t)|dt
+\end{align*}
+Ove $\int_{\overline{\gamma}}\rho ds$ è la massa della curva e $\overline{\gamma}(t)=(\gamma_1(t),\gamma_2(t),\gamma_3(t))$.
+
+\subparagraph{{\textbf{Momento d'inerzia di una curva}}}
+$\overline{\gamma}:[a,b]\rightarrow \R^3$ curva regolare di densità $\rho(\overline{x}) $ nel punto $\overline{x}=\overline{\gamma}(t)$, $\overline{x}=(x,y,z)$. Voglio calcolare il momento di inerzia di $\overline{\gamma}$ rispetto ad un asse di rotazione $a$. Sia $d(\overline{x})$ la distanza dal punto $\overline{x}=(x,y,z)$ dall'asse $a$. Allora
+\begin{equation*}
+    I= \int_{\overline{\gamma}}(d(\overline{x}))^2 \rho(\overline{x})ds= \int_a^b (d(\overline{\gamma}(t)))^2 \rho (\overline{\gamma}(t))|\overline{\gamma}'(t)|dt.
+\end{equation*}
+Se la curva è omogenea, cioè a densità constante $\rho(\overline{x})=\rho$, allora 
+\begin{align*}
+    x_B&= \frac{1}{\int_{\overline{\gamma}}\rho ds}\int_{\overline{\gamma}}x \rho ds = \frac{1}{\int_a^b\rho|\overline{\gamma}'(t)|dt}\int_a^b \gamma_1 (t) \rho |\overline{\gamma}'(t)|dt= \frac{1}{L(\overline{\gamma})}\int_{\overline{\gamma}}x ds\\
+    y_B&=\frac{1}{L(\overline{\gamma})}\int_{\overline{\gamma}}y ds\\
+    z_B&= \frac{1}{L(\overline{\gamma})}\int_{\overline{\gamma}}z ds
+\end{align*}
+Momento d'inerzia
+\begin{align*}
+    I=& \int_{\overline{\gamma}}(d(\overline{x}))^2\rho(\overline{x})ds\\
+    =& \int_a^b (d(\overline{\gamma}(t)))^2 \rho|\overline{\gamma}'(t)|dt\\
+    =& \frac{m}{L(\overline{\gamma})}\int_{\overline{\gamma}}(d(\overline{x}))^2 ds
+\end{align*}
+
+\subsection{{Forme differenziali (Campi vettoriali)}}
+\paragraph{Definizione}
+$A \subseteq \R^n$ aperto, $f:A \rightarrow \R$ differenziabile in $A$. Si definisce il differenziale di $f$ in $x_0 \in A$ come la funzione lineare 
+\begin{align*}
+    df(\overline{x}_0):&\R^n\rightarrow\R\\
+    &\overline{y}\mapsto \langle \nabla f(\overline{x}_0),\overline{y} \rangle
+\end{align*}
+$f(\overline{x})=f(\overline{x_0})+\langle \nabla f (\overline{x_0}),\overline{x}-\overline{x_0} \rangle + o(|\overline{x}-\overline{x_0}|)=f(\overline{x_0})+df(\overline{x_0})(\overline{x}-\overline{x_0})+o(|\overline{x}-\overline{x_0}|)$\\
+$df(\overline{x_0})(\overline{y})=\langle \nabla f (\overline{x_0}),\overline{y}\rangle =\sum_{j=1}^n\frac{\partial f}{\partial x_j}(\overline{x_0})y_j$, $\overline{y}=(y_1,...y_n)$\\
+$\pi_j: \R^n \rightarrow \R$, $\overline{y}\mapsto y_j$, $y_j=\pi_j(\overline{y})$ $j-$esima proiezione\\
+$\overline{x}=(x_1,...x_n)$, $x_j=\pi_j(\overline{x})$\\
+$\pi_j$ è lineare\\
+$d \pi_j (\overline{x_0})(\overline{x})=\pi_j(x)=x_j$\\
+$\nabla \pi_j (\overline{x_0})=\overline{e_j}$\\
+$d \pi _j (\overline{x_0})=dx_j: \R^n \rightarrow \R$, $\overline{x} \mapsto x_j=\pi_j(\overline{x})$\\
+$df(\overline{x_0})(\overline{x})=\sum_{j=1}^n \frac{\partial f}{\partial x_j}(\overline{x_0})x_j=\sum_{j=1}^n \frac{\partial f}{\partial x_j}(\overline{x_0})dx_j(\overline{x})$\\
+$df(\overline{x_0})=\sum_{j=1}^n \frac{\partial f}{\partial x_j} (\overline{x_0})dx_j$\\
+Se $f$ è differenziabile in $A$, posso definire
+\begin{align*}
+    df: &A \rightarrow \mathcal{L}(\R^n,\R)\\
+    &\overline{x_0} \mapsto df(\overline{x_0})=\sum_{j=1}^n \frac{\partial f}{\partial x_j}(\overline{x_0})dx_j
+\end{align*}
+
+\paragraph{{Definizione}}
+Una forma differenziale su $A \subseteq \R^n$ aperto è una scrittura del tipo 
+$\omega (\overline{x})=F_1(\overline{x})dx_1 +F_2(\overline{x})dx_2 +...+ F_n(\overline{x})dx_n$ dove $\overline{F}: A \rightarrow \R^n$, $\overline{x} \mapsto (F_1(\overline{x}),...,F_n(\overline{x}))$ è un campo vettoriale, intendendo con questo che la funzione $\overline{x}\mapsto \omega (\overline{x})$ associa ad ogni punto $\overline{x} \in A$ la funzione lineare
+\begin{equation*}
+    \omega(\overline{x})(\overline{y}) =\langle \overline{F}(\overline{x}),\overline{y}\rangle =\sum_{j=1}^n F_j (\overline{x}) y_j.
+\end{equation*}
+$\overline{F}$ si dice campo vettoriale associato ad $\omega$ e determina univocamente la forma differenziale.\\
+Una forma differenziale si dice di classe $C^k$, $k \geq 0$, se tale è il campo vettoriale ad essa associato.
+
+\subsubsection{Integrali di Seconda Specie}
+\paragraph{{Definizione}}
+Sia $\omega$ forma differenziale su $A \subseteq \R^n$ aperto e sia $\overline{F}=(F_1,...,F_n)$ il campo vettoriale ad essa associato. Data una curva $C^1$ a tratti $\overline{\gamma} :[a,b]\rightarrow \R^n$ con sostegno contenuto in $A$ si dice integrale (curvilineo) di seconda specie di $\omega$ o $\overline{F}$ lungo $\overline{\gamma}$ la quantità
+\begin{equation*}
+    \int_{\overline{\gamma}}\omega = \int_{\overline{\gamma}}\langle \overline{F},d\overline{\gamma} \rangle = \int_a^b \langle \overline{F}(\overline{\gamma}(t)),\overline{\gamma}'(t) \rangle dt=\int_a^b (F_1 (\overline{\gamma}(t))\gamma_1'(t)+...+F_n(\overline{\gamma}(t))\gamma_n'(t))dt
+\end{equation*}
+ dove $\overline{\gamma}=(\gamma_1,...,\gamma_n)$, nel senso che i primi due integrali esistono $\Leftrightarrow $ esiste l'ultimo.\\
+  Se $\overline{\gamma} $ è un circuito, si utilizzano anche le notazioni
+  \begin{equation*}
+      \oint_{\overline{\gamma}} \omega= \oint_{\overline{\gamma}} \overline{F} d\overline{\gamma} = \oint_{\overline{\gamma}}\langle \overline{F},d\overline{\gamma} \rangle.
+  \end{equation*}
+  Se $\overline{\gamma}$ è una curva di Jordan (circuito piano) allora utilizziamo le notazioni
+  \begin{align*}
+      &\ointctrclockwise_{\overline{\gamma}} \omega=\ointctrclockwise_{\overline{\gamma}}\overline{F}d\overline{\gamma}\,\,\,\,\, \text{se} \,\, \overline{\gamma}\,\, \text{è percorsa in senso antiorario} \\
+      &\ointclockwise_{\overline{\gamma}}\omega=\ointclockwise_{\overline{\gamma}}\overline{F}d\overline{\gamma} \,\,\,\,\, \text{se} \,\, \overline{\gamma}\,\, \text{è percorsa in senso orario}
+  \end{align*}
+  
+\paragraph{{Teorema}}
+Siano $\overline{\gamma}$ e $\overline{\zeta}$, $C^1$ a tratti, due curve equivalenti  con sostegno contenuto in un aperto $A \subseteq \R^n$ e sia $\omega$ una forma differenziale continua su $A$. Allora
+\begin{align*}
+    \int_{\overline{\gamma}} \omega= \int_{\overline{\zeta}} \omega
+    \,\,\,\,\,\text{se}\,\, \overline{\gamma}\,\, \text{e}\,\,\overline{\zeta}\,\,\, \text{hanno lo stesso verso,}\\
+    \int_{\overline{\gamma}}\omega= -\int_{\overline{\zeta}} \omega 
+    \,\,\,\,\,\text{se} \,\,\overline{\gamma} \,\, \text{e}\,\,\overline{\zeta} \,\,\,\text{hanno verso opposto.}
+\end{align*}
+
+\paragraph{{Dimostrazione}}
+\begin{align*}
+    \overline{\gamma}:& [a,b]\rightarrow A\\
+    \overline{\zeta}:&[c,d]\rightarrow A
+\end{align*}
+$\overline{\zeta}=\overline{\gamma}(\phi(u))$, $\phi:[c,d]\rightarrow[a,b]$
+invertibile, di classe $C^1$ con $\phi'(u)\neq 0 \,\,\, \forall \, u \in [c,d]$.\\
+Sia $\overline{F} : A \rightarrow \R^n$ il campo vettoriale associato ad $\omega$.\\
+ \begin{align*}
+     \int_{\overline{\zeta}} \omega& = \int_c^d \langle  \overline{F}(\overline{\zeta}(u)),\overline{\zeta}'(u) \rangle du \\
+     %& =\int_c^d \langle \overline{F}(\overline{\gamma}(\phi(u))), \overline{\gamma}' (\phi(u)) \rangle du\\
+     &= \int_c^d \langle \overline{F}(\overline{\gamma}(\phi(u))),\overline{\gamma}'(\phi(u)) \phi' (u)\rangle du\\
+     &=\int_{\phi^{-1}(c)}^{\phi^{-1}(d)}\langle \overline{F}(\overline{\gamma}(t)), \overline{\gamma}'(t)\rangle dt\\
+     &=\begin{cases}
+       & \int_a^b \langle \overline{F}(\overline{\gamma}(t)), \overline{\gamma}'(t) \rangle dt\,\,\, \text{se}\,\,\, \phi \,\,\, \text{crescente}  \\
+       & \int_b^a \langle \overline{F}(\overline{\gamma}(t)), \overline{\gamma}'(t) \rangle dt\,\,\, \text{se}\,\,\, \phi \,\,\, \text{decrescente}
+     \end{cases}\\
+     &=\begin{cases}
+       &\int_{\overline{\gamma}}\omega \text{  se  } \overline{\gamma} \text{  e  }\overline{\zeta} \text{  hanno lo stesso verso}\\
+        &-\int_{\overline{\gamma}}\omega \text{  se  } \overline{\gamma} \text{  e  } \overline{\zeta} \text{  hanno verso opposto}
+     \end{cases}
+ \end{align*}
+ \begin{flushright}
+   \textbf{QED}
+ \end{flushright}
+
+\paragraph{{Definizione}}
+Date due curve $\overline{\zeta}_1:[0,L]\rightarrow \R^n$ e $\overline{\zeta}_2:[0,M]\rightarrow \R^n$ tali che $\overline{\zeta}_1(L)=\overline{\zeta}_2(0)$ si definisce \underline{concatenazione} di $\overline{\zeta}_1$ e $\overline{\zeta}_2$ la curva 
+\begin{equation*}
+    (\overline{\zeta}_1+\overline{\zeta}_2)(t)=\begin{cases}
+    \overline{\zeta}_1 (t)\,\,\,\, &\text{  se  } t\in[0,L]\\
+    \overline{\zeta}_2 (t-L) \,\,\,\, &\text{  se  } t \in ]L,L+M]
+\end{cases}\,\,\,\,\, t \in [0,L+M]
+\end{equation*}
+%IMMAGINE
+
+\paragraph{{Proposizione}} Sia $\omega$ forma differenziale continua in $A$ e $\overline{\zeta}_1$ e $\overline{\zeta}_2$ due curve $C^1$ a tratti con sostegno contenuto in $A$ e concatenabili. Allora
+\begin{equation*}
+    \int_{\overline{\zeta}_1+\overline{\zeta}_2}\omega= \int_{\overline{\zeta}_1}\omega + \int_{\overline{\zeta}_2}\omega.
+\end{equation*}
+
+\paragraph{{Definizione}}
+$A \subseteq \R^n$ aperto, $\omega$ forma differenziale continua su $A$ con $\overline{F}=(F_1,...,F_n)$ campo vettoriale associato. $\omega$ si dice \underline{esatta} ed $\overline{F}$ si dice \underline{conservativo} se $\exists \,\,U \in  C^1(A)$ tale che $\omega(\overline{x})=dU(\overline{x})\,\, \forall\,\, \overline{x} \in A$, cioè $\overline{F}(\overline{x})=\nabla U(\overline{x})\,\, \forall\,\, \overline{x}\in A$. $U $ è detta (funzione) potenziale. 
+\textcolor{grey}{$\overline{F} = \nabla U(\overline{x})$\\
+$\nabla U(\overline{x})=(\partial_{x_1}U(\overline{x}),..., \partial_{x_n}U(\overline{x}))$\\
+$\overline{F}(\overline{x})=(F_1(\overline{x}),...,F_n(\overline{x}))$\\
+$F_1(\overline{x}) =\partial_{x_1}U(\overline{x}),..., F_n(\overline{x})=\partial_{x_n} U(\overline{x})\,\,\, \forall \overline{x}\in A$\\
+$F_j(\overline{x})=\partial_{x_j}U(\overline{x})\,\,\, \forall \overline{x}\in A\,\, j=1,...,n$.}
+
+\paragraph{Osservazione}
+Se $U$ è potenziale di $\overline{F}$ allora anche $U+c$ con $c$ costante reale lo è perché $\nabla (U+c)=\nabla U+\nabla c= \nabla U = \overline{F}$.
+
+\paragraph{Osservazione}
+Siano $U_1$ e $U_2$ potenziali di uno stesso campo vettoriale in un aperto connesso $A \subseteq \R^n$. Allora differiscono per una costante. $\overline{F} (\overline{x})=\nabla U_1 (\overline{x})=\nabla U_2(\overline{x})\,\, \forall \overline{x}\in A $\\
+$\nabla U_1(\overline{x})-\nabla U_2(\overline{x})=0\,\,\forall \overline{x}\in A \Rightarrow \nabla(U_1-U_2)(\overline{x})=0 \,\, \forall \overline{x}\in A$\\
+$\exists c \in \R \,\, \mid U_1(\overline{x}) - U_2(\overline{x}) = c \,\,\, \forall \overline{x}\in A$
+
+\paragraph{{Osservazione}}
+$F:\R\rightarrow \R$ campo vettoriale continuo su $\R$, con forma differenziale associata $\omega(x)=F(x)dx$. $F$ è conservativo $\Leftrightarrow \exists \,\, U : \R \rightarrow \R$ di classe $C^1$ tale che $U'(x)=F(x)\,\, \forall \, x \in \R$, ovvero che $U(x)=\int_0^xF(t)dt \Rightarrow$ ogni campo vettoriale continuo su $\R$ o su un suo aperto è conservativo per il teorema fondamentale del calcolo.
+
+\paragraph{{Teorema}}
+$\omega$ forma differenziale di classe $C^1$ su un aperto $A$ di $\R^n$ con $\overline{F}:A \rightarrow \R^n$,  $\overline{F}=(F_1,...,F_n)$, campo vettoriale associato. Se $\omega$ è esatta, allora è \underline{chiusa}, cioè vale
+\begin{equation*}
+    \partial_{x_i}F_j(\overline{x})=\partial_{x_j}F_i(\overline{x})\,\,\,\,\,\,\,\forall \, i,j=1,...,n\,\,\, \forall \overline{x}\in A.
+\end{equation*}
+
+\paragraph{{Dimostrazione del Teorema}}
+Se $\omega$ è esatta $\exists \, U : A\rightarrow \R$ tale che $\overline{F}(\overline{x})=\nabla U(\overline{x})\,\, \forall\, \overline{x}\in A$, $\overline{F}\in C^1(A)\Rightarrow \nabla U \in C^1(A) \Rightarrow U \in C^2(A)\Rightarrow $ vale il teorema di Schwarz. \\
+$\partial_{x_ix_j}^2U(\overline{x})=\partial_{x_jx_i}^2U(\overline{x})$\\
+$F_k(\overline{x})=\partial_{x_k}U(\overline{x})\,\, \forall \, k =1,...,n$\\
+$\partial_{x_i}F_j(\overline{x})=\partial_{x_i}(\partial_{x_j}U(\overline{x}))=\partial_{x_ix_j}^2U(\overline{x})=\partial_{x_jx_i}^2U(\overline{x})=\partial_{x_j}(\partial_x_iU(\overline{x}))=\partial_{x_j}F_i(\overline{x})$.
+\begin{flushright}
+    \textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+$A \subseteq \R^3$ aperto, $\overline{F}: A \rightarrow \R^3$ campo vettoriale $\overline{F}= (F_1,F_2,F_3)$, $\overline{x}=(x,y,z)$. Sia $\omega$ forma differenziale associata ad $\overline{F}$. Essa è chiusa $\Leftrightarrow$
+$\begin{cases}
+    &\partial_yF_1=\partial_xF_2\\
+    &\partial_zF_1=\partial_x F_3\\
+    &\partial_yF_3= \partial_z F_2
+\end{cases}$\\
+$\text{rot}\overline{F}=\nabla\times \overline{F}=\det \begin{pmatrix}
+    \overline{e}_1 & \overline{e}_2 & \overline{e}_3\\
+    \partial_x &\partial_y &\partial_z\\
+    F_1 &F_2 &F_3
+\end{pmatrix}= (\partial_yF_3-\partial_zF_2)\overline{e}_1-(\partial_xF_3-\partial_zF_1)\overline{e}_2+(\partial_xF_2-\partial_yF_1)\overline{e}_3$\\
+$\omega $ è chiusa $\Leftrightarrow \text{rot}\overline{F}=\overline{0}\,\, \forall \, (x,y,z)\in A$ e in tal caso $\overline{F}$ si dice \underline{irrotazionale}.
+
+\paragraph{{Teorema}}
+Siano $A \subseteq \R^n$ aperto, $\omega$ forma differenziale continua e esatta in $A$, $\overline{\gamma}:[a,b]\rightarrow A$ curva $C^1$ a tratti in $A$. Se $U$ è funzione potenziale di $\omega$ allora
+\begin{equation*}
+    \int_{\overline{\gamma}}\omega =U(\overline{\gamma}(b))-U(\overline{\gamma}(a)).
+\end{equation*}
+In particolare, se $\overline{\gamma}$ è un circuito,
+\begin{equation*}
+    \oint_{\overline{\gamma}}\omega = \left( \oint_{\overline{\gamma}}\overline{F} d\overline{\gamma} \right)=0.
+\end{equation*}
+\textcolor{grey}{Ove $\overline{F}$ è campo vettoriale associato ad $\omega$.}
+
+\paragraph{{Dimostrazione}}
+Per semplicità assumiamo $\overline{\gamma}\in C^1([a,b])$\\
+$\int_{\overline{\gamma}}\omega=\int_a^b \langle \overline{F}(\overline{\gamma}(t)), \overline{\gamma}'(t) \rangle dt = \int_a^b \langle \nabla U(\overline{\gamma}(t)),\overline{\gamma}'(t) \rangle dt = \int_a^b \frac{d}{dt}U(\overline{\gamma}(t))dt=U(\overline{\gamma}(b))-U(\overline{\gamma}(a))$.
+\begin{flushright}
+    \textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Il teorema fornisce un metodo per calcolare un potenziale.\\
+$A \subseteq \R^2$ aperto $\omega$ forma differenziale su $A$, $A$ connesso.\\
+%IMMAGINE\\
+$U(x,y)=U(x_0,y_0)+\int_{\overline{\gamma}}\omega$\\
+$\overline{\gamma}_1(t)=(t,y_0)$, $t \in [x_0,x]$\\
+$\overline{\gamma}_2(t)=(x,t)$, $t \in [y_0,y]$\\
+$U(x,y)=U(x_0,y_0)+\int_{\overline{\gamma}_1}\omega + \int_{\overline{\gamma}_2}\omega= U(x_0,y_0)+\int_{x_0}^x\langle \overline{F}(t,y_0),(1,0) \rangle dt + \int_{y_0}^y \langle \overline{F}(x,t),(0,1)\rangle dt$.
+
+\paragraph{Teorema}
+$A \subseteq \R^n$ aperto connesso, $\omega$ forma differenziale continua su $A$. Allora sono equivalenti le seguenti affermazioni:
+\begin{enumerate}
+    \item $\omega$ è esatta;
+    \item per ogni coppia di curve $C^1$ a tratti $\overline{\gamma}_1$ e $\overline{\gamma}_2$ con sostegno contenuto in $A$ aventi gli stessi punti iniziali e finali si ha
+    \begin{equation*}
+        \int_{\overline{\gamma}_1}\omega=\int_{\overline{\gamma}_2}\omega;
+    \end{equation*}
+    \item per ogni circuito $C^1$ a tratti $\overline{\gamma}$ con sostegno contenuto in $A$ si ha
+    \begin{equation*}
+        \oint_{\overline{\gamma}}\omega=0.
+    \end{equation*}
+\end{enumerate}
+
+\paragraph{{Dimostrazione}}
+\textbf{1.$\Rightarrow $2.} e \textbf{1.$\Rightarrow $3.} discendono dal teorema precedente. Se $U$ è potenziale allora\\
+$\int_{\overline{\gamma}_1}\omega=U(\overline{\gamma}_1(b))-U(\overline{\gamma}_1(a))=U(\overline{\gamma}_2(d))-U(\overline{\gamma}_2(c))=\int_{\overline{\gamma}_2}\omega$.\\
+Per \textbf{3.$\Rightarrow$2.} abbiamo che $\oint_{\overline{\gamma}}\omega =0$ per ogni circuito.\\
+Prendiamo $\overline{\gamma}_1$ e $\overline{\gamma}_2$ con gli stessi punti iniziale e finale e dimostriamo che $\int_{\overline{\gamma}_1}\omega=\int_{\overline{\gamma}_2}\omega$.\\
+%IMMAGINE\\
+Il punto finale di $\overline{\gamma}_1$ è il punto iniziale di $\overline{\gamma}_2^- \Rightarrow$ posso concatenarli e considerare $\overline{\gamma}_1+\overline{\gamma}_2^-$, che è circuito $C^1$ a tratti 
+$\Rightarrow 0 =\oint_{\overline{\gamma}_1+\overline{\gamma}_2^-}\omega=\int_{\overline{\gamma}_1}\omega+\int_{\overline{\gamma}_2^-}\omega= \int_{\overline{\gamma}_1}\omega - \int_{\overline{\gamma}_2}\omega\Rightarrow \int_{\overline{\gamma}_1}\omega = \int_{\overline{\gamma}_2}\omega$.\\
+Se dimostriamo che \textbf{2. $\Rightarrow$ 1.} abbiamo finito.\\
+Fissiamo $\overline{x}_0\in A$. Dato $\overline{x}_0 \in A$,  essendo $A$ connesso, troviamo una curva $\overline{\gamma}:[a,b]\rightarrow A$ tale che $\overline{\gamma}(a)=\overline{x}_0$ e $\overline{\gamma}(b)=\overline{x}$. Non è restrittivo assumere $\overline{\gamma}\in C^1([a,b])$. Definiamo $U(\overline{x})=\int_{\overline{\gamma}}\omega$. $U $ è ben definito perché non dipende dalla particolare curva $\overline{\gamma}$. Sia $\overline{F}$ il campo vettoriale associato ad $\omega$, $\overline{F}=(F_1,...,F_n)$. Dimostriamo che $U$ è derivabile rispetto a $x_1$ e $\partial_{x_1}U(\overline{x})=F_1(\overline{x})$. Poi possiamo replicare lo stesso argomento per ogni componente di $\overline{F}$, cosicché $U$ sia derivabile e $\partial_{x_j}U(\overline{x})=F_j(\overline{x})\,\, \overline{x}\in A\,\, \forall j=1,...,n$ cioè $\nabla U(\overline{x})=\overline{F}(\overline{x})$, e quindi $\omega$ è esatta.\\
+%IMMAGINE\\
+$\partial_{x_1}U(\overline{x})= \lim_{h\rightarrow 0}\frac{U(\overline{x}+h\overline{e}_1)-U(\overline{x})}{h}$\\
+$U(\overline{x} + h \overline{e}_1 )=\int_{\overline{\gamma}+\overline{\gamma}_h}\omega=\int_{\overline{\gamma}}\omega+\int_{\overline{\gamma}_h}\omega= U(\overline{x})+\int_{\overline{\gamma}_h}\omega$\\
+$U(\overline{x}+h \overline{e}_1)-U(\overline{x})=\int_{\overline{\gamma}_h}\omega=\int_0^h\langle \overline{F}(\overline{x}+t\overline{e}_1),\overline{\gamma}_h'(t)\rangle dt = \int_0^h \langle \overline{F}(\overline{x}+t\overline{e}_1),\overline{e}_1 \rangle dt = \int_0^h F_1(\overline{x}+t\overline{e}_1)dt$\\
+$\frac{U(\overline{x}+h\overline{e}_1)-U(\overline{x})}{h}=\frac{1}{h}\int_0^h F_1(\overline{x}+t\overline{e}_1)dt=F_1(\overline{\xi}(h))$ con $\overline{\xi}(h)$ punto del segmento $[\overline{x},\overline{x}+h\overline{e}_1]$\\
+$\lim_{h\rightarrow 0} \frac{U(\overline{x}+h\overline{e}_1)-U(\overline{x})}{h}=\lim_{h\rightarrow 0} F_1 (\overline{\xi}(h))=F_1(\overline{x})$.
+\begin{flushright}
+   \textbf{QED}
+\end{flushright}
+
+\paragraph{{Definizione}}
+$A \subseteq \R^n$ aperto, $\overline{\gamma}_0$ e $\overline{\gamma}_1$ circuiti con sostegno contenuto in $A$ parametrizzati sullo stesso intervallo $[a,b]$. Allora $\overline{\gamma}_0$ e $\overline{\gamma}_1$ si dicono \underline{omotopi} se esiste una funzione continua 
+\begin{equation*}
+    \phi: [a,b]\times [0,1]\rightarrow A
+\end{equation*}
+detta \underline{omotopia tra $\overline{\gamma}_0$ e $\overline{\gamma}_1$} tale che
+\begin{enumerate}
+    \item $\phi(t,0)=\overline{\gamma}_0(t)\,\,\, \forall\, t \in [a,b]$
+    \item $\phi(t,1)=\overline{\gamma}_1(t)\,\,\, \forall\, t \in [a,b]$
+    \item $\phi(a,\lambda)=\phi(b,\lambda)\,\,\, \forall \, \lambda \in[0,1]$
+\end{enumerate}
+
+\paragraph{{Osservazione}}
+Fissato $\lambda \in[0,1]$, $t \mapsto \phi(t,\lambda)$, $t \in [a,b]$ è la parametrizzazione di un circuito con sostegno contenuto  in $A$. Inoltre  $t \mapsto \phi(t,0)$ è la curva $\overline{\gamma}_0$ e $t \mapsto \phi(t,1)$ è la curva $\overline{\gamma}_1$
+
+\paragraph{{Teorema}}
+$A \subseteq \R^n$ aperto, $\omega \in C^1(A)$ forma differenziale chiusa, $\overline{\gamma}_1$ e $\overline{\gamma}_2$ due circuiti omotopi in $A$. Allora
+\begin{equation*}
+    \oint_{\overline{\gamma}_1}\omega=\oint_{\overline{\gamma}_2}\omega.
+\end{equation*}
+
+\paragraph{{Definizione}}
+$A \subseteq \R^n$ aperto si dice \underline{semplicemente connesso} se è connesso e se ogni circuito  \textcolor{grey}{(curva semplice chiusa)} con sostegno contenuto in $A$ è omotopa in $A$ ad un punto \textcolor{grey}{(curva costante)}.
+
+
+\subsubsection{{Teorema di Poincarè}}
+\paragraph{{Teorema}}
+$A \subseteq \R^n$ aperto semplicemente connesso, $\omega \in C^1(A)$ forma differenziale chiusa. Allora $\omega$ è esatta. 
+
+\paragraph{{Dimostrazione}}
+Sia $\overline{\gamma}$ circuito in $A$. Allora $\overline{\gamma}$ è omotopo in $A$ ad una curva costante $\overline{\zeta}:[a,b]\rightarrow A$, $t \mapsto \overline{x}$, $\overline{x}\in A$ fissato.
+\begin{equation*}
+    \oint_{\overline{\gamma}} \omega = \oint_{\overline{\zeta}} \omega= \int_a^b \langle \overline{F}(\overline{\zeta}(t)), \overline{\zeta}'(t)\rangle dt
+\end{equation*}
+\textcolor{grey}{$\omega$ è chiusa e $\overline{\gamma}$ e $\overline{\zeta}$ sono omotopi}
+$\Rightarrow \omega$ è esatta perché il suo integrale di seconda specie lungo ogni circuito in $A$ è nullo.
+\begin{flushright}
+    \textbf{QED}
+\end{flushright}
+
+\paragraph{{Osservazione}}
+Il teorema di Poincarè fornisce una condizione sufficiente ma non necessaria affinché una forma differenziale chiusa sia esatta.
+%$\overline{F}(x,y)=\frac{x}{x^2+y^2}\overline{e_1}+\frac{y}{x^2+y^2}\overline{e_2}$ definito in $\R^2 \backslash \{(0,0)\}$, che non è semplicemente connesso, è conservativo perché un suo potenziale è $ U(x,y)=\frac{1}{2}\ln (x^2+y^2)$.
+
+\end{document}
